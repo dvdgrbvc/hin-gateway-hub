@@ -520,13 +520,14 @@
       </span>
     </a>
     <nav class="nav" id="mainNav">
-      <button data-section="home" class="active">Übersicht</button>
-      <button data-section="wizard">Konfigurator</button>
-      <button data-section="architecture">Architektur</button>
-      <button data-section="decisions">Entscheidungen</button>
+      <button data-section="home" class="active" data-i18n="nav_home">Übersicht</button>
+      <button data-section="wizard" data-i18n="nav_wizard">Konfigurator</button>
+      <button data-section="architecture" data-i18n="nav_arch">Architektur</button>
+      <button data-section="decisions" data-i18n="nav_decisions">Entscheidungen</button>
       <button data-section="faq">FAQ</button>
       <button data-section="troubleshoot">Troubleshoot</button>
-      <button data-section="checklist">Checkliste</button>
+      <button data-section="checklist" data-i18n="nav_checklist">Checkliste</button>
+      <button id="langToggle" onclick="toggleLang()" style="margin-left:.5rem;border:1px solid var(--rule-strong);border-bottom:none;font-size:.78rem;letter-spacing:.08em;color:var(--muted);padding:.4rem .7rem">EN</button>
     </nav>
   </div>
 </header>
@@ -2679,14 +2680,16 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
 // Navigation
 // ======================================================
 function showSection(id){
+  if(!id) return;
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById('section-'+id).classList.add('active');
-  document.querySelectorAll('#mainNav button').forEach(b => {
+  const el = document.getElementById('section-'+id);
+  if(el) el.classList.add('active');
+  document.querySelectorAll('#mainNav button[data-section]').forEach(b => {
     b.classList.toggle('active', b.dataset.section === id);
   });
   window.scrollTo({top:0, behavior:'smooth'});
 }
-document.querySelectorAll('#mainNav button').forEach(b => {
+document.querySelectorAll('#mainNav button[data-section]').forEach(b => {
   b.addEventListener('click', () => showSection(b.dataset.section));
 });
 
@@ -2722,7 +2725,8 @@ function gotoStep(n){
   if(n < 0 || n >= TOTAL_STEPS) return;
   currentStep = n;
   document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
-  document.querySelector('.step-panel[data-step="'+n+'"]').classList.add('active');
+  const panel = document.querySelector('.step-panel[data-step="'+n+'"]');
+  if(panel) panel.classList.add('active');
   document.querySelectorAll('#wizSteps li').forEach(li => {
     const s = parseInt(li.dataset.step);
     li.classList.toggle('active', s === n);
@@ -3298,6 +3302,1116 @@ function copyEmail(){
 // Initialize
 updatePreview();
 updateRoutingHint();
+</script>
+
+<script>
+// ======================================================
+// INTERNATIONALISATION (i18n) — DE / EN
+// ======================================================
+let currentLang = 'de';
+const deCache = {}; // stores original DE innerHTML per selector
+
+// Static HTML translations: CSS selector → EN innerHTML
+// DE is the page default and is cached from the DOM on first switch
+const I18N = {
+  // ── NAV ──
+  '[data-i18n="nav_home"]': 'Overview',
+  '[data-i18n="nav_wizard"]': 'Configurator',
+  '[data-i18n="nav_arch"]': 'Architecture',
+  '[data-i18n="nav_decisions"]': 'Decisions',
+  '[data-i18n="nav_checklist"]': 'Checklist',
+
+  // ── HOME / HERO ──
+  '#section-home .eyebrow-accent': 'Internal Guide · As of April 2026',
+  '#section-home .hero h1': 'Making the new <em>HIN&nbsp;Gateway</em><br/>easy to understand.',
+  '#section-home .hero .lead': 'This hub guides clinics and IT departments step by step through the migration to Stargate — from the first architecture decision to productive mail handover with S/MIME.',
+  '#section-home .hero .btn-accent': 'Start Configurator →',
+  '#section-home .hero .btn-outline': 'Understand Architecture',
+
+  // Hero meta
+  '#section-home .hero-meta-item:nth-child(1) .k': 'Rollout Start',
+  '#section-home .hero-meta-item:nth-child(2) .k': 'Services in Stack',
+  '#section-home .hero-meta-item:nth-child(3) .k': 'Appliance per Customer',
+  '#section-home .hero-meta-item:nth-child(4) .k': 'Ports Inbound',
+  '#section-home .hero-meta-item:nth-child(1) .v': 'May 18',
+
+  // Hero card
+  '#section-home .hero-card h3': 'What does this tool do?',
+  '#section-home .hero-card p:nth-of-type(1)': 'Customers can independently think through their deployment variant, generate a matching <code>customer-config.sh</code> and work through all preparatory steps (DNS, firewall, peer registration) in a structured way.',
+  '#section-home .hero-card p:nth-of-type(2)': 'For the HIN team, it serves as a reference for meetings — all questions raised during the rollout pilot are documented here with answers and configuration references.',
+  '#section-home .hero-card .btn-outline': 'Open Official HIN Page ↗',
+
+  // Hub tools overview
+  '#section-home > .wrap > .eyebrow:last-of-type': 'Six Tools in this Hub',
+  '#section-home .decisions-grid .decision:nth-child(1) .eyebrow': '01 · Interactive',
+  '#section-home .decisions-grid .decision:nth-child(1) h3': 'Configurator',
+  '#section-home .decisions-grid .decision:nth-child(1) p': 'Nine-step wizard. Asks exactly what belongs in <code>customer-config.sh</code> — and downloads the finished file at the end.',
+  '#section-home .decisions-grid .decision:nth-child(2) .eyebrow': '02 · Reference',
+  '#section-home .decisions-grid .decision:nth-child(2) h3': 'Architecture',
+  '#section-home .decisions-grid .decision:nth-child(2) p': 'Mail flow, services, ports, data flows. Everything you need to know for a meeting with infrastructure teams.',
+  '#section-home .decisions-grid .decision:nth-child(3) .eyebrow': '03 · Explained',
+  '#section-home .decisions-grid .decision:nth-child(3) h3': 'Decisions',
+  '#section-home .decisions-grid .decision:nth-child(3) p': 'The six real forks in the setup — MX vs. RELAYHOST, TCP vs. UDP, on-prem vs. M365 — with honest trade-offs.',
+  '#section-home .decisions-grid .decision:nth-child(4) .eyebrow': '04 · Reference',
+  '#section-home .decisions-grid .decision:nth-child(4) h3': 'FAQ',
+  '#section-home .decisions-grid .decision:nth-child(4) p': 'Cluster? Cloud? Multi-Tenant? S3? Offline operation? SASL Auth? All questions asked during the rollout, honestly answered.',
+  '#section-home .decisions-grid .decision:nth-child(5) .eyebrow': '05 · Diagnosis',
+  '#section-home .decisions-grid .decision:nth-child(5) h3': 'Troubleshoot',
+  '#section-home .decisions-grid .decision:nth-child(5) p': 'The most common error gets its own decision tree: Certificate not being issued → what now?',
+  '#section-home .decisions-grid .decision:nth-child(6) .eyebrow': '06 · Printable',
+  '#section-home .decisions-grid .decision:nth-child(6) h3': 'Checklist',
+  '#section-home .decisions-grid .decision:nth-child(6) p': 'Pre-deployment list for coordinating network, DNS, mail and security teams at the customer site.',
+
+  // ── WIZARD ──
+  '#section-wizard > .wrap > .eyebrow': 'Step by Step',
+  '#section-wizard > .wrap > h2': 'Configurator',
+  '#section-wizard > .wrap > .lead': 'Nine guided decisions. At the end you get a ready-to-use <code>customer-config.sh</code>, a deployment checklist and an email template for peer registration.',
+
+  // Wizard sidebar steps
+  '#wizSteps li[data-step="0"] span:last-child': 'Customer Identification',
+  '#wizSteps li[data-step="1"] span:last-child': 'Phase & Peer Target',
+  '#wizSteps li[data-step="2"] span:last-child': 'Platform',
+  '#wizSteps li[data-step="3"] span:last-child': 'Server & Network',
+  '#wizSteps li[data-step="4"] span:last-child': 'Mail Domains',
+  '#wizSteps li[data-step="5"] span:last-child': 'Mail Server & Routing',
+  '#wizSteps li[data-step="6"] span:last-child': 'Certificate',
+  '#wizSteps li[data-step="7"] span:last-child': 'Advanced',
+  '#wizSteps li[data-step="8"] span:last-child': 'Summary',
+
+  // Step 1
+  '.step-panel[data-step="0"] .eyebrow': 'Step 01',
+  '.step-panel[data-step="0"] h3': 'Who are you?',
+  '.step-panel[data-step="0"] > p': 'These values identify your appliance in logs, the S/MIME certificate and towards HIN. They don\'t need to be secret — but they must be unique and stable.',
+  '.step-panel[data-step="0"] .field:nth-child(3) .field-hint': 'Used as <code>CERT_ORGANIZATION</code> and in the certificate subject. Full official company name as you appear publicly.',
+  '.step-panel[data-step="0"] .field:nth-child(4) .field-hint': 'Technical slug for logs and Promtail hostname. <strong>Lowercase, hyphens, no spaces.</strong> For multiple instances per organization, extend with site or role suffix (e.g. <code>stargate-hirslanden-zh-prod</code>).',
+  '.step-panel[data-step="0"] .callout-sage .callout-title': 'Remember',
+  '.step-panel[data-step="0"] .callout-sage': '<div class="callout-title">Remember</div>These two values can be changed later, but at a cost: the deployment name appears in all historical log queries in Loki. Choose wisely from the start if possible.',
+  '.step-panel[data-step="0"] .step-footer .btn:last-child': 'Next: Phase →',
+
+  // Step 2
+  '.step-panel[data-step="1"] .eyebrow': 'Step 02',
+  '.step-panel[data-step="1"] h3': 'Which phase are you starting in?',
+  '.step-panel[data-step="1"] > p': 'HIN rolls out Stargate in three phases. The choice determines which CA the appliance connects to and whether real production mail should run through it.',
+  '.step-panel[data-step="1"] .radio-card:nth-child(1) .radio-card-desc': 'Rapid development. <strong>Use a test domain</strong>, no production mail. Connection to HIN Test CA (<code>hintest.ch</code>). CSR is automatically signed.',
+  '.step-panel[data-step="1"] .radio-card:nth-child(2) .radio-card-desc': 'Still HIN Test CA, start announced separately. Real traffic tests possible after approval.',
+  '.step-panel[data-step="1"] .radio-card:nth-child(3) .radio-card-title': 'Production <span class="pill pill-sage" style="margin-left:.5rem">From 18.05.2026</span>',
+  '.step-panel[data-step="1"] .radio-card:nth-child(3) .radio-card-desc': 'HIN Production CA. Regular S/MIME certificates. Production mail traffic approved.',
+  '.step-panel[data-step="1"] .callout-amber .callout-title': 'In Alpha/Beta',
+  '.step-panel[data-step="1"] .callout-amber': '<div class="callout-title">In Alpha/Beta</div>Please use a <strong>test domain</strong>, not a production domain. CSR submission runs automatically against the HIN Test CA — production traffic in this phase is at your own risk.',
+  '.step-panel[data-step="1"] .step-footer .btn-outline': '← Back',
+  '.step-panel[data-step="1"] .step-footer .btn:last-child': 'Next: Platform →',
+
+  // Step 3
+  '.step-panel[data-step="2"] .eyebrow': 'Step 03',
+  '.step-panel[data-step="2"] h3': 'Where does the appliance run?',
+  '.step-panel[data-step="2"] > p': 'For each platform there is a VM image or installation guide. The target file is always the same — but the path there differs.',
+  '.step-panel[data-step="2"] .radio-card:nth-child(1) .radio-card-desc': 'VHD image from <code>images.vereign.io</code>, upload as Block Blob, create VM from managed disk image.',
+  '.step-panel[data-step="2"] .radio-card:nth-child(3) .radio-card-desc': 'qcow2 image imported via URL, VM with imported disk.',
+  '.step-panel[data-step="2"] .radio-card:nth-child(4) .radio-card-desc': 'Hyper-V image installation for test and lab environments.',
+  '.step-panel[data-step="2"] .radio-card:nth-child(5) .radio-card-title': 'Existing Linux Host (Docker)',
+  '.step-panel[data-step="2"] .radio-card:nth-child(5) .radio-card-desc': 'Clone the deployment repo, <code>install.sh</code> on RHEL 8/9/10, Alma, Rocky, Ubuntu 22/24 or Debian 11/12/13. Docker is automatically installed if needed.',
+  '.step-panel[data-step="2"] .radio-card:nth-child(6) .radio-card-desc': 'Helm chart for operators with existing K8s platform. Request documentation from HIN.',
+  '.step-panel[data-step="2"] .step-footer .btn-outline': '← Back',
+  '.step-panel[data-step="2"] .step-footer .btn:last-child': 'Next: Server →',
+
+  // Step 4
+  '.step-panel[data-step="3"] .eyebrow': 'Step 04',
+  '.step-panel[data-step="3"] h3': 'Server and Network',
+  '.step-panel[data-step="3"] .callout:first-of-type .callout-title': 'Prerequisite · Static Public IP',
+  '.step-panel[data-step="3"] .callout:first-of-type': '<div class="callout-title">Prerequisite · Static Public IP</div>The appliance <strong>requires a real, routable, static public IPv4 address</strong> — no NAT address, no dynamic. It is used both as the WireGuard tunnel address (for peer registration with HIN) and for the MXEngine callback. If the host is behind NAT, at least 1:1 NAT with fixed IP mapping must be configured.',
+  '.step-panel[data-step="3"] .field:nth-of-type(1) .field-hint': 'From this single IP, <code>WG_LOCAL_IP</code> and <code>MXENGINE_PUBLIC_ADDRESS</code> (default: <code>http://&lt;IP&gt;:8084</code>) are derived. If changed, the appliance must re-onboard.',
+  '.step-panel[data-step="3"] .card:nth-child(1) .eyebrow': 'Inbound (open in firewall)',
+  '.step-panel[data-step="3"] .card:nth-child(2) .eyebrow': 'Outbound (must be reachable)',
+  '.step-panel[data-step="3"] .callout-amber .callout-title': 'Not air-gapped operable',
+  '.step-panel[data-step="3"] .callout-amber': '<div class="callout-title">Not air-gapped operable</div>Unlike the legacy MGW, Stargate requires <strong>permanent internet access</strong> — for image pulls, WireGuard tunnel and CA communication. Environments with hard offline policies must be adapted (e.g. whitelisted proxy).',
+  '.step-panel[data-step="3"] h4': 'Server Resources (Minimum)',
+  '.step-panel[data-step="3"] .step-footer .btn-outline': '← Back',
+  '.step-panel[data-step="3"] .step-footer .btn:last-child': 'Next: Domains →',
+
+  // Step 5
+  '.step-panel[data-step="4"] .eyebrow': 'Step 05',
+  '.step-panel[data-step="4"] h3': 'Mail Domains',
+  '.step-panel[data-step="4"] > p': 'These domains are relayed by the appliance. For each domain, MX and SPF records are automatically resolved in DNS.',
+  '.step-panel[data-step="4"] .field:nth-child(3) .field-hint': 'One or more domains — separate multiple with commas, <strong>no spaces</strong>. For each, both an MX record (for routing) and an SPF record (for allowed senders) must exist in DNS.',
+  '.step-panel[data-step="4"] .field:nth-child(4) .field-hint': 'Used for the certificate and as hostname in the SMTP banner. If empty, <code>mail.&lt;first-domain&gt;</code> is set automatically.',
+  '.step-panel[data-step="4"] .callout-sage .callout-title': 'New vs. Legacy MGW',
+  '.step-panel[data-step="4"] .callout-sage': '<div class="callout-title">New vs. Legacy MGW</div>In the old MGW, the target was configured per domain manually. In Stargate, Postfix does an MX lookup per domain on startup and delivers to the <em>second</em> MX entry (the first = Stargate itself is filtered). You now control routing in DNS — no longer in the appliance config. Details in the next step.',
+  '.step-panel[data-step="4"] .step-footer .btn-outline': '← Back',
+  '.step-panel[data-step="4"] .step-footer .btn:last-child': 'Next: Mail Server →',
+
+  // Step 6
+  '.step-panel[data-step="5"] .eyebrow': 'Step 06',
+  '.step-panel[data-step="5"] h3': 'Mail Server Type and Routing',
+  '.step-panel[data-step="5"] .field:first-of-type > label': 'Which mail system is behind Stargate?',
+  '.step-panel[data-step="5"] .radio-card:nth-child(1) .radio-card-desc': 'Target MX is typically <code>&lt;domain&gt;.mail.protection.outlook.com</code>. An outbound and inbound connector plus a transport rule need to be configured.',
+  '.step-panel[data-step="5"] .radio-card:nth-child(3) .radio-card-title': 'Other mail system (Zimbra, Kopano, Postfix …)',
+  '.step-panel[data-step="5"] .radio-card:nth-child(3) .radio-card-desc': 'Works via standard MX routing. No special HIN documentation — integration like any relay.',
+  '.step-panel[data-step="5"] .step-footer .btn-outline': '← Back',
+  '.step-panel[data-step="5"] .step-footer .btn:last-child': 'Next: Certificate →',
+
+  // Step 6 routing
+  '.step-panel[data-step="5"] .field:nth-of-type(2) > label': 'Routing Strategy',
+  '.step-panel[data-step="5"] .radio-card:nth-child(4) .radio-card-title': 'MX-based <span class="pill pill-sage" style="margin-left:.5rem">Recommended</span>',
+  '.step-panel[data-step="5"] .radio-card:nth-child(4) .radio-card-desc': 'For each domain, two MX entries: Exchange with priority 10 (lower value = higher priority), Stargate with 20 (inbound gateway). Postfix filters itself and delivers to the Exchange MX.',
+  '.step-panel[data-step="5"] .radio-card:nth-child(5) .radio-card-desc': 'All domains go to exactly <strong>one</strong> target system. No per-domain routing. Useful when all mail goes to the same Exchange/Outlook endpoint.',
+  '.step-panel[data-step="5"] .radio-card:nth-child(6) .radio-card-title': 'DOMAIN_RELAY_MAP (Explicit per Domain)',
+  '.step-panel[data-step="5"] .radio-card:nth-child(6) .radio-card-desc': 'Each domain is explicitly assigned to a relay. For multi-domain setups where domains point to different Exchange instances (typical for service providers).',
+
+  // Step 7
+  '.step-panel[data-step="6"] .eyebrow': 'Step 07',
+  '.step-panel[data-step="6"] h3': 'S/MIME Certificate',
+  '.step-panel[data-step="6"] > p': 'The certificate for encrypted communication within the HIN community is issued by the HIN CA through the WireGuard tunnel. No Let\'s Encrypt, no external CA.',
+  '.step-panel[data-step="6"] .field:nth-child(3) .field-hint': 'Organization field in the certificate subject. If empty, the customer name from step 1 is used.',
+  '.step-panel[data-step="6"] .field:nth-child(4) .field-hint': 'CN field. Typically <code>&lt;Company&gt; Mail Signing</code>.',
+  '.step-panel[data-step="6"] .field:nth-child(5) .field-hint': 'Two-letter ISO code. Multiple possible with comma (e.g. <code>CH,DE</code>).',
+  '.step-panel[data-step="6"] .callout .callout-title': 'Important · Validity & Rotation',
+  '.step-panel[data-step="6"] .callout': '<div class="callout-title">Important · Validity & Rotation</div>Certificates are <strong>valid for 1 year</strong>. Rotation is currently manual via <code>./scripts/onboard.sh --regenerate-cert</code>. Plan ahead before expiry — set a monitoring alert for expiry &lt; 30 days.',
+  '.step-panel[data-step="6"] .step-footer .btn-outline': '← Back',
+  '.step-panel[data-step="6"] .step-footer .btn:last-child': 'Next: Advanced →',
+
+  // Step 8
+  '.step-panel[data-step="7"] .eyebrow': 'Step 08',
+  '.step-panel[data-step="7"] h3': 'Advanced Options',
+  '.step-panel[data-step="7"] > p': 'For standard setups, just skip — all fields have sensible defaults.',
+  '.step-panel[data-step="7"] .radio-card:nth-child(1) .radio-card-desc': 'Works through most firewalls. Recommended starting value.',
+  '.step-panel[data-step="7"] .radio-card:nth-child(2) .radio-card-desc': 'Only set if TCP tunneling causes problems. Some firewalls block long-lived TCP connections more aggressively.',
+  '.step-panel[data-step="7"] .field:nth-of-type(2) .field-hint': 'Only set if the system-native resolver causes problems (e.g. internal DNS servers with aggressive filtering).',
+  '.step-panel[data-step="7"] .field:nth-of-type(3) .field-hint': 'To <strong>disable</strong> central log shipping: leave explicitly empty and remove the Promtail service from Docker Compose. <em>Note: The public IP of the appliance must be whitelisted on HIN\'s Loki ingress.</em>',
+  '.step-panel[data-step="7"] .field:nth-of-type(4) .field-hint': 'Git repo with OPA/Rego policies for delivery decisions. Default is the official HIN repo. For private repos also set <code>POLICY_SYNC_REPO_USER</code>/<code>PASS</code>.',
+  '.step-panel[data-step="7"] .step-footer .btn-outline': '← Back',
+  '.step-panel[data-step="7"] .step-footer .btn:last-child': 'Next: Summary →',
+
+  // Step 9
+  '.step-panel[data-step="8"] .eyebrow': 'Step 09 · Done',
+  '.step-panel[data-step="8"] h3': 'Summary and Download',
+  '.step-panel[data-step="8"] > p': 'Your configuration is ready. Below you\'ll find the three artifacts: the <code>customer-config.sh</code>, a written deployment checklist and an email template for peer registration.',
+  '.step-panel[data-step="8"] .gen-section:nth-child(1) p': 'The generated file — copy to the deployment directory on the server and run with <code>./scripts/install.sh</code>.',
+  '.step-panel[data-step="8"] .gen-section:nth-child(2) h3': '📋 Deployment Checklist',
+  '.step-panel[data-step="8"] .gen-section:nth-child(2) p': 'Step-by-step guide for IT teams at the customer — coordinates DNS, firewall, mail and HIN requirements.',
+  '.step-panel[data-step="8"] .gen-section:nth-child(1) .btn:first-of-type': 'Download customer-config.sh',
+  '.step-panel[data-step="8"] .gen-section:nth-child(1) .btn-outline': 'Copy',
+  '.step-panel[data-step="8"] .gen-section:nth-child(2) .btn:first-of-type': 'Download Checklist.md',
+  '.step-panel[data-step="8"] .gen-section:nth-child(2) .btn-outline': 'Copy',
+  '.step-panel[data-step="8"] > .wrap > .gen-section:last-of-type h3': '📧 Email Template · Peer Registration at HIN',
+  '.step-panel[data-step="8"] > .wrap > .gen-section:last-of-type > p': 'The most important manual step after installation. Once <code>install.sh</code> has completed, your WireGuard public key is visible in the idagent logs. Insert it along with the other details into this template and send to HIN so your peer is registered on the HIN side.',
+  '.step-panel[data-step="8"] .callout-sage .callout-title': 'Next Steps',
+  '.step-panel[data-step="8"] .step-footer .btn-outline:first-child': '← Back',
+  '.step-panel[data-step="8"] .step-footer .btn-outline:last-child': 'Open Full Checklist →',
+
+  // ── ARCHITECTURE ──
+  '#section-architecture > .wrap > .eyebrow': 'How it all fits together technically',
+  '#section-architecture > .wrap > h2': 'Architecture',
+  '#section-architecture > .wrap > .lead': 'Stargate is a stack of four application services plus infrastructure. Mail passes through in three hops, the second contains the cryptographic work.',
+  '#section-architecture h3:nth-of-type(1)': 'Mail Flow · Inbound Mail',
+  '#section-architecture h3:nth-of-type(1) + p': 'From the external sender to the Exchange mailbox of the recipient. Every arrow is a real network hop, every block is a container.',
+
+  // Architecture SVG text
+  '#section-architecture .arch-svg text.label:nth-of-type(1)': 'External Mail Server',
+  '#section-architecture .arch-svg text.sub:nth-of-type(1)': 'Internet · Sender of the mail',
+  '#section-architecture .arch-svg text.label:nth-of-type(2)': 'Postfix Relay · stargate-postfix-relay',
+  '#section-architecture .arch-svg text.sub:nth-of-type(2)': 'Receives on port 25 · auto config from DNS (MX + SPF)',
+  '#section-architecture .arch-svg text.label:last-of-type': 'Destination Mail Server',
+
+  // Architecture sections
+  '#section-architecture h3:nth-of-type(2)': 'Services in the Stack',
+  '#section-architecture .eyebrow-accent:not(:first-child)': 'Application Services',
+  '#section-architecture .eyebrow-sage': 'Infrastructure',
+  '#section-architecture h3:nth-of-type(3)': 'WireGuard · Appliance-to-Appliance',
+
+  // ── DECISIONS ──
+  '#section-decisions > .wrap > .eyebrow': 'The Real Forks',
+  '#section-decisions > .wrap > h2': 'Decisions',
+  '#section-decisions > .wrap > .lead': 'Seven points where you really have to decide — with honest trade-offs instead of "best practice" slogans.',
+
+  // ── FAQ ──
+  '#section-faq > .wrap > .eyebrow': 'All Questions from the Rollout Meetings',
+  '#section-faq > .wrap > .lead': 'Everything that has been asked so far — honestly answered. Where the answer is still open, it says so. Grouped by topic.',
+
+  // FAQ nav
+  '#section-faq .faq-nav .eyebrow': 'Topics',
+  '#section-faq .faq-nav a[href="#faq-arch"]': 'Architecture & Scaling',
+  '#section-faq .faq-nav a[href="#faq-sec"]': 'Security & Compliance',
+  '#section-faq .faq-nav a[href="#faq-cert"]': 'Certificates & CA',
+  '#section-faq .faq-nav a[href="#faq-mail"]': 'Mail Routing & SMTP',
+  '#section-faq .faq-nav a[href="#faq-net"]': 'Network & Firewall',
+  '#section-faq .faq-nav a[href="#faq-ops"]': 'Operations & Maintenance',
+  '#section-faq .faq-nav a[href="#faq-migr"]': 'Migration from Legacy MGW',
+  '#section-faq .faq-nav a[href="#faq-sp"]': 'Service Provider Questions',
+  '#section-faq .faq-nav a[href="#faq-open"]': 'Open Questions to HIN',
+
+  // FAQ section headers
+  '#faq-arch': 'Architecture & Scaling',
+  '#faq-sec': 'Security & Compliance',
+  '#faq-cert': 'Certificates & CA',
+  '#faq-mail': 'Mail Routing & SMTP',
+  '#faq-net': 'Network & Firewall',
+  '#faq-ops': 'Operations & Maintenance',
+  '#faq-migr': 'Migration from Legacy MGW',
+  '#faq-sp': 'Service Provider Questions',
+  '#faq-open': 'Open Questions to HIN',
+
+  // ── TROUBLESHOOT ──
+  '#section-troubleshoot > .wrap > .eyebrow': 'Diagnosis & Resolution',
+  '#section-troubleshoot > .wrap > .lead': 'The most common errors during rollout — with structured diagnosis. The top error (certificate not issued) was hit by almost every customer in the alpha phase.',
+  '#section-troubleshoot h3:nth-of-type(2)': 'General Health Check Commands',
+  '#section-troubleshoot h3:nth-of-type(2) + p': 'Always run this baseline diagnosis before escalating:',
+  '#section-troubleshoot .card:nth-of-type(1) h4': 'Everything at a Glance',
+  '#section-troubleshoot .card:nth-of-type(2) h4': 'Container Status',
+  '#section-troubleshoot .card:nth-of-type(3) h4': 'Liveness Endpoints',
+  '#section-troubleshoot .card:nth-of-type(4) h4': 'WireGuard Status',
+  '#section-troubleshoot .card:nth-of-type(5) h4': 'Mail Queue',
+  '#section-troubleshoot .callout-amber .callout-title': 'When Nothing Helps · Reset Options',
+
+  // ── CHECKLIST ──
+  '#section-checklist > .wrap > .eyebrow': 'Print and Check Off',
+  '#section-checklist > .wrap > h2': 'Pre-Deployment Checklist',
+  '#section-checklist > .wrap > .lead': 'The complete list of all steps and dependencies — for coordinating between network, DNS, mail and security teams at the customer site.',
+  '#section-checklist .btn-outline:nth-of-type(1)': 'Print · PDF Export',
+  '#section-checklist .btn-outline:nth-of-type(2)': '→ Personalized Version in Configurator',
+
+  // Checklist sections
+  '#section-checklist .checklist-section:nth-child(1) h3': '1 · Preparation · Infrastructure Team',
+  '#section-checklist .checklist-section:nth-child(1) .section-desc': 'Before anything gets installed.',
+  '#section-checklist .checklist-section:nth-child(2) h3': '2 · Firewall Rules · Network Team',
+  '#section-checklist .checklist-section:nth-child(2) .section-desc': 'A common stumbling block, especially port 19818 in both directions.',
+  '#section-checklist .checklist-section:nth-child(3) h3': '3 · DNS Preparation · DNS Team',
+  '#section-checklist .checklist-section:nth-child(3) .section-desc': 'DNS records must be in place <strong>before</strong> go-live, due to TTL propagation.',
+  '#section-checklist .checklist-section:nth-child(4) h3': '4 · Installation',
+  '#section-checklist .checklist-section:nth-child(4) .section-desc': 'The actual 30 minutes.',
+  '#section-checklist .checklist-section:nth-child(5) h3': '5 · Peer Registration at HIN · Critical Step',
+  '#section-checklist .checklist-section:nth-child(5) .section-desc': 'Without this step, no certificate. Applies to every rollout.',
+  '#section-checklist .checklist-section:nth-child(6) h3': '6 · Exchange Integration · Mail Team',
+  '#section-checklist .checklist-section:nth-child(6) .section-desc': 'Setup in Exchange system (M365 or on-prem).',
+  '#section-checklist .checklist-section:nth-child(7) h3': '7 · Functional Tests',
+  '#section-checklist .checklist-section:nth-child(7) .section-desc': 'Before the rollout goes to production, run test mails.',
+  '#section-checklist .checklist-section:nth-child(8) h3': '8 · Operations Handover',
+  '#section-checklist .checklist-section:nth-child(8) .section-desc': 'Before handing the system over to regular operations.',
+
+  // Resources
+  '#section-checklist .card:last-of-type h4': 'Resources & Links',
+};
+
+// FAQ questions & answers — stored separately for clarity
+const FAQ_EN = {
+  // Architektur & Skalierung
+  'Kann ich mehrere Stargate-Instanzen clustern für Hochverfügbarkeit?': 'Can I cluster multiple Stargate instances for high availability?',
+  'Kann ein einziger Appliance mehrere Kunden bedienen (Multi-Tenant)?': 'Can a single appliance serve multiple customers (multi-tenant)?',
+  'Kann ich Stargate in Kubernetes betreiben?': 'Can I run Stargate on Kubernetes?',
+  'Welche Cloud-Plattformen werden unterstützt?': 'Which cloud platforms are supported?',
+  'Warum ist S3-Storage drin? Kann ich den an externes S3 (AWS, Azure Blob) anbinden?': 'Why is S3 storage included? Can I connect it to external S3 (AWS, Azure Blob)?',
+  'Wie performt der Appliance? Welche Last hält er aus?': 'How does the appliance perform? What load can it handle?',
+  // Security
+  'Welche Verschlüsselung wird verwendet?': 'What encryption is used?',
+  'Kann der Appliance air-gapped (ohne Internet) laufen?': 'Can the appliance run air-gapped (without internet)?',
+  'Wie wird der S/MIME-Private-Key geschützt?': 'How is the S/MIME private key protected?',
+  'Telemetrie — werden Daten an HIN oder Dritte geschickt?': 'Telemetry — is data sent to HIN or third parties?',
+  'Wird der Appliance penetriert getestet?': 'Is the appliance penetration tested?',
+  'Wurde die modifizierte WireGuard-Implementierung (Application-Layer) auditiert?': 'Has the modified WireGuard implementation (application layer) been audited?',
+  'Wo werden die Daten verarbeitet?': 'Where is data processed?',
+  'Zertifizierung · ISO 27001?': 'Certification · ISO 27001?',
+  // Certificates
+  'Werden externe CAs wie Let\'s Encrypt akzeptiert?': 'Are external CAs like Let\'s Encrypt accepted?',
+  'Wie lange sind die Zertifikate gültig?': 'How long are the certificates valid?',
+  'Was passiert, wenn das Zertifikat abgelaufen ist?': 'What happens when the certificate expires?',
+  'Kann ich Zertifikate im Voraus erneuern?': 'Can I renew certificates in advance?',
+  // Mail
+  'Wie unterscheidet sich das Routing vom alten MGW?': 'How does routing differ from the old MGW?',
+  'Unterstützt der Appliance Port 587 mit SMTP-Auth (SASL)?': 'Does the appliance support port 587 with SMTP auth (SASL)?',
+  'IPv6-Support?': 'IPv6 support?',
+  'Greylisting-Fehler (450 4.7.1) — was tun?': 'Greylisting error (450 4.7.1) — what to do?',
+  'Microsoft blockt unsere IP (S3140-Fehler)?': 'Microsoft blocks our IP (S3140 error)?',
+  'Wie funktioniert die ausgehende Mail-Routing-Entscheidung?': 'How does the outbound mail routing decision work?',
+  'Ändert sich etwas an HIN Mail Global?': 'Does anything change with HIN Mail Global?',
+  // Network
+  'Muss ich wirklich eine statische öffentliche IP haben?': 'Do I really need a static public IP?',
+  'NAT ist bei uns Pflicht — geht das?': 'NAT is mandatory for us — does that work?',
+  'Welche Outbound-Destinationen muss die Firewall zulassen?': 'Which outbound destinations must the firewall allow?',
+  // Operations
+  'Wie funktioniert das Backup?': 'How does backup work?',
+  'Wie restore ich auf einer neuen Maschine?': 'How do I restore on a new machine?',
+  'Vault ist nach Restart sealed — wie entsiegeln?': 'Vault is sealed after restart — how to unseal?',
+  'Wie funktionieren Service-Updates?': 'How do service updates work?',
+  'Wie prüfe ich, ob alles gesund läuft?': 'How do I check if everything is running healthy?',
+  'Wo sind die Logs zu finden?': 'Where can I find the logs?',
+  // Migration
+  'Wann ist das genaue Timing?': 'What is the exact timing?',
+  'Welche Daten werden vom alten MGW migriert?': 'What data is migrated from the old MGW?',
+  'Kann ich alten und neuen MGW parallel betreiben während der Migration?': 'Can I run old and new MGW in parallel during migration?',
+  'Referenzkunden mit produktivem Stargate?': 'Reference customers with productive Stargate?',
+  // Service Provider
+  'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': 'We are a service provider with 30+ customers on a legacy MGW. What now?',
+  'Gibt es Sonder-Lizenzmodelle für SPs?': 'Are there special licensing models for SPs?',
+  // Open
+  'Datenverarbeitung — gibt es Sub-Verarbeiter ausserhalb CH/EU?': 'Data processing — are there sub-processors outside CH/EU?',
+  'Vulnerability-Management — SLAs für Fixes kritischer CVEs?': 'Vulnerability management — SLAs for fixing critical CVEs?',
+  'Incident-Management — Prozess bei Security-Vorfällen?': 'Incident management — process for security incidents?',
+  'SBOM — Software Bill of Materials verfügbar?': 'SBOM — Software Bill of Materials available?',
+  'Verantwortungs-Modell — Zuständigkeit HIN vs. Betreiber vs. Kunde?': 'Responsibility model — HIN vs. operator vs. customer?',
+  'Business-Continuity auf HIN-Seite — BCM-Prozesse?': 'Business continuity on HIN side — BCM processes?',
+  'Vertrags-Anpassungen durch Stargate?': 'Contract adjustments due to Stargate?',
+  'M365-Exchange-Online-Connector-Dokumentation': 'M365 Exchange Online connector documentation',
+};
+
+// FAQ answer body translations (keyed by DE summary text)
+const FAQ_BODY_EN = {
+  'Kann ich mehrere Stargate-Instanzen clustern für Hochverfügbarkeit?': '<p>Short answer: <strong>No — there is no native cluster.</strong> Each Stargate instance has its own database, its own Vault, its own WireGuard keypair, and its own S/MIME certificate. Two parallel instances share no state.</p><p>What <em>pragmatically</em> works: Two independent appliances with different MX priorities (primary + backup). Both would need to be registered separately as peers at HIN. Mail arriving during the primary\'s downtime would be delivered to the backup MX. <strong>This is not officially tested</strong> and should only be done in consultation with HIN.</p>',
+  'Kann ein einziger Appliance mehrere Kunden bedienen (Multi-Tenant)?': '<p><strong>Currently no.</strong> The architecture is 1:1 — one WireGuard keypair, one S/MIME certificate, one customer identity per appliance.</p><p>This is a <strong>known problem for service providers</strong>: A provider with 30 customers on an old MGW (3 CPU, 6 GB RAM) would need 30 separate appliances under the current architecture — approx. 120 CPUs, 240 GB RAM, 30 public IPs. HIN is evaluating this scenario. Customers with this use case should actively inquire.</p>',
+  'Kann ich Stargate in Kubernetes betreiben?': '<p>Yes, Helm charts are available. The documentation (<code>helm-deploy.md</code>) is currently sparse — request Kubernetes deployment docs directly from HIN.</p><p><strong>Note:</strong> The appliance requires a static public IP for WireGuard. In managed K8s (AKS, EKS, GKE) this is often tricky — host networking or LoadBalancer with static IP needed. For cluster-internal deployments, also support UDP for WireGuard.</p>',
+  'Welche Cloud-Plattformen werden unterstützt?': '<p>Ready-made VM images exist for <strong>Azure, VMware/ESXi, Proxmox, Hyper-V</strong> — all based on Alma Linux. AWS and GCP don\'t have pre-built images but work fine with the Docker installation on a regular Linux VM.</p><p>Supported Linux distributions for Docker install: RHEL 8/9/10, Alma Linux, Rocky Linux, CentOS Stream, Ubuntu 22/24, Debian 11/12/13.</p>',
+  'Warum ist S3-Storage drin? Kann ich den an externes S3 (AWS, Azure Blob) anbinden?': '<p>MXEngine stores message bodies and attachments in object storage. Internally, <strong>MinIO</strong> runs in the same Docker stack — so not centrally, but locally per appliance.</p><p>Currently the MinIO target is <strong>not replaceable via config keys</strong>. Technically MinIO is fully S3-API compatible, but the services point to the local instance. Anyone wanting external S3 would need to modify docker-compose.yml accordingly — but this is not officially supported.</p>',
+  'Wie performt der Appliance? Welche Last hält er aus?': '<p>The 4-CPU/8-GB reference is the documented minimum. HIN does not currently publish concrete benchmark numbers (mails/second). <em>Pragmatic guideline</em>: For a mid-sized clinic with &lt; 10,000 mails/day, the reference sizing is more than sufficient. For higher volume, scale vertically (more CPU/RAM) — horizontal scaling is not available.</p>',
+  'Welche Verschlüsselung wird verwendet?': '<p><strong>RSA</strong> for the S/MIME mail content. <strong>ChaCha20-Poly1305</strong> for the WireGuard tunnel (standard WireGuard cipher).</p>',
+  'Kann der Appliance air-gapped (ohne Internet) laufen?': '<p><strong>No.</strong> This is an important difference from the legacy MGW, which could. The new appliance needs internet access to:</p><ul><li>Pull Docker images from <code>registry.vereign.io</code></li><li>Establish the WireGuard tunnel to the HIN CA</li><li>Optionally send logs to Loki</li></ul><p>Customers with hard offline policies must adapt their architecture — e.g. with a whitelisted outbound proxy.</p>',
+  'Wie wird der S/MIME-Private-Key geschützt?': '<p>Stored in <strong>HashiCorp Vault</strong> (KV-v2) on the appliance itself. Vault is automatically sealed on every container restart — <code>start.sh</code> unseals it with the local unseal keys from <code>secrets/vault-keys.json</code>. The key never leaves the appliance in plaintext.</p><p><strong>Critical:</strong> <code>secrets/vault-keys.json</code> must be backed up externally — if this file is lost, the Vault is sealed forever.</p>',
+  'Telemetrie — werden Daten an HIN oder Dritte geschickt?': '<p>No — except what you explicitly configure:</p><ul><li><strong>Logs to Loki</strong> (if <code>LOKI_URL</code> is set, active by default) — can be disabled</li><li><strong>WireGuard traffic to HIN CA</strong> — this is the core purpose, not "telemetry" in the classic sense</li><li>No separate anonymous telemetry, no usage statistics</li></ul>',
+  'Wird der Appliance penetriert getestet?': '<p>Yes, by HIN in the second half of April 2026 — before the production rollout.</p>',
+  'Wurde die modifizierte WireGuard-Implementierung (Application-Layer) auditiert?': '<p><span class="pill pill-amber">Open Question</span> Stargate uses a WireGuard variant that adds TCP — this is not the native protocol. Whether this modification has been formally audited is not publicly documented. <strong>For customers with high security requirements: inquire directly with HIN.</strong></p>',
+  'Wo werden die Daten verarbeitet?': '<p>Exclusively on the customer-owned appliance. No upload of mail content anywhere. <strong>Only exception:</strong> Logs to Loki (if enabled) — these contain no mail bodies, only service logs. Loki is operated by HIN/Vereign; the exact jurisdiction of the Loki infrastructure should be asked at HIN.</p>',
+  'Zertifizierung · ISO 27001?': '<p>HIN holds ISO 27001. For Stargate specifically (as a product), there is currently no separate certification — the appliance runs at the customer, the ISO 27001 certification refers to HIN itself as an organization.</p>',
+  'Werden externe CAs wie Let\'s Encrypt akzeptiert?': '<p>No, and not needed either. S/MIME certificates are issued <strong>exclusively by the HIN CA</strong> — via the WireGuard tunnel. These certificates serve only for communication within the HIN community.</p><p>For SMTP-TLS (transport between external mail servers), Stargate uses a self-signed certificate with opportunistic TLS (<code>smtpd_tls_security_level = may</code>). Configure Exchange connectors accordingly (<em>"Any digital certificate, including self-signed"</em>).</p>',
+  'Wie lange sind die Zertifikate gültig?': '<p>1 year from issuance. Rotation is currently manual via <code>./scripts/onboard.sh --regenerate-cert</code>. <strong>Recommendation:</strong> Set a monitoring alert for "expiry &lt; 30 days", plan with 4 weeks buffer.</p>',
+  'Was passiert, wenn das Zertifikat abgelaufen ist?': '<p>S/MIME signing and decryption fails. Regular mail transport to non-HIN recipients continues, but HIN-internal communication is interrupted until a new certificate is issued.</p><p>Regeneration normally takes a few seconds, as long as the WireGuard tunnel is up: <code>./scripts/onboard.sh --regenerate-cert</code>.</p>',
+  'Kann ich Zertifikate im Voraus erneuern?': '<p>Yes, at any time. <code>onboard.sh --regenerate-cert</code> creates a new CSR, sends it through the tunnel and replaces the existing certificate. No downtime, as long as the tunnel is up.</p>',
+  'Wie unterscheidet sich das Routing vom alten MGW?': '<p><strong>The most important change:</strong> In the old MGW, the target was configured per domain <em>in the appliance config</em>. In the new Stargate, <strong>DNS</strong> handles this: Postfix does an MX lookup per domain on startup, filters itself out, and delivers to the second MX entry.</p><p><strong>Practical consequence:</strong> When you add a new domain or change a target server, the fix is in DNS — not in the appliance config. After a DNS change, a <code>docker compose restart postfix-relay</code> is sufficient.</p>',
+  'Unterstützt der Appliance Port 587 mit SMTP-Auth (SASL)?': '<p><span class="pill pill-amber">Partial</span> <code>RELAYHOST</code> can point to port 587 (e.g. <code>[smtp.provider.com]:587</code>), but <strong>SMTP SASL authentication is not currently configured</strong> — <code>smtp_sasl_auth_enable</code> and related Postfix options are missing from the default config.</p><p>When relevant: If your ISP blocks outbound port 25 (common with private connections and some cloud providers) and you need to send via an authenticated SMTP service like SendGrid, Office365 SMTP Auth or Gmail Relay. <strong>Current status: under evaluation.</strong></p>',
+  'IPv6-Support?': '<p>Disabled by default (<code>POSTFIX_ENABLE_IPV6=false</code>). The main reason: Microsoft Exchange Online connector GUI does not support IPv6, leading to inconsistent configuration. IPv4-only remains the default. If IPv6 is strictly required, the flag can be changed.</p>',
+  'Greylisting-Fehler (450 4.7.1) — was tun?': '<p>This is <strong>normal</strong>. The destination server temporarily rejects the first delivery. Postfix automatically retries after ~5 minutes. No action needed.</p><p>Check queue: <code>docker exec stargate-postfix-relay mailq</code>.</p>',
+  'Microsoft blockt unsere IP (S3140-Fehler)?': '<p>The appliance\'s public IP has poor reputation with Microsoft. Request delisting at <strong>https://sender.office.com</strong>. Takes 24–48 hours. For frequent blocks, discuss IP warming strategy with HIN.</p>',
+  'Wie funktioniert die ausgehende Mail-Routing-Entscheidung?': '<p>Outbound mails are decided based on the HIN mail domain list (<code>app.hin.ch/mgw/maildomains</code>, automatically updated every 6 hours). Mails to HIN recipients are S/MIME signed and encrypted; mails to external recipients go through without S/MIME. <strong>No change from legacy MGW behavior.</strong></p>',
+  'Ändert sich etwas an HIN Mail Global?': '<p>No — HIN Mail Global remains unchanged.</p>',
+  'Muss ich wirklich eine statische öffentliche IP haben?': '<p>Yes. The IP is used three ways:</p><ul><li>As the WireGuard tunnel address (it is also the peer identity)</li><li>As <code>MXENGINE_PUBLIC_ADDRESS</code> for seal callbacks</li><li>As target for incoming SMTP connections</li></ul><p>Changing the IP means: HIN must re-register the peer, and the certificate must be re-issued. <strong>Without a fixed IP → no operation.</strong></p>',
+  'NAT ist bei uns Pflicht — geht das?': '<p>Yes, but only <strong>1:1 NAT</strong> with fixed IP mapping. Classic PAT/SNAT does not work — incoming connections on port 25, 8084 and 19818 must be deterministically forwarded to the appliance. Technically: you need a dedicated public IP mapped to your internal appliance IP.</p>',
+  'Welche Outbound-Destinationen muss die Firewall zulassen?': '<p>See the Architecture section for the complete list. Key points:</p><ul><li><code>registry.vereign.io:443</code> (Docker images)</li><li><code>*.k8s.vereign-cdn.com:443</code> (Sealer &amp; CA)</li><li><code>loki.infra.vereign-cdn.com:443</code> (Logs)</li><li><code>vereign-issuer.vrgnservices.eu:443</code></li><li><code>vereign-verifier.vrgnservices.eu:4433</code></li><li>Port 25 to all destination MX servers</li><li>DNS (Port 53)</li></ul>',
+  'Wie funktioniert das Backup?': '<p><code>./scripts/backup.sh</code> runs daily at 02:00 automatically (via cron, set up during install) and creates a tar.gz archive with:</p><ul><li>Full PostgreSQL dump (all 4 DBs)</li><li>Individual DB dumps (for partial restore)</li><li><code>vault-keys.json</code></li><li><code>customer-config.sh</code></li><li>All <code>.crt</code>, <code>.pem</code>, <code>.cer</code> files</li><li>Manifest JSON with metadata</li></ul><p>Retention: 7 days locally in <code>backups/</code>. External replication must be set up by you.</p>',
+  'Wie restore ich auf einer neuen Maschine?': '<p><code>./scripts/restore.sh backups/YYYYMMDD_HHMMSS.tar.gz</code> — works on a fresh machine. The script:</p><ol><li>Stops running services</li><li>Extracts and validates the backup</li><li>Installs Docker if needed</li><li>Restores the customer config</li><li>Starts infrastructure services</li><li>Restores the databases</li><li>Unseals Vault with saved keys</li><li>Starts application services</li></ol><p>Partial restore of a single DB is possible via <code>psql</code> import from the extracted archive.</p>',
+  'Vault ist nach Restart sealed — wie entsiegeln?': '<p>Simply run <code>./scripts/start.sh</code> — it automatically unseals with the local keys from <code>secrets/vault-keys.json</code>.</p>',
+  'Wie funktionieren Service-Updates?': '<p>Two ways:</p><ul><li><strong>Individual:</strong> Set version in <code>.env</code> (e.g. <code>MXENGINE_VERSION=v0.0.31</code>), then <code>docker compose pull mxengine &amp;&amp; docker compose up -d --force-recreate mxengine</code></li><li><strong>All:</strong> <code>docker compose pull &amp;&amp; docker compose up -d --force-recreate</code></li></ul><p>Rollback: Set version in <code>.env</code> to previous and <code>--force-recreate</code> again.</p><p>After updates, clean up old images: <code>docker image prune -f</code>.</p>',
+  'Wie prüfe ich, ob alles gesund läuft?': '<p><code>./scripts/health-check.sh</code> checks:</p><ul><li>All container statuses (running, healthy)</li><li>Liveness endpoints of the 4 application services</li><li>Vault seal status</li><li>PostgreSQL connectivity and all 4 DBs</li><li>MinIO health</li><li>WireGuard tunnel status and peer handshakes</li><li>Postfix (port 25, 10026, queue)</li><li>Prometheus endpoints</li><li>Disk and memory usage</li></ul><p>Exit 0 = all ok. Use <code>-v</code> for details.</p>',
+  'Wo sind die Logs zu finden?': '<p>Locally: <code>docker compose logs -f [service]</code>. Centrally (if enabled) in Grafana/Loki via labels like <code>{environment="stargate-acme"}</code> or <code>{service="mxengine"}</code>.</p><p>Quick checks:</p><pre style="margin-top:.5rem">docker logs stargate-mxengine --tail 10\ndocker logs stargate-idagent | grep -i handshake</pre>',
+  'Wann ist das genaue Timing?': '<ul><li>Testing phase: until end of April 2026</li><li>Production appliance (with incorporated feedback): May 2026</li><li>Rollout start with final documentation: <strong>May 18, 2026</strong></li><li>Penetration test: 2nd half of April 2026</li></ul>',
+  'Welche Daten werden vom alten MGW migriert?': '<p>Actually <strong>no user data</strong>. Stargate is stateless regarding mail history — mails are processed and forwarded, not permanently stored. What needs to be migrated is the <em>configuration</em>:</p><ul><li><strong>Domain list</strong> → <code>MAIL_DOMAINS</code></li><li><strong>Routing configuration</strong> → moved to DNS MX records (or <code>DOMAIN_RELAY_MAP</code>)</li><li><strong>SPF records</strong> → add appliance IP</li><li><strong>Exchange connectors</strong> → reconfigure to new appliance IP</li></ul>',
+  'Kann ich alten und neuen MGW parallel betreiben während der Migration?': '<p>Yes, conditionally. Methods:</p><ul><li><strong>Split per domain</strong>: New domains via Stargate, old ones still via legacy — separated via MX records.</li><li><strong>Split per recipient group</strong>: Transport rules in Exchange Online allow routing certain mails through Stargate as a test.</li></ul><p>Details on migration strategy to be clarified with HIN project management — depends on your own setup.</p>',
+  'Referenzkunden mit produktivem Stargate?': '<p>Currently <strong>none</strong> — no customer is in production with the new appliance. This is expected in the alpha phase. Production approval from May 18, 2026.</p>',
+  'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': '<p>Under the current architecture: <strong>30 separate Stargate appliances</strong>, one per customer. That\'s approx. 120 CPUs, 240 GB RAM and 30 public IPs compared to the one old MGW (3 CPU, 6 GB RAM).</p><p>This is a <strong>critical open point</strong>. HIN has been made aware of the problem, a multi-tenant or shared appliance model is being evaluated. <strong>Actively inquire at HIN</strong> and document the use case — multiple SPs are affected.</p>',
+  'Gibt es Sonder-Lizenzmodelle für SPs?': '<p><span class="pill pill-amber">Open Question</span> Currently not documented. Licensing/pricing structure will be communicated separately. When in doubt, inquire directly with HIN.</p>',
+  'Datenverarbeitung — gibt es Sub-Verarbeiter ausserhalb CH/EU?': '<p>Open. Request a concrete list of sub-processors and jurisdictions from HIN.</p>',
+  'Vulnerability-Management — SLAs für Fixes kritischer CVEs?': '<p>Open. Request customer notification process and time targets from HIN.</p>',
+  'Incident-Management — Prozess bei Security-Vorfällen?': '<p>Open. How quickly are customers informed? What information is provided?</p>',
+  'SBOM — Software Bill of Materials verfügbar?': '<p>Open. Request update frequency and format from HIN.</p>',
+  'Verantwortungs-Modell — Zuständigkeit HIN vs. Betreiber vs. Kunde?': '<p>Open. A clear RACI matrix is expected with the rollout.</p>',
+  'Business-Continuity auf HIN-Seite — BCM-Prozesse?': '<p>Open. How does the appliance behave during HIN CA outage? During Loki outage?</p>',
+  'Vertrags-Anpassungen durch Stargate?': '<p>Open. Licensing, pricing, migration costs will be communicated separately.</p>',
+  'M365-Exchange-Online-Connector-Dokumentation': '<p><span class="pill pill-sage">In Progress</span> A separate, dedicated integration guide for M365 customers is being prepared — will be included in the deployment repo. Currently covered in the Hub under Configurator/Checklist.</p>',
+};
+
+const FAQ_OPEN_INTRO_EN = 'These questions came up during the rollout and are not yet conclusively documented. Current knowledge base status — if a customer asks one of these, honestly say "open, being clarified" and escalate if needed.';
+
+// Troubleshoot tree EN translations
+const TT_TREE_EN = {
+  start: {
+    type: 'branch',
+    q: 'What are you stuck on?',
+    options: [
+      {label: 'S/MIME certificate not being issued', next: 'cert_issue'},
+      {label: 'Vault is sealed after restart', next: 'vault_sealed'},
+      {label: 'Containers won\'t start / image pull fails', next: 'image_pull'},
+      {label: 'Mail not being processed (stuck in queue)', next: 'mail_stuck'},
+      {label: 'WireGuard tunnel won\'t connect', next: 'wg_issue'},
+      {label: 'Microsoft blocks our IP', next: 'ms_block'},
+      {label: 'Mail loop / duplicate delivery', next: 'mail_loop'},
+      {label: 'DNS lookups failing', next: 'dns_fail'},
+    ]
+  },
+  cert_issue: {
+    type: 'branch',
+    q: 'Certificate not being issued · what do the logs show?',
+    hint: 'Check first with: <code>docker logs stargate-smimekeys-client | tail -50</code> and <code>docker logs stargate-idagent | tail -50</code>',
+    options: [
+      {label: '"idagent: context deadline exceeded"', next: 'cert_peer_missing'},
+      {label: '"onboard.sh: WireGuard tunnel may not be established"', next: 'cert_peer_missing'},
+      {label: 'No error message, but no certificate either', next: 'cert_run_onboard'},
+      {label: 'Different error — logs show nothing obvious', next: 'cert_escalate'},
+    ]
+  },
+  cert_peer_missing: {
+    type: 'answer',
+    title: 'Peer not registered at HIN · most common case',
+    body: `
+      <p>This is <strong>by far the most common error during rollout</strong>. Your WireGuard public key must be registered as a peer on the HIN side — this does not happen automatically.</p>
+      <h4 style="margin-top:1rem">Solution in 4 steps:</h4>
+      <ol>
+        <li>Read WG public key:
+          <pre>docker compose logs idagent | grep "public key"</pre>
+        </li>
+        <li>Send email to HIN with:
+          <ul>
+            <li>WireGuard public key (from step 1)</li>
+            <li><code>DEPLOYMENT_NAME</code> from your customer-config.sh</li>
+            <li><code>SERVER_STATIC_IP</code></li>
+            <li><code>WG_INTERFACE_PORT</code> if different from default 19818</li>
+          </ul>
+          <em>The configurator creates a ready-made email template.</em>
+        </li>
+        <li>Wait for confirmation from HIN.</li>
+        <li>Regenerate:
+          <pre>./scripts/onboard.sh --regenerate-cert</pre>
+        </li>
+      </ol>
+      <h4 style="margin-top:1rem">Verification:</h4>
+      <pre>docker compose restart idagent
+docker compose logs idagent 2>&1 | grep -i "handshake"</pre>
+      <p>If a handshake appears in the log, the tunnel is up. Another <code>onboard.sh --regenerate-cert</code> should now succeed.</p>
+      <h4 style="margin-top:1rem">Also check:</h4>
+      <ul>
+        <li>Firewall: <code>19818/TCP</code> (or UDP depending on <code>WG_TRANSPORT_MODE</code>) open in both directions</li>
+        <li><code>MAIL_HOSTNAME</code> no longer on template default (<code>mail.example.com</code>)</li>
+      </ul>
+    `
+  },
+  cert_run_onboard: {
+    type: 'answer',
+    title: 'Run onboard.sh manually',
+    body: `
+      <pre>./scripts/onboard.sh --regenerate-cert</pre>
+      <p>Sometimes the initial onboarding during <code>install.sh</code> fails silently. A manual re-run often fixes the issue — provided the WireGuard tunnel is up (check with <code>docker exec stargate-idagent wg show</code>).</p>
+    `
+  },
+  cert_escalate: {
+    type: 'answer',
+    title: 'Escalate to HIN',
+    body: `
+      <p>Collect these outputs and send them to HIN support:</p>
+      <pre>docker logs stargate-smimekeys-client 2>&1 | tail -100
+docker logs stargate-idagent 2>&1 | tail -100
+docker exec stargate-idagent wg show
+./scripts/health-check.sh -v</pre>
+    `
+  },
+  vault_sealed: {
+    type: 'answer',
+    title: 'Vault sealed — run start.sh',
+    body: `
+      <pre>./scripts/start.sh</pre>
+      <p>The script automatically unseals Vault using the local keys from <code>secrets/vault-keys.json</code>. If this file is missing, the Vault is permanently sealed — restore from backup.</p>
+    `
+  },
+  image_pull: {
+    type: 'answer',
+    title: 'Image pull fails — check network & registry',
+    body: `
+      <ul>
+        <li>Can the host reach the registry? <code>curl -I https://registry.vereign.io/v2/</code></li>
+        <li>DNS working? <code>host registry.vereign.io</code></li>
+        <li>Proxy configured? If yes, Docker needs the proxy env vars in <code>/etc/systemd/system/docker.service.d/http-proxy.conf</code></li>
+        <li>Disk full? <code>df -h</code> — Docker needs space for layers</li>
+        <li>Docker login correct? <code>docker login registry.vereign.io</code></li>
+      </ul>
+    `
+  },
+  mail_stuck: {
+    type: 'branch',
+    q: 'Mail stuck in queue — where exactly?',
+    options: [
+      {label: 'In Postfix queue (mailq shows entries)', next: 'mail_postfix_queue'},
+      {label: 'MXEngine does not process', next: 'mail_content_filter'},
+      {label: 'Processed but not delivered (reinjection)', next: 'mail_reinjection'},
+      {label: '450 4.7.1 Greylisting error', next: 'mail_greylisting'},
+    ]
+  },
+  mail_postfix_queue: {
+    type: 'answer',
+    title: 'Postfix queue diagnosis',
+    body: `
+      <pre>docker exec stargate-postfix-relay mailq
+docker exec stargate-postfix-relay postcat -q &lt;QUEUE_ID&gt;</pre>
+      <p>Common causes:</p>
+      <ul>
+        <li><strong>Destination unreachable:</strong> DNS/MX lookup fails → check DNS</li>
+        <li><strong>Rejected by destination:</strong> IP reputation, missing SPF → check bounce message</li>
+        <li><strong>content_filter not working:</strong> MXEngine down → check next</li>
+      </ul>
+    `
+  },
+  mail_content_filter: {
+    type: 'answer',
+    title: 'content_filter not set',
+    body: `
+      <pre>docker exec stargate-postfix-relay postconf content_filter</pre>
+      <p>Expected: <code>content_filter = smtp:[mxengine]:1587</code>. If empty or different:</p>
+      <pre>docker exec stargate-postfix-relay nc -zv mxengine 1587</pre>
+      <p>This tests whether MXEngine is reachable. On error: check MXEngine container (<code>docker logs stargate-mxengine</code>) and restart if needed.</p>
+    `
+  },
+  mail_reinjection: {
+    type: 'answer',
+    title: 'Check reinjection port 10026',
+    body: `
+      <ul>
+        <li><code>docker exec stargate-postfix-relay ss -tlnp | grep 10026</code> — is the listener there?</li>
+        <li>MXEngine config: <code>OUTBOUND_SMTP_HOST=postfix-relay</code>, <code>OUTBOUND_SMTP_PORT=10026</code></li>
+        <li><code>mynetworks</code> on port 10026 must include the Docker network (172.x.x.x/16)</li>
+      </ul>
+    `
+  },
+  mail_greylisting: {
+    type: 'answer',
+    title: 'Greylisting — just wait',
+    body: `
+      <p>This is <strong>normal behavior</strong>. The destination server temporarily rejects the first delivery attempt (anti-spam mechanism). Postfix retries automatically after about 5 minutes.</p>
+      <pre>docker exec stargate-postfix-relay mailq</pre>
+      <p>Shows the queue. If a mail is still there after 10+ minutes, flush manually:</p>
+      <pre>docker exec stargate-postfix-relay postqueue -f</pre>
+    `
+  },
+  wg_issue: {
+    type: 'branch',
+    q: 'WireGuard problem · where exactly?',
+    options: [
+      {label: 'No WireGuard interface after install', next: 'wg_no_iface'},
+      {label: 'Interface present but no handshake', next: 'wg_no_handshake'},
+      {label: 'Handshake sporadic / drops again', next: 'wg_flaky'},
+    ]
+  },
+  wg_no_iface: {
+    type: 'answer',
+    title: 'Check idagent',
+    body: `
+      <ul>
+        <li><code>docker logs stargate-idagent | tail -50</code> — error messages?</li>
+        <li><code>WG_LOCAL_IP</code> in <code>.env</code> correctly set? (auto-derived from <code>SERVER_STATIC_IP</code>)</li>
+        <li><code>cap_add: [NET_ADMIN]</code> is set in docker-compose.yml? (included by default)</li>
+      </ul>
+    `
+  },
+  wg_no_handshake: {
+    type: 'answer',
+    title: 'Peer unreachable · firewall or wrong key',
+    body: `
+      <ul>
+        <li>Remote endpoint reachable? <code>nc -zv 5.102.144.182 19818</code></li>
+        <li>Firewall allows TCP+UDP 19818 in <strong>both directions</strong>?</li>
+        <li>Public keys match on both sides?</li>
+        <li>If TCP doesn't work, set <code>WG_TRANSPORT_MODE="udp"</code> in customer-config.sh and restart idagent</li>
+        <li>Most common cause: Peer not registered at HIN → back to certificate error</li>
+      </ul>
+    `
+  },
+  wg_flaky: {
+    type: 'answer',
+    title: 'Connection unstable',
+    body: `
+      <ul>
+        <li>Stateful firewall with short TCP timeout? → try <code>WG_TRANSPORT_MODE="udp"</code></li>
+        <li>MTU issues? Usually automatic in Linux kernel, but can cause problems with MPLS/VPN paths</li>
+        <li>Contact HIN support with <code>docker exec stargate-idagent wg show</code> output</li>
+      </ul>
+    `
+  },
+  ms_block: {
+    type: 'answer',
+    title: 'Microsoft block · S3140 error',
+    body: `
+      <p>Your public IP has poor reputation with Microsoft Exchange Online. This happens especially with freshly provisioned cloud IPs or IPs from ranges with spam history.</p>
+      <h4 style="margin-top:1rem">Solution:</h4>
+      <ol>
+        <li>Request delisting: <strong>https://sender.office.com</strong></li>
+        <li>Specify IP owner and purpose (legitimate mail relay for healthcare organization)</li>
+        <li>Wait · 24–48 hours processing time</li>
+      </ol>
+      <h4 style="margin-top:1rem">Prevention:</h4>
+      <ul>
+        <li>Set reverse DNS (PTR) for the appliance IP, pointing to <code>MAIL_HOSTNAME</code></li>
+        <li>Configure DKIM and SPF properly (SPF entry for appliance IP is mandatory)</li>
+        <li>For sensitive customers: discuss IP warming with HIN</li>
+      </ul>
+    `
+  },
+  mail_loop: {
+    type: 'answer',
+    title: 'Mail loop · transport rule exception missing',
+    body: `
+      <p>Typical cause: The Exchange transport rule sends all outbound mail to Stargate — <strong>including mail that Stargate just sent back</strong>. Endless loop.</p>
+      <h4 style="margin-top:1rem">Fix:</h4>
+      <p>In Exchange Admin Center → Mail flow → Rules → open your Stargate rule. Under <em>Except if</em> check:</p>
+      <ul>
+        <li><strong>The sender IP address is in one of these ranges</strong> → your Stargate <code>SERVER_STATIC_IP</code> must be listed here</li>
+      </ul>
+      <p>Without this exception, the loop occurs deterministically — every first rollout customer makes this mistake at least once.</p>
+    `
+  },
+  dns_fail: {
+    type: 'answer',
+    title: 'Check DNS configuration',
+    body: `
+      <ul>
+        <li>System resolver works? On host: <code>host mxengine-dev.k8s.vereign-cdn.com</code></li>
+        <li>If yes but not in container: check Docker DNS config. Set a specific server with <code>DNS_SERVER=8.8.8.8</code> (or your internal DNS) in customer-config.sh.</li>
+        <li>MX records for your domains resolved? <code>host -t mx &lt;domain&gt;</code></li>
+        <li>Workaround for DNS issues: set <code>RELAYHOST=[smtp.example.com]</code> and <code>POSTFIX_MYNETWORKS=10.0.0.0/8 172.16.0.0/12 192.168.0.0/16</code> — skips DNS lookups entirely.</li>
+      </ul>
+    `
+  }
+};
+
+// ── Apply translations to static HTML ──
+function applyI18n(lang) {
+  if (lang === 'en') {
+    // Save DE originals on first switch, then apply EN
+    Object.keys(I18N).forEach(sel => {
+      const els = document.querySelectorAll(sel);
+      els.forEach((el, i) => {
+        const key = sel + (i > 0 ? ':' + i : '');
+        if (!deCache[key]) deCache[key] = el.innerHTML;
+        el.innerHTML = I18N[sel];
+      });
+    });
+
+    // Translate FAQ questions AND answer bodies
+    document.querySelectorAll('details.qa').forEach(detail => {
+      const sum = detail.querySelector('summary');
+      const body = detail.querySelector('.qa-body');
+      const deText = sum?.childNodes[0]?.textContent?.trim();
+      if (deText && FAQ_EN[deText]) {
+        if (!deCache['faq:' + deText]) deCache['faq:' + deText] = deText;
+        sum.childNodes[0].textContent = FAQ_EN[deText];
+      }
+      if (deText && FAQ_BODY_EN[deText] && body) {
+        if (!deCache['faqbody:' + deText]) deCache['faqbody:' + deText] = body.innerHTML;
+        body.innerHTML = FAQ_BODY_EN[deText];
+      }
+    });
+
+    // Open questions intro paragraph
+    const openIntro = document.querySelector('#faq-open + p');
+    if (openIntro) {
+      if (!deCache['faq-open-intro']) deCache['faq-open-intro'] = openIntro.textContent;
+      openIntro.textContent = FAQ_OPEN_INTRO_EN;
+    }
+
+    // Re-render troubleshoot tree in EN
+    ttHistory = [];
+    renderTT('start');
+
+  } else {
+    // Restore DE originals
+    Object.keys(I18N).forEach(sel => {
+      const els = document.querySelectorAll(sel);
+      els.forEach((el, i) => {
+        const key = sel + (i > 0 ? ':' + i : '');
+        if (deCache[key]) el.innerHTML = deCache[key];
+      });
+    });
+
+    // Restore FAQ questions AND bodies
+    document.querySelectorAll('details.qa').forEach(detail => {
+      const sum = detail.querySelector('summary');
+      const body = detail.querySelector('.qa-body');
+      const enText = sum?.childNodes[0]?.textContent?.trim();
+      const deText = Object.keys(FAQ_EN).find(k => FAQ_EN[k] === enText);
+      if (deText) {
+        sum.childNodes[0].textContent = deText;
+        if (deCache['faqbody:' + deText] && body) {
+          body.innerHTML = deCache['faqbody:' + deText];
+        }
+      }
+    });
+
+    // Restore open questions intro
+    const openIntro = document.querySelector('#faq-open + p');
+    if (openIntro && deCache['faq-open-intro']) {
+      openIntro.textContent = deCache['faq-open-intro'];
+    }
+
+    // Re-render troubleshoot tree in DE
+    ttHistory = [];
+    renderTT('start');
+  }
+}
+
+// Override renderTT to be language-aware
+const _origRenderTT = renderTT;
+renderTT = function(nodeId) {
+  const tree = (currentLang === 'en') ? TT_TREE_EN : TT_TREE;
+  const container = document.getElementById('ttContainer');
+  if (!container) return;
+  const node = tree[nodeId];
+  if (!node) return;
+
+  ttHistory.push(nodeId);
+  let html = '';
+
+  const fromStart = currentLang === 'en' ? '↻ Start over' : '↻ Von vorne';
+  const pathLabel = currentLang === 'en' ? 'Path' : 'Pfad';
+  const stepLabel = currentLang === 'en' ? 'step' : 'Schritt';
+  const stepsLabel = currentLang === 'en' ? 'steps' : 'Schritte';
+  const diagLabel = currentLang === 'en' ? 'Diagnosis' : 'Diagnose';
+  const newDiag = currentLang === 'en' ? '↻ Start New Diagnosis' : '↻ Neue Diagnose starten';
+
+  if (ttHistory.length > 1) {
+    html += `<div style="margin-bottom:1.5rem;font-size:.82rem;color:var(--muted)">
+      <a href="#" onclick="resetTT();return false" style="text-decoration:none;color:var(--accent)">${fromStart}</a>
+      <span style="margin:0 .5rem">·</span>
+      ${pathLabel}: ${ttHistory.length} ${ttHistory.length > 1 ? stepsLabel : stepLabel}
+    </div>`;
+  }
+
+  if (node.type === 'branch') {
+    html += `<div class="tt-node">
+      <div class="tt-q">${node.q}</div>
+      ${node.hint ? `<div style="font-size:.85rem;color:var(--ink-soft);margin-bottom:.5rem">${node.hint}</div>` : ''}
+      <div class="tt-options">
+        ${node.options.map(o => `<button class="tt-option" onclick="renderTT('${o.next}')">${o.label}</button>`).join('')}
+      </div>
+    </div>`;
+  } else if (node.type === 'answer') {
+    html += `<div class="tt-answer">
+      <div class="eyebrow eyebrow-sage" style="margin-bottom:.5rem">${diagLabel}</div>
+      <h3 style="margin-bottom:.8rem">${node.title}</h3>
+      ${node.body}
+    </div>
+    <div style="margin-top:1.5rem">
+      <button class="btn btn-sm btn-outline" onclick="resetTT()">${newDiag}</button>
+    </div>`;
+  }
+
+  container.innerHTML = html;
+};
+
+// Override toast and download for EN
+const _origDownload = download;
+download = function(filename, content) {
+  const blob = new Blob([content], {type: 'text/plain'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  const msg = currentLang === 'en' ? 'File downloaded: ' : 'Datei heruntergeladen: ';
+  toast(msg + filename);
+};
+
+const _origCopy = copy;
+copy = function(text) {
+  const msg = currentLang === 'en' ? 'Copied to clipboard' : 'In Zwischenablage kopiert';
+  navigator.clipboard.writeText(text).then(() => toast(msg));
+};
+
+// Override generateEmail for EN
+const _origGenerateEmail = generateEmail;
+generateEmail = function(s) {
+  if (currentLang === 'en') {
+    return `Subject: HIN Gateway Peer Registration · ${s.customer_name || '[Customer]'}
+
+Dear HIN Team,
+
+We have successfully installed the HIN Gateway (Stargate) and request the registration of our appliance on the HIN side so that the WireGuard tunnel to the HIN CA can be established and our S/MIME certificate can be issued.
+
+Our details:
+
+• Customer Name:      ${s.customer_name || '[Customer Name]'}
+• Deployment Name:    ${s.deployment_name || '[deployment-name]'}
+• Phase:              ${s.phase.toUpperCase()}
+• Server Static IP:   ${s.server_ip || '[IP]'}
+• WireGuard Port:     19818 (Default)
+• WireGuard Public Key:
+
+  [INSERT YOUR PUBLIC KEY HERE]
+
+You can read the public key from the IDAgent logs on your appliance:
+   docker compose logs idagent | grep "public key"
+
+After your confirmation, we will run
+   ./scripts/onboard.sh --regenerate-cert
+to re-trigger the certificate issuance.
+
+Best regards,
+${s.customer_name || '[Organization]'}
+`;
+  }
+  return _origGenerateEmail(s);
+};
+
+// Override generateChecklist for EN
+const _origGenerateChecklist = generateChecklist;
+generateChecklist = function(s) {
+  if (currentLang === 'en') {
+    const domains = (s.domains || 'example.com').split(',').map(d=>d.trim()).filter(Boolean);
+    const firstDomain = domains[0];
+    const hostname = s.hostname || ('mail.' + firstDomain);
+    const platformLabel = {
+      azure:'Microsoft Azure (VHD Image)', vmware:'VMware / ESXi', proxmox:'Proxmox VE',
+      hyperv:'Hyper-V', docker:'Existing Linux Host (Docker)', k8s:'Kubernetes (Helm)'
+    }[s.platform] || s.platform;
+    const mailSystemLabel = {
+      m365:'Microsoft 365 / Exchange Online', exchange_onprem:'Exchange on-premises', other:'Other system'
+    }[s.mailserver] || s.mailserver;
+
+    let ch = `# HIN Gateway · Deployment Checklist
+### ${s.customer_name || 'Customer'} — Deployment: ${s.deployment_name || 'n/a'}
+Phase: **${s.phase.toUpperCase()}** · Platform: **${platformLabel}** · Mail system: **${mailSystemLabel}**
+Created: ${new Date().toLocaleDateString('en-US', {day:'2-digit', month:'long', year:'numeric'})}
+
+---
+
+## 1. Preparation (Infrastructure Team)
+
+- [ ] Static public IP reserved: **${s.server_ip || '<TO BE DEFINED>'}**
+- [ ] VM/host provisioned (min 4 CPU / 8 GB RAM / 30 GB disk)
+- [ ] SSH access configured for operations team
+- [ ] Backup target defined (external storage for daily replication)
+
+## 2. Firewall Rules (Network Team)
+
+**Inbound (from internet to appliance):**
+- [ ] 25/TCP — SMTP (mail reception)
+- [ ] 8084/TCP — HTTP Seal callback (from HIN)
+- [ ] 19818/TCP+UDP — WireGuard peer communication
+
+**Outbound (from appliance to internet):**
+- [ ] registry.vereign.io:443
+- [ ] mxengine-dev.k8s.vereign-cdn.com:443
+- [ ] smimekeys-ca-dev.k8s.vereign-cdn.com:443
+- [ ] loki.infra.vereign-cdn.com:443
+- [ ] vereign-issuer.vrgnservices.eu:443
+- [ ] vereign-verifier.vrgnservices.eu:4433
+- [ ] Port 25/TCP to any destination MX servers
+- [ ] DNS (port 53) — UDP and TCP
+
+## 3. DNS Preparation (DNS Team)
+
+- [ ] A record: \`${hostname}. A ${s.server_ip || '<IP>'}\`
+`;
+    domains.forEach(d => {
+      ch += `- [ ] MX records for \`${d}\`: Exchange MX 10, Stargate (\`${hostname}\`) MX 20\n`;
+    });
+    ch += `- [ ] SPF records updated: add \`ip4:${s.server_ip || '<IP>'}\` to each domain
+- [ ] Reverse DNS (PTR) for appliance IP → \`${hostname}\`
+- [ ] TTLs set to low values (5 min) before go-live
+
+## 4. Installation
+`;
+
+    if (s.platform === 'docker') {
+      ch += `\`\`\`bash
+git clone <stargate-deployment-repo>
+cd stargate-deployment/docker-compose
+cp customer-config.example customer-config.sh
+# Paste customer-config.sh (content generated from Hub)
+chmod +x scripts/*.sh
+./scripts/install.sh
+\`\`\`
+`;
+    } else if (s.platform === 'k8s') {
+      ch += `**Helm Deployment:** See \`helm-deploy.md\` in the deployment repo. Request documentation from HIN.
+`;
+    } else {
+      ch += `**VM Image Installation (${platformLabel}):**
+1. Download image from https://images.vereign.io/ (latest version)
+2. Import image into the platform
+3. Create VM with 4 CPU / 8 GB RAM / 30 GB Disk using imported image
+4. Start VM, log in as \`hinadmin\` (request password via aroel.vandenbroele@hin.com)
+5. Switch to root and fill \`customer-config.sh\` in \`stargate-deployment/docker-compose/\`
+6. Run \`./scripts/install.sh\`
+
+Detailed instructions per platform in the official deployment repo (\`${s.platform}-image-install.md\`).
+`;
+    }
+
+    ch += `
+- [ ] customer-config.sh deployed
+- [ ] install.sh completed successfully
+- [ ] All services show \`healthy\` in \`docker ps\` or \`./scripts/health-check.sh\`
+
+## 5. Peer Registration at HIN (manual step — critical!)
+
+After the first install, the WireGuard tunnel to the HIN CA is not yet active. Your appliance must be manually registered as a peer on the HIN side.
+
+- [ ] WireGuard public key read from logs:
+  \`\`\`
+  docker compose logs idagent | grep "public key"
+  \`\`\`
+- [ ] Email sent to HIN with:
+  - WireGuard public key
+  - DEPLOYMENT_NAME: \`${s.deployment_name || '<TO BE DEFINED>'}\`
+  - SERVER_STATIC_IP: \`${s.server_ip || '<IP>'}\`
+  - (WG_INTERFACE_PORT only if different from default 19818)
+- [ ] Confirmation received from HIN that peer is registered
+- [ ] Certificate regenerated:
+  \`\`\`
+  ./scripts/onboard.sh --regenerate-cert
+  \`\`\`
+- [ ] WireGuard handshake confirmed: \`docker exec stargate-idagent wg show\`
+
+## 6. Exchange Integration
+`;
+
+    if (s.mailserver === 'm365') {
+      ch += `**Microsoft 365 / Exchange Online:**
+- [ ] Outbound connector "From Office 365 to postfix relay server"
+  - From: Office 365 → To: Your organization's email server
+  - Triggered only via transport rule
+  - Smart host: ${s.server_ip || '<IP>'}
+  - Certificate: "Any digital certificate, including self-signed"
+- [ ] Inbound connector "Receive mail from postfix relay server"
+  - From: Your organization's email server → To: Office 365
+  - Authentication via IP: ${s.server_ip || '<IP>'}
+- [ ] Transport rule "Redirect external recipients to Stargate"
+  - Apply if: Recipient located Outside the organization
+  - Do: Redirect to connector "From Office 365 to postfix relay server"
+  - Except if: Sender IP is in range **${s.server_ip || '<IP>'}** (prevents mail loops!)
+  - **Activate** the rule (created in disabled state)
+`;
+    } else if (s.mailserver === 'exchange_onprem') {
+      ch += `**Exchange on-premises:**
+- [ ] Send connector "To Stargate Relay" (PowerShell):
+  \`\`\`powershell
+  New-SendConnector -Name "To Stargate Relay" \`
+    -AddressSpaces "SMTP:*;1" \`
+    -SmartHosts "${s.server_ip || '<IP>'}" \`
+    -SmartHostAuthMechanism None \`
+    -DNSRoutingEnabled $false
+  \`\`\`
+- [ ] Receive connector "From Stargate Relay":
+  \`\`\`powershell
+  New-ReceiveConnector -Name "From Stargate Relay" \`
+    -Bindings "0.0.0.0:25" \`
+    -RemoteIPRanges "${s.server_ip || '<IP>'}" \`
+    -TransportRole FrontendTransport \`
+    -Usage Custom \`
+    -AuthMechanism ExternalAuthoritative \`
+    -PermissionGroups ExchangeServers
+  \`\`\`
+- [ ] Transport rule for outbound redirect:
+  \`\`\`powershell
+  New-TransportRule -Name "Relay outbound via Stargate" \`
+    -SentToScope NotInOrganization \`
+    -RouteMessageOutboundConnector "To Stargate Relay" \`
+    -ExceptIfSenderIpRanges "${s.server_ip || '<IP>'}"
+  \`\`\`
+`;
+    } else {
+      ch += `**Generic mail system:** Standard MX routing. No HIN-specific integration needed. Ensure the appliance is treated as a trusted sender (add IP to receiving system as trusted relay).
+`;
+    }
+
+    ch += `
+- [ ] Test mail external → internal (via Stargate)
+- [ ] Test mail internal → external (via Stargate)
+- [ ] No mail loops in Exchange logs
+
+## 7. Monitoring & Operations
+
+- [ ] \`./scripts/health-check.sh\` shows no errors
+- [ ] Prometheus scraping of \`:2113/:2114/:2115/:2116\` endpoints configured (optional)
+- [ ] Loki logs visible in Grafana (if enabled)
+- [ ] Backup cron job running (2:00 AM, see \`/etc/cron\`)
+- [ ] **Secrets backup secured externally:**
+  - \`secrets/vault-keys.json\` (critical!)
+  - \`customer-config.sh\` (contains WG private key after first install)
+
+## 8. Go-Live
+
+- [ ] Go/No-Go decision in project steering meeting
+- [ ] MX TTLs reset to production values
+- [ ] Contact person for 2nd-level support at HIN documented
+- [ ] Runbook handed over to operations team
+`;
+    return ch;
+  }
+  return _origGenerateChecklist(s);
+};
+
+// Override updatePreview validation messages for EN
+const _origUpdatePreview = updatePreview;
+updatePreview = function() {
+  _origUpdatePreview();
+
+  if (currentLang === 'en') {
+    const state = collectState();
+    const missing = [];
+    if (!state.customer_name) missing.push('Customer Name');
+    if (!state.deployment_name) missing.push('Deployment Name');
+    if (!state.server_ip) missing.push('Server Static IP');
+    if (!state.domains) missing.push('Mail Domains');
+    const vEl = document.getElementById('summaryValidation');
+    if (vEl) {
+      if (missing.length) {
+        vEl.innerHTML = `<div class="callout">
+          <div class="callout-title">Incomplete</div>
+          <p style="margin:0">The following required fields are still empty: <strong>${missing.join(', ')}</strong>. The file will still be generated — with placeholders. Replace before productive deployment.</p>
+        </div>`;
+      } else {
+        vEl.innerHTML = `<div class="callout callout-sage">
+          <div class="callout-title">Complete · Ready for Deployment</div>
+          <p style="margin:0">All required fields set. The generated artifacts below can be used directly.</p>
+        </div>`;
+      }
+    }
+  }
+};
+
+// Override updateRoutingHint for EN
+const _origUpdateRoutingHint = updateRoutingHint;
+updateRoutingHint = function() {
+  _origUpdateRoutingHint();
+  if (currentLang === 'en') {
+    const routing = getRadio('w_routing');
+    const host = document.getElementById('routingExtra');
+    if (!host) return;
+    if (routing === 'relayhost') {
+      const label = host.querySelector('label');
+      if (label) label.textContent = 'RELAYHOST';
+      const hint = host.querySelector('.field-hint');
+      if (hint) hint.innerHTML = 'A single hostname for all mail. With <code>[ ]</code>, DNS MX lookup is skipped (direct A record lookup). Examples: <code>[smtp.office365.com]</code>, <code>[mail.klinik.ch]:587</code>.';
+      const calloutTitle = host.querySelector('.callout-title');
+      if (calloutTitle) calloutTitle.textContent = 'Attention · No Per-Domain Routing';
+      const callout = host.querySelector('.callout-amber');
+      if (callout) {
+        const p = callout.querySelector('p') || callout.childNodes[callout.childNodes.length - 1];
+        if (p && p.nodeType === 3) {
+          callout.innerHTML = `<div class="callout-title">Attention · No Per-Domain Routing</div>If you have multiple domains going to different mail systems, choose <strong>DOMAIN_RELAY_MAP</strong> instead. <code>RELAYHOST</code> ignores domain assignment.`;
+        }
+      }
+    } else if (routing === 'domain_map') {
+      const hint = host.querySelector('.field-hint');
+      if (hint) hint.innerHTML = 'Comma-separated list <code>domain:[relay]:port</code>. Domains not in the list fall back to <code>RELAYHOST</code> or MX lookup.';
+      const calloutTitle = host.querySelector('.callout-title');
+      if (calloutTitle) calloutTitle.textContent = 'Ideal for Multi-Domain Setups';
+      const callout = host.querySelector('.callout-sage');
+      if (callout) {
+        callout.innerHTML = `<div class="callout-title">Ideal for Multi-Domain Setups</div>If you e.g. as a service provider relay 26 domains to 12 different Exchange servers, this is the clean way.`;
+      }
+    } else {
+      const calloutTitle = host.querySelector('.callout-title');
+      if (calloutTitle) calloutTitle.textContent = 'Recommended DNS Records';
+      const p = host.querySelector('p');
+      if (p) {
+        const domains = getVal('w_domains').split(',').map(d=>d.trim()).filter(Boolean);
+        const firstDomain = domains[0] || 'example.com';
+        p.innerHTML = `Per domain, two MX entries. Example for <code>${firstDomain}</code>:`;
+      }
+      const bottomP = host.querySelectorAll('p');
+      if (bottomP.length > 1) {
+        bottomP[bottomP.length - 1].textContent = 'The lower MX value has priority. Stargate filters itself during delivery and delivers to the next highest entry.';
+      }
+    }
+  }
+};
+
+// ── Language toggle ──
+function toggleLang() {
+  currentLang = currentLang === 'de' ? 'en' : 'de';
+  const btn = document.getElementById('langToggle');
+  btn.textContent = currentLang === 'de' ? 'EN' : 'DE';
+  document.documentElement.lang = currentLang;
+
+  applyI18n(currentLang);
+
+  // Re-run preview with new language
+  updatePreview();
+  updateRoutingHint();
+}
 </script>
 
 </body>
