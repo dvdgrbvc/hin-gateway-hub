@@ -559,8 +559,8 @@
 
         <!-- External sender -->
         <rect class="node" x="320" y="20" width="260" height="48" />
-        <text class="label" x="450" y="42" text-anchor="middle">Externer Mail-Server</text>
-        <text class="sub" x="450" y="58" text-anchor="middle">Internet · Absender der Mail</text>
+        <text class="label" x="450" y="42" text-anchor="middle" data-i18n="svg_ext_mail">Externer Mail-Server</text>
+        <text class="sub" x="450" y="58" text-anchor="middle" data-i18n="svg_ext_mail_sub">Internet · Absender der Mail</text>
 
         <!-- Arrow 1 -->
         <line class="edge" x1="450" y1="68" x2="450" y2="100" marker-end="url(#arrow)" />
@@ -569,9 +569,9 @@
         <!-- Postfix inbound -->
         <rect class="node-accent" x="240" y="100" width="420" height="96" />
         <text class="label" x="450" y="124" text-anchor="middle">Postfix Relay · stargate-postfix-relay</text>
-        <text class="sub" x="450" y="142" text-anchor="middle">Empfängt auf Port 25 · automat. Konfiguration aus DNS (MX + SPF)</text>
+        <text class="sub" x="450" y="142" text-anchor="middle" data-i18n="svg_postfix_sub">Empfängt auf Port 25 · automat. Konfiguration aus DNS (MX + SPF)</text>
         <text class="sub" x="450" y="162" text-anchor="middle" style="font-family:var(--mono)">content_filter = smtp:[mxengine]:1587</text>
-        <text class="sub" x="450" y="180" text-anchor="middle">transport_maps = per-Domain-Routing aus MX-Lookup</text>
+        <text class="sub" x="450" y="180" text-anchor="middle" data-i18n="svg_transport_maps">transport_maps = per-Domain-Routing aus MX-Lookup</text>
 
         <!-- Arrow 2 -->
         <line class="edge-accent" x1="450" y1="196" x2="450" y2="228" marker-end="url(#arrow-accent)" />
@@ -580,19 +580,19 @@
         <!-- MXEngine -->
         <rect class="node-accent" x="240" y="228" width="420" height="96" />
         <text class="label" x="450" y="252" text-anchor="middle">MXEngine · stargate-mxengine</text>
-        <text class="sub" x="450" y="270" text-anchor="middle">Kernarbeit: S/MIME-Signatur, Policy-Entscheidung (OPA/Rego),</text>
-        <text class="sub" x="450" y="286" text-anchor="middle">Seal-Erzeugung bzw. -Auflösung, Empfänger-Lookup</text>
-        <text class="sub" x="450" y="306" text-anchor="middle">Callback-Port :8084 für Remote-Sealer (public!)</text>
+        <text class="sub" x="450" y="270" text-anchor="middle" data-i18n="svg_mx_line1">Kernarbeit: S/MIME-Signatur, Policy-Entscheidung (OPA/Rego),</text>
+        <text class="sub" x="450" y="286" text-anchor="middle" data-i18n="svg_mx_line2">Seal-Erzeugung bzw. -Auflösung, Empfänger-Lookup</text>
+        <text class="sub" x="450" y="306" text-anchor="middle" data-i18n="svg_mx_callback">Callback-Port :8084 für Remote-Sealer (public!)</text>
 
         <!-- Dependencies side -->
         <rect class="node" x="30" y="228" width="170" height="48" />
         <text class="label" x="115" y="250" text-anchor="middle">policy</text>
-        <text class="sub" x="115" y="266" text-anchor="middle">OPA/Rego · :8082</text>
+        <text class="sub" x="115" y="266" text-anchor="middle" data-i18n="svg_policy_sub">OPA/Rego · :8082</text>
         <line class="edge edge-dashed" x1="200" y1="252" x2="240" y2="252" />
 
         <rect class="node" x="30" y="286" width="170" height="48" />
         <text class="label" x="115" y="308" text-anchor="middle">smimekeys-client</text>
-        <text class="sub" x="115" y="324" text-anchor="middle">Schlüssel aus Vault · :8081</text>
+        <text class="sub" x="115" y="324" text-anchor="middle" data-i18n="svg_smime_sub">Schlüssel aus Vault · :8081</text>
         <line class="edge edge-dashed" x1="200" y1="310" x2="240" y2="310" />
 
         <rect class="node" x="700" y="228" width="170" height="48" />
@@ -611,8 +611,8 @@
 
         <!-- Postfix outbound -->
         <rect class="node-accent" x="240" y="356" width="420" height="76" />
-        <text class="label" x="450" y="380" text-anchor="middle">Postfix Relay · gleicher Container, Port 10026</text>
-        <text class="sub" x="450" y="398" text-anchor="middle">Empfängt verarbeitete Mail und liefert an den echten Ziel-MX</text>
+        <text class="label" x="450" y="380" text-anchor="middle" data-i18n="svg_postfix_out">Postfix Relay · gleicher Container, Port 10026</text>
+        <text class="sub" x="450" y="398" text-anchor="middle" data-i18n="svg_postfix_out_sub1">Empfängt verarbeitete Mail und liefert an den echten Ziel-MX</text>
         <text class="sub" x="450" y="416" text-anchor="middle" style="font-family:var(--mono)">relay via transport_maps oder RELAYHOST</text>
 
         <!-- Arrow 4 -->
@@ -621,68 +621,68 @@
 
         <!-- Destination -->
         <rect class="node" x="320" y="466" width="260" height="48" />
-        <text class="label" x="450" y="488" text-anchor="middle">Ziel-Mail-Server</text>
-        <text class="sub" x="450" y="504" text-anchor="middle">Exchange / Exchange Online / anderes System</text>
+        <text class="label" x="450" y="488" text-anchor="middle" data-i18n="svg_dest_mail">Ziel-Mail-Server</text>
+        <text class="sub" x="450" y="504" text-anchor="middle" data-i18n="svg_dest_mail_sub">Exchange / Exchange Online / anderes System</text>
       </svg>
 
       <div style="margin-top:1.5rem;font-size:.85rem;color:var(--ink-soft);display:grid;grid-template-columns:auto 1fr;gap:.5rem 1rem;max-width:680px">
-        <span class="pill pill-accent">1</span><span><strong>Inbound</strong> — externe Mail trifft auf Port 25. Postfix entscheidet anhand von <code>content_filter</code>, die Mail zunächst an MXEngine zur Verarbeitung weiterzuleiten.</span>
-        <span class="pill pill-accent">2</span><span><strong>Processing</strong> — MXEngine erledigt die eigentliche Arbeit: Policy-Lookup (wie soll diese Mail behandelt werden?), S/MIME-Signatur, Seal-Erzeugung. Schlüssel kommen via smimekeys-client aus Vault.</span>
-        <span class="pill pill-accent">3</span><span><strong>Reinjection</strong> — Verarbeitete Mail geht zurück an Postfix auf Port 10026 (internes Listener).</span>
-        <span class="pill">4</span><span><strong>Delivery</strong> — Postfix liefert via MX-Lookup (oder <code>RELAYHOST</code>/<code>DOMAIN_RELAY_MAP</code>) an den echten Ziel-Mail-Server.</span>
+        <span class="pill pill-accent">1</span><span data-i18n="flow_step1"><strong>Inbound</strong> — externe Mail trifft auf Port 25. Postfix entscheidet anhand von <code>content_filter</code>, die Mail zunächst an MXEngine zur Verarbeitung weiterzuleiten.</span>
+        <span class="pill pill-accent">2</span><span data-i18n="flow_step2"><strong>Processing</strong> — MXEngine erledigt die eigentliche Arbeit: Policy-Lookup (wie soll diese Mail behandelt werden?), S/MIME-Signatur, Seal-Erzeugung. Schlüssel kommen via smimekeys-client aus Vault.</span>
+        <span class="pill pill-accent">3</span><span data-i18n="flow_step3"><strong>Reinjection</strong> — Verarbeitete Mail geht zurück an Postfix auf Port 10026 (internes Listener).</span>
+        <span class="pill">4</span><span data-i18n="flow_step4"><strong>Delivery</strong> — Postfix liefert via MX-Lookup (oder <code>RELAYHOST</code>/<code>DOMAIN_RELAY_MAP</code>) an den echten Ziel-Mail-Server.</span>
       </div>
     </div>
 
     <!-- Services section -->
-    <h3 style="margin-top:4rem">Services im Stack</h3>
+    <h3 style="margin-top:4rem" data-i18n="arch_services_title">Services im Stack</h3>
 
     <div class="two-col" style="margin-top:1.5rem">
       <div>
-        <div class="eyebrow eyebrow-accent">Anwendungs-Services</div>
+        <div class="eyebrow eyebrow-accent" data-i18n="arch_svc_app">Anwendungs-Services</div>
         <dl class="keyvals" style="grid-template-columns:max-content 1fr;margin-top:1rem">
-          <dt>mxengine</dt><dd>Mail-Processing · :8084 HTTP · :1587 SMTP · :2116 Metrics</dd>
-          <dt>smimekeys-client</dt><dd>S/MIME-Schlüsselverwaltung · :8081 · :2113 Metrics</dd>
-          <dt>policy</dt><dd>OPA/Rego-Policy-Engine · :8082 · :2115 Metrics</dd>
-          <dt>idagent</dt><dd>WireGuard-Tunnel &amp; Peer-Kommunikation · :8083 · :19818 WG · :2114 Metrics</dd>
-          <dt>policy-sync</dt><dd>Cron-artiger Sync von Rego-Policies aus Git in die DB (stündlich)</dd>
-          <dt>postfix-relay</dt><dd>Mail-Transport · :25 extern · :10026 reinjection · :1587 MXEngine-Eingang</dd>
+          <dt>mxengine</dt><dd data-i18n="svc_mxengine">Mail-Processing · :8084 HTTP · :1587 SMTP · :2116 Metrics</dd>
+          <dt>smimekeys-client</dt><dd data-i18n="svc_smimekeys">S/MIME-Schlüsselverwaltung · :8081 · :2113 Metrics</dd>
+          <dt>policy</dt><dd data-i18n="svc_policy">OPA/Rego-Policy-Engine · :8082 · :2115 Metrics</dd>
+          <dt>idagent</dt><dd data-i18n="svc_idagent">WireGuard-Tunnel &amp; Peer-Kommunikation · :8083 · :19818 WG · :2114 Metrics</dd>
+          <dt>policy-sync</dt><dd data-i18n="svc_policysync">Cron-artiger Sync von Rego-Policies aus Git in die DB (stündlich)</dd>
+          <dt>postfix-relay</dt><dd data-i18n="svc_postfix">Mail-Transport · :25 extern · :10026 reinjection · :1587 MXEngine-Eingang</dd>
         </dl>
       </div>
       <div>
-        <div class="eyebrow eyebrow-sage">Infrastruktur</div>
+        <div class="eyebrow eyebrow-sage" data-i18n="arch_svc_infra">Infrastruktur</div>
         <dl class="keyvals" style="grid-template-columns:max-content 1fr;margin-top:1rem">
           <dt>postgres</dt><dd>PostgreSQL 18 · :5432 · 4 DBs: smimekeys_client, policy, idagent, mxengine</dd>
-          <dt>vault</dt><dd>HashiCorp Vault 1.19 · :8200 · KV-v2 für alle Secrets und S/MIME-Keys</dd>
-          <dt>minio</dt><dd>S3-kompatibles Object-Storage · :9000 API · :9001 Console</dd>
-          <dt>promtail</dt><dd>Log-Shipper zu Loki (optional)</dd>
-          <dt>node-exporter</dt><dd>Host-Metriken für Prometheus · :9100</dd>
-          <dt>version-collector</dt><dd>Sammelt App-Versionen aus /liveness für Metriken</dd>
+          <dt>vault</dt><dd data-i18n="svc_vault">HashiCorp Vault 1.19 · :8200 · KV-v2 für alle Secrets und S/MIME-Keys</dd>
+          <dt>minio</dt><dd data-i18n="svc_minio">S3-kompatibles Object-Storage · :9000 API · :9001 Console</dd>
+          <dt>promtail</dt><dd data-i18n="svc_promtail">Log-Shipper zu Loki (optional)</dd>
+          <dt>node-exporter</dt><dd data-i18n="svc_nodeexp">Host-Metriken für Prometheus · :9100</dd>
+          <dt>version-collector</dt><dd data-i18n="svc_vercoll">Sammelt App-Versionen aus /liveness für Metriken</dd>
         </dl>
       </div>
     </div>
 
     <!-- WireGuard diagram -->
-    <h3 style="margin-top:4rem">WireGuard · Appliance-zu-Appliance</h3>
-    <p style="color:var(--ink-soft);max-width:65ch">Jede Stargate-Instanz ist ein eigener WireGuard-Peer. Die <em>öffentliche</em> IP des Servers dient als eindeutige Tunnel-Adresse — so braucht es keinen zentralen Koordinator für WG-IPs.</p>
+    <h3 style="margin-top:4rem" data-i18n="arch_wg_title">WireGuard · Appliance-zu-Appliance</h3>
+    <p style="color:var(--ink-soft);max-width:65ch" data-i18n="arch_wg_desc2">Jede Stargate-Instanz ist ein eigener WireGuard-Peer. Die <em>öffentliche</em> IP des Servers dient als eindeutige Tunnel-Adresse — so braucht es keinen zentralen Koordinator für WG-IPs.</p>
 
     <div class="arch-diagram">
       <svg class="arch-svg" viewBox="0 0 900 260" xmlns="http://www.w3.org/2000/svg">
         <!-- Left: your appliance -->
         <rect class="node-sage" x="30" y="40" width="340" height="180" />
-        <text class="label" x="200" y="65" text-anchor="middle">Euer Stargate-Appliance</text>
+        <text class="label" x="200" y="65" text-anchor="middle" data-i18n="svg_wg_your_appliance">Euer Stargate-Appliance</text>
         <text class="sub" x="200" y="82" text-anchor="middle" style="font-family:var(--mono);font-size:11px">203.0.113.10</text>
 
         <rect class="node" x="60" y="110" width="280" height="46" />
         <text class="label" x="200" y="130" text-anchor="middle">idagent</text>
-        <text class="sub" x="200" y="146" text-anchor="middle">generiert Keypair · :19818 tcp+udp</text>
+        <text class="sub" x="200" y="146" text-anchor="middle" data-i18n="svg_wg_keygen">generiert Keypair · :19818 tcp+udp</text>
 
-        <text class="sub" x="200" y="180" text-anchor="middle">WG-Tunnel-Adresse = SERVER_STATIC_IP</text>
+        <text class="sub" x="200" y="180" text-anchor="middle" data-i18n="svg_wg_addr">WG-Tunnel-Adresse = SERVER_STATIC_IP</text>
         <text class="sub" x="200" y="196" text-anchor="middle" style="font-family:var(--mono);font-size:11px">wg0: 203.0.113.10</text>
 
         <!-- Middle: tunnel -->
         <line x1="370" y1="135" x2="530" y2="135" stroke="var(--sage)" stroke-width="2" stroke-dasharray="6 3" />
         <line x1="530" y1="130" x2="370" y2="130" stroke="var(--sage)" stroke-width="2" stroke-dasharray="6 3" />
-        <text x="450" y="115" text-anchor="middle" style="font-weight:600;fill:var(--sage);font-size:12px">WireGuard-Tunnel</text>
+        <text x="450" y="115" text-anchor="middle" style="font-weight:600;fill:var(--sage);font-size:12px" data-i18n="svg_wg_tunnel">WireGuard-Tunnel</text>
         <text x="450" y="155" text-anchor="middle" class="sub" style="font-family:var(--mono);font-size:10.5px">ChaCha20-Poly1305</text>
 
         <!-- Right: HIN -->
@@ -692,44 +692,44 @@
 
         <rect class="node" x="560" y="110" width="280" height="46" />
         <text class="label" x="700" y="130" text-anchor="middle">HIN IDAgent + CA</text>
-        <text class="sub" x="700" y="146" text-anchor="middle">signiert CSR und liefert Zertifikat zurück</text>
+        <text class="sub" x="700" y="146" text-anchor="middle" data-i18n="svg_wg_hin_ca_sub">signiert CSR und liefert Zertifikat zurück</text>
 
-        <text class="sub" x="700" y="180" text-anchor="middle">WG-Adresse der HIN-Seite</text>
+        <text class="sub" x="700" y="180" text-anchor="middle" data-i18n="svg_wg_hin_addr">WG-Adresse der HIN-Seite</text>
         <text class="sub" x="700" y="196" text-anchor="middle" style="font-family:var(--mono);font-size:11px">wg0: 5.102.144.182</text>
       </svg>
 
       <div class="callout" style="margin-top:1.5rem">
-        <div class="callout-title">Der kritische manuelle Schritt</div>
-        <p style="margin:0">Nach dem ersten Install hat euer Appliance zwar einen Public Key generiert — <strong>auf der HIN-Seite ist er aber noch nicht registriert</strong>. Bis das nicht passiert, kommt kein Handshake zustande und damit auch keine Zertifikatsausstellung. Siehe Troubleshoot für die exakten Symptome.</p>
+        <div class="callout-title" data-i18n="arch_critical_step_title">Der kritische manuelle Schritt</div>
+        <p style="margin:0"><span data-i18n="arch_critical_step_body">Nach dem ersten Install hat euer Appliance zwar einen Public Key generiert — <strong>auf der HIN-Seite ist er aber noch nicht registriert</strong>. Bis das nicht passiert, kommt kein Handshake zustande und damit auch keine Zertifikatsausstellung. Siehe Troubleshoot für die exakten Symptome.</span></p>
       </div>
     </div>
 
     <!-- Port map -->
-    <h3 style="margin-top:4rem">Port- und Netz-Übersicht</h3>
+    <h3 style="margin-top:4rem" data-i18n="arch_port_title">Port- und Netz-Übersicht</h3>
     <div class="two-col">
       <div class="card">
-        <div class="eyebrow eyebrow-accent">Inbound (extern)</div>
+        <div class="eyebrow eyebrow-accent" data-i18n="arch_port_inbound">Inbound (extern)</div>
         <div class="port-map">
-          <span class="port">25/tcp</span><span>SMTP — Mail-Empfang</span><span class="dir">pflicht</span>
-          <span class="port">8084/tcp</span><span>HTTP — Seal-Callback</span><span class="dir">pflicht</span>
-          <span class="port">19818/tcp+udp</span><span>WireGuard — Peer-Tunnel</span><span class="dir">pflicht</span>
+          <span class="port">25/tcp</span><span data-i18n="port_smtp_in">SMTP — Mail-Empfang</span><span class="dir" data-i18n="port_required">pflicht</span>
+          <span class="port">8084/tcp</span><span data-i18n="port_seal_cb">HTTP — Seal-Callback</span><span class="dir" data-i18n="port_required2">pflicht</span>
+          <span class="port">19818/tcp+udp</span><span data-i18n="port_wg">WireGuard — Peer-Tunnel</span><span class="dir" data-i18n="port_required3">pflicht</span>
         </div>
       </div>
       <div class="card">
-        <div class="eyebrow">Outbound (nach extern)</div>
+        <div class="eyebrow" data-i18n="arch_port_outbound">Outbound (nach extern)</div>
         <div class="port-map">
-          <span class="port">25/tcp</span><span>Destination-MX</span><span class="dir">pflicht</span>
-          <span class="port">443/tcp</span><span>registry.vereign.io</span><span class="dir">pflicht</span>
-          <span class="port">443/tcp</span><span>*.vereign-cdn.com</span><span class="dir">pflicht</span>
-          <span class="port">4433/tcp</span><span>vereign-verifier</span><span class="dir">pflicht</span>
-          <span class="port">53</span><span>DNS</span><span class="dir">pflicht</span>
+          <span class="port">25/tcp</span><span>Destination-MX</span><span class="dir" data-i18n="port_required4">pflicht</span>
+          <span class="port">443/tcp</span><span>registry.vereign.io</span><span class="dir" data-i18n="port_required5">pflicht</span>
+          <span class="port">443/tcp</span><span>*.vereign-cdn.com</span><span class="dir" data-i18n="port_required6">pflicht</span>
+          <span class="port">4433/tcp</span><span>vereign-verifier</span><span class="dir" data-i18n="port_required7">pflicht</span>
+          <span class="port">53</span><span>DNS</span><span class="dir" data-i18n="port_required8">pflicht</span>
         </div>
       </div>
     </div>
 
     <div class="two-col" style="margin-top:1.5rem">
       <div class="card">
-        <div class="eyebrow">Host-lokal (Diagnose)</div>
+        <div class="eyebrow" data-i18n="arch_port_local">Host-lokal (Diagnose)</div>
         <div class="port-map" style="grid-template-columns:auto 1fr">
           <span class="port">:8081</span><span>smimekeys-client liveness</span>
           <span class="port">:8082</span><span>policy liveness</span>
@@ -741,7 +741,7 @@
         </div>
       </div>
       <div class="card">
-        <div class="eyebrow">Metriken (Prometheus)</div>
+        <div class="eyebrow" data-i18n="arch_port_metrics">Metriken (Prometheus)</div>
         <div class="port-map" style="grid-template-columns:auto 1fr">
           <span class="port">:2113</span><span>smimekeys-client</span>
           <span class="port">:2114</span><span>idagent</span>
@@ -753,21 +753,21 @@
     </div>
 
     <!-- Datenpersistenz -->
-    <h3 style="margin-top:4rem">Wo liegen welche Daten?</h3>
+    <h3 style="margin-top:4rem" data-i18n="arch_data_title">Wo liegen welche Daten?</h3>
     <div class="card">
       <dl class="keyvals" style="grid-template-columns:max-content max-content 1fr;gap:.6rem 1.2rem">
-        <dt>PostgreSQL</dt><dd>postgres_data</dd><dd>Alle 4 DBs: smimekeys_client, policy, idagent, mxengine</dd>
-        <dt>Vault</dt><dd>vault_data</dd><dd>Master-Keys, S/MIME-Keys, WG-Private-Key</dd>
-        <dt>MinIO</dt><dd>minio_data</dd><dd>Object-Storage: Message Bodies, Attachments</dd>
-        <dt>Postfix</dt><dd>postfix_spool</dd><dd>Mail-Queue (transient)</dd>
-        <dt>Host-FS</dt><dd>secrets/</dd><dd><strong>vault-keys.json</strong> — Unseal-Keys &amp; Root-Token. <em>Extern sichern!</em></dd>
-        <dt>Host-FS</dt><dd>customer-config.sh</dd><dd>Auto-befüllt mit WG_PRIVATE_KEY und VAULT_TOKEN nach erstem Install</dd>
+        <dt>PostgreSQL</dt><dd>postgres_data</dd><dd data-i18n="dp_pg">Alle 4 DBs: smimekeys_client, policy, idagent, mxengine</dd>
+        <dt>Vault</dt><dd>vault_data</dd><dd data-i18n="dp_vault">Master-Keys, S/MIME-Keys, WG-Private-Key</dd>
+        <dt>MinIO</dt><dd>minio_data</dd><dd data-i18n="dp_minio">Object-Storage: Message Bodies, Attachments</dd>
+        <dt>Postfix</dt><dd>postfix_spool</dd><dd data-i18n="dp_postfix">Mail-Queue (transient)</dd>
+        <dt>Host-FS</dt><dd>secrets/</dd><dd data-i18n="dp_secrets"><strong>vault-keys.json</strong> — Unseal-Keys &amp; Root-Token. <em>Extern sichern!</em></dd>
+        <dt>Host-FS</dt><dd>customer-config.sh</dd><dd data-i18n="dp_config">Auto-befüllt mit WG_PRIVATE_KEY und VAULT_TOKEN nach erstem Install</dd>
       </dl>
     </div>
 
     <div class="callout callout-amber" style="margin-top:1.5rem">
-      <div class="callout-title">Backup-Kritikalität</div>
-      Das Backup-Skript (<code>./scripts/backup.sh</code>) läuft täglich um 02:00 automatisch und sichert DB-Dumps, Vault-Keys, customer-config und Zertifikate in <code>backups/</code>. <strong>Dieses Verzeichnis muss extern repliziert werden</strong> — bei Totalverlust des Servers ist sonst der WG-Private-Key weg, und es gibt keinen Weg zurück: die HIN-Seite erwartet den alten Public Key und muss manuell neu registriert werden.
+      <div class="callout-title" data-i18n="arch_backup_title">Backup-Kritikalität</div>
+      <span data-i18n="arch_backup_body">Das Backup-Skript (<code>./scripts/backup.sh</code>) läuft täglich um 02:00 automatisch und sichert DB-Dumps, Vault-Keys, customer-config und Zertifikate in <code>backups/</code>. <strong>Dieses Verzeichnis muss extern repliziert werden</strong> — bei Totalverlust des Servers ist sonst der WG-Private-Key weg, und es gibt keinen Weg zurück: die HIN-Seite erwartet den alten Public Key und muss manuell neu registriert werden.</span>
     </div>
   </div>
 </section>
@@ -785,139 +785,139 @@
 
       <!-- Decision 1: Mail routing -->
       <div class="decision">
-        <div class="eyebrow eyebrow-accent">Entscheidung 01</div>
-        <h3>Mail-Routing-Strategie</h3>
-        <p style="font-size:.9rem;color:var(--ink-soft)">Wie findet die ausgehende Mail ihr Ziel — nach der Verarbeitung durch MXEngine? Drei sich ausschliessende Wege.</p>
+        <div class="eyebrow eyebrow-accent" data-i18n="dec1_eyebrow">Entscheidung 01</div>
+        <h3 data-i18n="dec1_title">Mail-Routing-Strategie</h3>
+        <p style="font-size:.9rem;color:var(--ink-soft)" data-i18n="dec1_desc">Wie findet die ausgehende Mail ihr Ziel — nach der Verarbeitung durch MXEngine? Drei sich ausschliessende Wege.</p>
         <div class="decision-options">
           <div class="decision-option">
-            <div class="decision-option-title"><span class="pill pill-sage">MX-basiert</span> Empfohlen für Einzel- bis Multi-Domain mit eigener Infra</div>
-            <div class="decision-option-desc">Postfix macht DNS-MX-Lookup pro Domain, filtert sich selbst aus, liefert an den Rest. <strong>Pro:</strong> Null Config in der Appliance — ihr steuert im DNS. Funktioniert beliebig vielfach. <strong>Contra:</strong> Setzt voraus, dass ihr MX-Records verwalten dürft und dass mindestens 2 MX pro Domain vorhanden sind.</div>
+            <div class="decision-option-title"><span class="pill pill-sage" data-i18n="dec1_mx_pill">MX-basiert</span> <span data-i18n="dec1_mx_rec">Empfohlen für Einzel- bis Multi-Domain mit eigener Infra</span></div>
+            <div class="decision-option-desc" data-i18n="dec1_mx_desc">Postfix macht DNS-MX-Lookup pro Domain, filtert sich selbst aus, liefert an den Rest. <strong>Pro:</strong> Null Config in der Appliance — ihr steuert im DNS. Funktioniert beliebig vielfach. <strong>Contra:</strong> Setzt voraus, dass ihr MX-Records verwalten dürft und dass mindestens 2 MX pro Domain vorhanden sind.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title"><span class="pill">RELAYHOST</span> Ein Ziel für alle</div>
-            <div class="decision-option-desc">Alle Domains gehen an genau einen Smart-Host, z.B. <code>[smtp.office365.com]</code>. <strong>Pro:</strong> Trivial einfach. <strong>Contra:</strong> Kein Per-Domain-Routing. Für Multi-Domain-Setups mit unterschiedlichen Zielen ungeeignet. SASL-Auth fehlt aktuell.</div>
+            <div class="decision-option-title"><span class="pill">RELAYHOST</span> <span data-i18n="dec1_relay_rec">Ein Ziel für alle</span></div>
+            <div class="decision-option-desc" data-i18n="dec1_relay_desc">Alle Domains gehen an genau einen Smart-Host, z.B. <code>[smtp.office365.com]</code>. <strong>Pro:</strong> Trivial einfach. <strong>Contra:</strong> Kein Per-Domain-Routing. Für Multi-Domain-Setups mit unterschiedlichen Zielen ungeeignet. SASL-Auth fehlt aktuell.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title"><span class="pill pill-amber">DOMAIN_RELAY_MAP</span> Service-Provider-Fall</div>
-            <div class="decision-option-desc">Explizite Zuordnung <code>domain:[host]:port</code>, komma-separiert. <strong>Pro:</strong> Sauber für viele Domains mit unterschiedlichen Zielen ohne DNS-Control. <strong>Contra:</strong> Config-Pflege bei jeder Änderung. Präzedenz &gt; RELAYHOST &gt; MX-Lookup.</div>
+            <div class="decision-option-title"><span class="pill pill-amber">DOMAIN_RELAY_MAP</span> <span data-i18n="dec1_drm_rec">Service-Provider-Fall</span></div>
+            <div class="decision-option-desc" data-i18n="dec1_drm_desc">Explizite Zuordnung <code>domain:[host]:port</code>, komma-separiert. <strong>Pro:</strong> Sauber für viele Domains mit unterschiedlichen Zielen ohne DNS-Control. <strong>Contra:</strong> Config-Pflege bei jeder Änderung. Präzedenz &gt; RELAYHOST &gt; MX-Lookup.</div>
           </div>
         </div>
       </div>
 
       <!-- Decision 2: Deployment platform -->
       <div class="decision">
-        <div class="eyebrow">Entscheidung 02</div>
-        <h3>Deployment-Plattform</h3>
-        <p style="font-size:.9rem;color:var(--ink-soft)">VM-Image, bestehender Linux-Host oder K8s — alle drei Wege führen zum identischen Stack, nur der Aufwand unterscheidet sich.</p>
+        <div class="eyebrow" data-i18n="dec2_eyebrow">Entscheidung 02</div>
+        <h3 data-i18n="dec2_title">Deployment-Plattform</h3>
+        <p style="font-size:.9rem;color:var(--ink-soft)" data-i18n="dec2_desc">VM-Image, bestehender Linux-Host oder K8s — alle drei Wege führen zum identischen Stack, nur der Aufwand unterscheidet sich.</p>
         <div class="decision-options">
           <div class="decision-option">
-            <div class="decision-option-title">VM-Image (Azure · VMware · Proxmox · Hyper-V)</div>
-            <div class="decision-option-desc">Fertig vorbereitetes Alma-Linux-Image mit allen Deps. <strong>Pro:</strong> Schnell, reproduzierbar, keine OS-Pflege nötig. <strong>Contra:</strong> Ihr müsst die Plattform-spezifische Import-Zeremonie mitgehen.</div>
+            <div class="decision-option-title" data-i18n="dec2_vm_title">VM-Image (Azure · VMware · Proxmox · Hyper-V)</div>
+            <div class="decision-option-desc" data-i18n="dec2_vm_desc">Fertig vorbereitetes Alma-Linux-Image mit allen Deps. <strong>Pro:</strong> Schnell, reproduzierbar, keine OS-Pflege nötig. <strong>Contra:</strong> Ihr müsst die Plattform-spezifische Import-Zeremonie mitgehen.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title">Bestehender Linux-Host (Docker-Install)</div>
-            <div class="decision-option-desc">Repo klonen, <code>install.sh</code> ausführen. Docker wird bei Bedarf installiert. <strong>Pro:</strong> Volle Kontrolle über Host-OS, Patch-Zyklus im eigenen Standard. <strong>Contra:</strong> Ihr seid für OS-Hardening verantwortlich.</div>
+            <div class="decision-option-title" data-i18n="dec2_docker_title">Bestehender Linux-Host (Docker-Install)</div>
+            <div class="decision-option-desc" data-i18n="dec2_docker_desc">Repo klonen, <code>install.sh</code> ausführen. Docker wird bei Bedarf installiert. <strong>Pro:</strong> Volle Kontrolle über Host-OS, Patch-Zyklus im eigenen Standard. <strong>Contra:</strong> Ihr seid für OS-Hardening verantwortlich.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title">Kubernetes (Helm)</div>
-            <div class="decision-option-desc">Helm-Chart für bestehende Cluster. <strong>Pro:</strong> Passt zu bestehendem K8s-Betrieb. <strong>Contra:</strong> WireGuard-Host-Networking und statische IP brauchen erhöhte Privilegien — nicht in jedem Managed-K8s möglich. Dokumentation bei HIN anfordern.</div>
+            <div class="decision-option-title" data-i18n="dec2_k8s_title">Kubernetes (Helm)</div>
+            <div class="decision-option-desc" data-i18n="dec2_k8s_desc">Helm-Chart für bestehende Cluster. <strong>Pro:</strong> Passt zu bestehendem K8s-Betrieb. <strong>Contra:</strong> WireGuard-Host-Networking und statische IP brauchen erhöhte Privilegien — nicht in jedem Managed-K8s möglich. Dokumentation bei HIN anfordern.</div>
           </div>
         </div>
       </div>
 
       <!-- Decision 3: Phase -->
       <div class="decision">
-        <div class="eyebrow">Entscheidung 03</div>
-        <h3>Phase · Alpha / Beta / Produktion</h3>
-        <p style="font-size:.9rem;color:var(--ink-soft)">Bestimmt CA-Endpunkt, Peer-Ziel und Erwartungshaltung.</p>
+        <div class="eyebrow" data-i18n="dec3_eyebrow">Entscheidung 03</div>
+        <h3 data-i18n="dec3_title">Phase · Alpha / Beta / Produktion</h3>
+        <p style="font-size:.9rem;color:var(--ink-soft)" data-i18n="dec3_desc">Bestimmt CA-Endpunkt, Peer-Ziel und Erwartungshaltung.</p>
         <div class="decision-options">
           <div class="decision-option">
-            <div class="decision-option-title"><span class="pill pill-amber">Alpha</span> aktuell</div>
-            <div class="decision-option-desc">Verbindung zur HIN Test CA (<code>hintest.ch</code>). CSR wird automatisch signiert. <strong>Keine Produktions-Mails</strong>. Test-Domain verwenden. Häufige Updates zu erwarten.</div>
+            <div class="decision-option-title"><span class="pill pill-amber">Alpha</span> <span data-i18n="dec3_alpha_label">aktuell</span></div>
+            <div class="decision-option-desc" data-i18n="dec3_alpha_desc">Verbindung zur HIN Test CA (<code>hintest.ch</code>). CSR wird automatisch signiert. <strong>Keine Produktions-Mails</strong>. Test-Domain verwenden. Häufige Updates zu erwarten.</div>
           </div>
           <div class="decision-option">
             <div class="decision-option-title"><span class="pill">Beta</span></div>
-            <div class="decision-option-desc">Noch Test-CA, aber echter Traffic-Test nach separater Freigabe möglich. Zeitpunkt wird separat kommuniziert.</div>
+            <div class="decision-option-desc" data-i18n="dec3_beta_desc">Noch Test-CA, aber echter Traffic-Test nach separater Freigabe möglich. Zeitpunkt wird separat kommuniziert.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title"><span class="pill pill-sage">Produktion</span> ab 18.05.2026</div>
-            <div class="decision-option-desc">Verbindung zur HIN Produktions-CA. Reguläre S/MIME-Zertifikate mit 1 Jahr Gültigkeit. Peer muss manuell bei HIN registriert werden.</div>
+            <div class="decision-option-title"><span class="pill pill-sage" data-i18n="dec3_prod_pill">Produktion</span> <span data-i18n="dec3_prod_label">ab 18.05.2026</span></div>
+            <div class="decision-option-desc" data-i18n="dec3_prod_desc">Verbindung zur HIN Produktions-CA. Reguläre S/MIME-Zertifikate mit 1 Jahr Gültigkeit. Peer muss manuell bei HIN registriert werden.</div>
           </div>
         </div>
       </div>
 
       <!-- Decision 4: M365 vs on-prem -->
       <div class="decision">
-        <div class="eyebrow">Entscheidung 04</div>
-        <h3>Exchange-Integrations-Pattern</h3>
-        <p style="font-size:.9rem;color:var(--ink-soft)">Beide Pattern sind möglich und funktionieren — der Unterschied ist, ob Stargate der primäre MX ist oder die Mail via Transport-Rule umgeleitet wird.</p>
+        <div class="eyebrow" data-i18n="dec4_eyebrow">Entscheidung 04</div>
+        <h3 data-i18n="dec4_title">Exchange-Integrations-Pattern</h3>
+        <p style="font-size:.9rem;color:var(--ink-soft)" data-i18n="dec4_desc">Beide Pattern sind möglich und funktionieren — der Unterschied ist, ob Stargate der primäre MX ist oder die Mail via Transport-Rule umgeleitet wird.</p>
         <div class="decision-options">
           <div class="decision-option">
-            <div class="decision-option-title"><span class="pill pill-sage">Pattern A</span> Stargate als primärer MX</div>
-            <div class="decision-option-desc">Stargate MX 15, Exchange MX 20. Internet → Stargate → Exchange. <strong>Empfohlen</strong>: Die inbound S/MIME-Verarbeitung passiert automatisch für alle Mails. Transport-Rule nur für outbound nötig.</div>
+            <div class="decision-option-title"><span class="pill pill-sage">Pattern A</span> <span data-i18n="dec4_a_label">Stargate als primärer MX</span></div>
+            <div class="decision-option-desc" data-i18n="dec4_a_desc">Stargate MX 15, Exchange MX 20. Internet → Stargate → Exchange. <strong>Empfohlen</strong>: Die inbound S/MIME-Verarbeitung passiert automatisch für alle Mails. Transport-Rule nur für outbound nötig.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title">Pattern B · Exchange als primärer MX</div>
-            <div class="decision-option-desc">Exchange bleibt der Haupt-MX, Transport-Rule schickt Mails je nach Kriterium über Stargate. Sinnvoll wenn ihr nur einen Teil der Mails durch Stargate routen wollt. Mehr Konfiguration.</div>
+            <div class="decision-option-title" data-i18n="dec4_b_label">Pattern B · Exchange als primärer MX</div>
+            <div class="decision-option-desc" data-i18n="dec4_b_desc">Exchange bleibt der Haupt-MX, Transport-Rule schickt Mails je nach Kriterium über Stargate. Sinnvoll wenn ihr nur einen Teil der Mails durch Stargate routen wollt. Mehr Konfiguration.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title">Beides: Outbound-Transport-Rule mit IP-Ausnahme</div>
-            <div class="decision-option-desc"><strong>Kritisch:</strong> In beiden Pattern muss die Transport-Rule <em>"Except if sender IP is &lt;STARGATE_IP&gt;"</em> gesetzt sein — sonst Mail-Loop.</div>
+            <div class="decision-option-title" data-i18n="dec4_c_label">Beides: Outbound-Transport-Rule mit IP-Ausnahme</div>
+            <div class="decision-option-desc" data-i18n="dec4_c_desc"><strong>Kritisch:</strong> In beiden Pattern muss die Transport-Rule <em>"Except if sender IP is &lt;STARGATE_IP&gt;"</em> gesetzt sein — sonst Mail-Loop.</div>
           </div>
         </div>
       </div>
 
       <!-- Decision 5: WireGuard transport -->
       <div class="decision">
-        <div class="eyebrow">Entscheidung 05</div>
-        <h3>WireGuard-Transport · TCP vs. UDP</h3>
-        <p style="font-size:.9rem;color:var(--ink-soft)">WireGuard ist ursprünglich UDP-only, HIN benutzt eine Variante die TCP kann — das erleichtert Firewall-Passage.</p>
+        <div class="eyebrow" data-i18n="dec5_eyebrow">Entscheidung 05</div>
+        <h3 data-i18n="dec5_title">WireGuard-Transport · TCP vs. UDP</h3>
+        <p style="font-size:.9rem;color:var(--ink-soft)" data-i18n="dec5_desc">WireGuard ist ursprünglich UDP-only, HIN benutzt eine Variante die TCP kann — das erleichtert Firewall-Passage.</p>
         <div class="decision-options">
           <div class="decision-option">
             <div class="decision-option-title"><span class="pill pill-sage">TCP</span> Default</div>
-            <div class="decision-option-desc">Funktioniert durch die meisten Firewalls, auch mit tiefer Packet-Inspection. <strong>Tipp:</strong> So starten und erst wechseln, wenn konkret Probleme auftreten.</div>
+            <div class="decision-option-desc" data-i18n="dec5_tcp_desc">Funktioniert durch die meisten Firewalls, auch mit tiefer Packet-Inspection. <strong>Tipp:</strong> So starten und erst wechseln, wenn konkret Probleme auftreten.</div>
           </div>
           <div class="decision-option">
             <div class="decision-option-title">UDP</div>
-            <div class="decision-option-desc">Native WireGuard-Performance. <strong>Wann sinnvoll:</strong> Bei stateful Firewalls die langlebige TCP-Verbindungen aggressiv droppen, oder wenn Latenz entscheidend ist (bei S/MIME zwischen Institutionen kaum relevant).</div>
+            <div class="decision-option-desc" data-i18n="dec5_udp_desc">Native WireGuard-Performance. <strong>Wann sinnvoll:</strong> Bei stateful Firewalls die langlebige TCP-Verbindungen aggressiv droppen, oder wenn Latenz entscheidend ist (bei S/MIME zwischen Institutionen kaum relevant).</div>
           </div>
         </div>
       </div>
 
       <!-- Decision 6: Central logging -->
       <div class="decision">
-        <div class="eyebrow">Entscheidung 06</div>
-        <h3>Zentrale Log-Zusendung</h3>
-        <p style="font-size:.9rem;color:var(--ink-soft)">Ob Logs an HINs Loki gesendet werden — oder ausschliesslich lokal bleiben.</p>
+        <div class="eyebrow" data-i18n="dec6_eyebrow">Entscheidung 06</div>
+        <h3 data-i18n="dec6_title">Zentrale Log-Zusendung</h3>
+        <p style="font-size:.9rem;color:var(--ink-soft)" data-i18n="dec6_desc">Ob Logs an HINs Loki gesendet werden — oder ausschliesslich lokal bleiben.</p>
         <div class="decision-options">
           <div class="decision-option">
-            <div class="decision-option-title"><span class="pill pill-sage">Loki aktiviert</span> Default</div>
-            <div class="decision-option-desc">Promtail schickt Logs der 4 Anwendungs-Container an <code>loki.infra.vereign-cdn.com</code>. <strong>Pro:</strong> HIN-Support kann bei Problemen direkt mitsehen. <strong>Contra:</strong> Eure Appliance-IP muss bei HIN in der Loki-Ingress-Whitelist stehen.</div>
+            <div class="decision-option-title"><span class="pill pill-sage" data-i18n="dec6_loki_on_pill">Loki aktiviert</span> Default</div>
+            <div class="decision-option-desc" data-i18n="dec6_loki_on_desc">Promtail schickt Logs der 4 Anwendungs-Container an <code>loki.infra.vereign-cdn.com</code>. <strong>Pro:</strong> HIN-Support kann bei Problemen direkt mitsehen. <strong>Contra:</strong> Eure Appliance-IP muss bei HIN in der Loki-Ingress-Whitelist stehen.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title">Loki deaktiviert</div>
-            <div class="decision-option-desc"><code>LOKI_URL=""</code> setzen und Promtail-Service in docker-compose.yml entfernen/kommentieren. <strong>Pro:</strong> Logs bleiben strikt lokal. <strong>Contra:</strong> Ihr müsst für HIN-Support Logs manuell bereitstellen (<code>docker compose logs</code>).</div>
+            <div class="decision-option-title" data-i18n="dec6_loki_off_title">Loki deaktiviert</div>
+            <div class="decision-option-desc" data-i18n="dec6_loki_off_desc"><code>LOKI_URL=""</code> setzen und Promtail-Service in docker-compose.yml entfernen/kommentieren. <strong>Pro:</strong> Logs bleiben strikt lokal. <strong>Contra:</strong> Ihr müsst für HIN-Support Logs manuell bereitstellen (<code>docker compose logs</code>).</div>
           </div>
         </div>
       </div>
 
       <!-- Decision 7: Backup strategy -->
       <div class="decision">
-        <div class="eyebrow">Entscheidung 07</div>
-        <h3>Backup-Strategie</h3>
-        <p style="font-size:.9rem;color:var(--ink-soft)">Das eingebaute Backup deckt den Appliance ab — aber <em>wohin</em> muss eure Infrastruktur-Policy lösen.</p>
+        <div class="eyebrow" data-i18n="dec7_eyebrow">Entscheidung 07</div>
+        <h3 data-i18n="dec7_title">Backup-Strategie</h3>
+        <p style="font-size:.9rem;color:var(--ink-soft)" data-i18n="dec7_desc">Das eingebaute Backup deckt den Appliance ab — aber <em>wohin</em> muss eure Infrastruktur-Policy lösen.</p>
         <div class="decision-options">
           <div class="decision-option">
-            <div class="decision-option-title">Eingebauter Cron-Backup</div>
-            <div class="decision-option-desc">Läuft täglich 02:00 lokal via <code>./scripts/backup.sh</code>. Enthält PG-Dump, Vault-Keys, customer-config, Zertifikate. Retention 7 Tage lokal.</div>
+            <div class="decision-option-title" data-i18n="dec7_cron_title">Eingebauter Cron-Backup</div>
+            <div class="decision-option-desc" data-i18n="dec7_cron_desc">Läuft täglich 02:00 lokal via <code>./scripts/backup.sh</code>. Enthält PG-Dump, Vault-Keys, customer-config, Zertifikate. Retention 7 Tage lokal.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title"><span class="pill pill-accent">Externe Replikation · Pflicht</span></div>
-            <div class="decision-option-desc"><strong>Kritisch:</strong> Das Backup-Verzeichnis muss täglich extern repliziert werden (S3, Azure Blob, Veeam, rsync nach Remote-Storage — egal was). Bei Totalverlust ohne externes Backup ist der WG-Private-Key weg und ihr braucht neue Peer-Registrierung bei HIN.</div>
+            <div class="decision-option-title"><span class="pill pill-accent" data-i18n="dec7_ext_pill">Externe Replikation · Pflicht</span></div>
+            <div class="decision-option-desc" data-i18n="dec7_ext_desc"><strong>Kritisch:</strong> Das Backup-Verzeichnis muss täglich extern repliziert werden (S3, Azure Blob, Veeam, rsync nach Remote-Storage — egal was). Bei Totalverlust ohne externes Backup ist der WG-Private-Key weg und ihr braucht neue Peer-Registrierung bei HIN.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title">Snapshot-basiert (zusätzlich)</div>
-            <div class="decision-option-desc">Auf VM-Ebene regelmäßige Snapshots (Azure, vSphere, Proxmox, Hyper-V). Deckt zusätzlich das Host-FS ab. Für schnelle Recovery-Szenarien (in 15 Min. wieder up) oft bequemer als dateibasierter Restore.</div>
+            <div class="decision-option-title" data-i18n="dec7_snap_title">Snapshot-basiert (zusätzlich)</div>
+            <div class="decision-option-desc" data-i18n="dec7_snap_desc">Auf VM-Ebene regelmäßige Snapshots (Azure, vSphere, Proxmox, Hyper-V). Deckt zusätzlich das Host-FS ab. Für schnelle Recovery-Szenarien (in 15 Min. wieder up) oft bequemer als dateibasierter Restore.</div>
           </div>
         </div>
       </div>
@@ -952,8 +952,7 @@
           <li><a href="#faq-ops">Betrieb &amp; Wartung</a></li>
           <li><a href="#faq-migr">Migration vom Legacy-MGW</a></li>
           <li><a href="#faq-sp">Service-Provider-Fragen</a></li>
-          <li><a href="#faq-open">Offene Fragen an HIN</a></li>
-        </ul>
+            </ul>
       </nav>
 
       <div>
@@ -1356,49 +1355,6 @@ docker logs stargate-idagent | grep -i handshake</pre>
           </div>
         </details>
 
-        <!-- Open questions -->
-        <h3 id="faq-open" style="margin-top:3rem">Offene Fragen an HIN</h3>
-        <p style="color:var(--ink-soft)">Diese Fragen sind im Rollout aufgekommen und noch nicht abschliessend dokumentiert. Stand der Knowledge Base — wenn ein Kunde eine davon fragt, ehrlich sagen "offen, wird geklärt" und ggf. eskalieren.</p>
-
-        <details class="qa">
-          <summary>Datenverarbeitung — gibt es Sub-Verarbeiter ausserhalb CH/EU?</summary>
-          <div class="qa-body"><p>Offen. Konkrete Liste der Sub-Verarbeiter und Rechtsgebiete bei HIN anfragen.</p></div>
-        </details>
-
-        <details class="qa">
-          <summary>Vulnerability-Management — SLAs für Fixes kritischer CVEs?</summary>
-          <div class="qa-body"><p>Offen. Kunden-Notification-Prozess und Zeitziele bei HIN anfragen.</p></div>
-        </details>
-
-        <details class="qa">
-          <summary>Incident-Management — Prozess bei Security-Vorfällen?</summary>
-          <div class="qa-body"><p>Offen. Wie schnell werden Kunden informiert? Welche Informationen?</p></div>
-        </details>
-
-        <details class="qa">
-          <summary>SBOM — Software Bill of Materials verfügbar?</summary>
-          <div class="qa-body"><p>Offen. Update-Frequenz und Format bei HIN anfragen.</p></div>
-        </details>
-
-        <details class="qa">
-          <summary>Verantwortungs-Modell — Zuständigkeit HIN vs. Betreiber vs. Kunde?</summary>
-          <div class="qa-body"><p>Offen. Klare RACI-Matrix wird mit dem Rollout erwartet.</p></div>
-        </details>
-
-        <details class="qa">
-          <summary>Business-Continuity auf HIN-Seite — BCM-Prozesse?</summary>
-          <div class="qa-body"><p>Offen. Wie verhält sich der Appliance bei HIN-CA-Ausfall? Bei Loki-Ausfall?</p></div>
-        </details>
-
-        <details class="qa">
-          <summary>Vertrags-Anpassungen durch Stargate?</summary>
-          <div class="qa-body"><p>Offen. Lizenz-, Preis-, Migrations-Kosten werden separat kommuniziert.</p></div>
-        </details>
-
-        <details class="qa">
-          <summary>M365-Exchange-Online-Connector-Dokumentation</summary>
-          <div class="qa-body"><p><span class="pill pill-sage">In Arbeit</span> Separate, dedizierte Integrations-Anleitung für M365-Kunden ist in Vorbereitung — wird ins Deployment-Repo aufgenommen. Aktuell im Hub unter Checkliste abgedeckt.</p></div>
-        </details>
 
       </div>
     </div>
@@ -1756,7 +1712,7 @@ docker exec stargate-idagent wg show > wg.txt</pre>
     <div class="card" style="margin-top:1rem">
       <h4>Alles auf einen Blick</h4>
       <pre>./scripts/health-check.sh -v</pre>
-      <p style="font-size:.85rem;margin-top:.8rem">Prüft Container, Liveness-Endpoints, Vault, DB, MinIO, WireGuard, Postfix, Metriken.</p>
+      <p style="font-size:.85rem;margin-top:.8rem" data-i18n="tt_healthcheck_desc">Prüft Container, Liveness-Endpoints, Vault, DB, MinIO, WireGuard, Postfix, Metriken.</p>
     </div>
 
     <div class="card">
@@ -1786,13 +1742,13 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
 
     <div class="callout callout-amber" style="margin-top:2rem">
       <div class="callout-title">Wenn nichts hilft · Reset-Optionen</div>
-      <p><strong>Sanft (Daten bleiben):</strong></p>
+      <p data-i18n="tt_reset_soft"><strong>Sanft (Daten bleiben):</strong></p>
       <pre>./scripts/stop.sh
 ./scripts/start.sh</pre>
-      <p style="margin-top:1rem"><strong>Hart (ALLE Daten weg · nur wenn wirklich nichts mehr geht):</strong></p>
+      <p style="margin-top:1rem" data-i18n="tt_reset_hard"><strong>Hart (ALLE Daten weg · nur wenn wirklich nichts mehr geht):</strong></p>
       <pre>./scripts/purge.sh
 ./scripts/install.sh</pre>
-      <p style="margin-top:1rem;font-size:.85rem">Nach <code>purge</code> muss die WireGuard-Peer-Registrierung bei HIN erneuert werden (neuer Public-Key). Nur als letzte Option.</p>
+      <p style="margin-top:1rem;font-size:.85rem" data-i18n="tt_purge_note">Nach <code>purge</code> muss die WireGuard-Peer-Registrierung bei HIN erneuert werden (neuer Public-Key). Nur als letzte Option.</p>
     </div>
 
   </div>
@@ -1818,40 +1774,40 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
       <div class="checklist-item">
         <input type="checkbox">
         <div class="checklist-item-body">
-          <div class="checklist-label">Statische öffentliche IPv4-Adresse reserviert</div>
-          <div class="checklist-desc">Echte routbare IP, kein NAT mit dynamischer Zuordnung. Wird sowohl für WireGuard-Tunnel als auch für MXEngine-Callback gebraucht.</div>
+          <div class="checklist-label" data-i18n="cl_label_1">Statische öffentliche IPv4-Adresse reserviert</div>
+          <div class="checklist-desc" data-i18n="cl_desc_29">Echte routbare IP, kein NAT mit dynamischer Zuordnung. Wird sowohl für WireGuard-Tunnel als auch für MXEngine-Callback gebraucht.</div>
         </div>
       </div>
 
       <div class="checklist-item">
         <input type="checkbox">
         <div class="checklist-item-body">
-          <div class="checklist-label">VM oder Host bereitgestellt</div>
-          <div class="checklist-desc">Mindestens 4 CPU · 8 GB RAM · 30 GB Storage. OS: RHEL 8/9/10, Alma, Rocky, Centos Stream, Ubuntu 22/24 oder Debian 11/12/13.</div>
+          <div class="checklist-label" data-i18n="cl_label_2">VM oder Host bereitgestellt</div>
+          <div class="checklist-desc" data-i18n="cl_desc_30">Mindestens 4 CPU · 8 GB RAM · 30 GB Storage. OS: RHEL 8/9/10, Alma, Rocky, Centos Stream, Ubuntu 22/24 oder Debian 11/12/13.</div>
         </div>
       </div>
 
       <div class="checklist-item">
         <input type="checkbox">
         <div class="checklist-item-body">
-          <div class="checklist-label">Deployment-Plattform gewählt</div>
-          <div class="checklist-desc">Azure-VHD, VMware-OVA, Proxmox-qcow2, Hyper-V-Image, Docker auf bestehendem Host, oder Kubernetes-Helm.</div>
+          <div class="checklist-label" data-i18n="cl_label_3">Deployment-Plattform gewählt</div>
+          <div class="checklist-desc" data-i18n="cl_desc_31">Azure-VHD, VMware-OVA, Proxmox-qcow2, Hyper-V-Image, Docker auf bestehendem Host, oder Kubernetes-Helm.</div>
         </div>
       </div>
 
       <div class="checklist-item">
         <input type="checkbox">
         <div class="checklist-item-body">
-          <div class="checklist-label">SSH-Zugriff für Betriebsteam eingerichtet</div>
-          <div class="checklist-desc">Wer darf auf den Appliance? 2-Personen-Regel oder privilegiertes Betriebs-Konto.</div>
+          <div class="checklist-label" data-i18n="cl_label_4">SSH-Zugriff für Betriebsteam eingerichtet</div>
+          <div class="checklist-desc" data-i18n="cl_desc_32">Wer darf auf den Appliance? 2-Personen-Regel oder privilegiertes Betriebs-Konto.</div>
         </div>
       </div>
 
       <div class="checklist-item">
         <input type="checkbox">
         <div class="checklist-item-body">
-          <div class="checklist-label">Backup-Zielort definiert</div>
-          <div class="checklist-desc">Externer Storage für tägliche Replikation des <code>backups/</code>- und <code>secrets/</code>-Verzeichnisses. Ohne externes Backup ist bei Totalverlust alles weg.</div>
+          <div class="checklist-label" data-i18n="cl_s200">Backup-Zielort definiert</div>
+          <div class="checklist-desc" data-i18n="cl_r100">Externer Storage für tägliche Replikation des <code>backups/</code>- und <code>secrets/</code>-Verzeichnisses. Ohne externes Backup ist bei Totalverlust alles weg.</div>
         </div>
       </div>
     </div>
@@ -1862,21 +1818,21 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
 
       <h4 style="margin-top:1rem">Inbound (vom Internet zum Appliance):</h4>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Port 25/TCP — SMTP (Mail-Empfang von extern)</div>
+        <div class="checklist-label" data-i18n="cl_s201">Port 25/TCP — SMTP (Mail-Empfang von extern)</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Port 8084/TCP — HTTP Seal-Callback</div>
-        <div class="checklist-desc">Für Remote-Sealer von der HIN-Seite. <code>http://</code> ist korrekt — TLS nicht nötig, weil das Seal-Payload bereits verschlüsselt ist.</div>
+        <div class="checklist-label" data-i18n="cl_s202">Port 8084/TCP — HTTP Seal-Callback</div>
+        <div class="checklist-desc" data-i18n="cl_r101">Für Remote-Sealer von der HIN-Seite. <code>http://</code> ist korrekt — TLS nicht nötig, weil das Seal-Payload bereits verschlüsselt ist.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Port 19818/TCP und UDP — WireGuard</div>
-        <div class="checklist-desc"><strong>Beide Protokolle</strong>, auch wenn ihr nur TCP-Mode nutzt — erleichtert später Switch zu UDP falls nötig.</div>
+        <div class="checklist-label" data-i18n="cl_s203">Port 19818/TCP und UDP — WireGuard</div>
+        <div class="checklist-desc" data-i18n="cl_r102"><strong>Beide Protokolle</strong>, auch wenn ihr nur TCP-Mode nutzt — erleichtert später Switch zu UDP falls nötig.</div>
       </div></div>
 
       <h4 style="margin-top:1.5rem">Outbound (vom Appliance ins Internet):</h4>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
         <div class="checklist-label">registry.vereign.io:443</div>
-        <div class="checklist-desc">Docker-Image-Registry.</div>
+        <div class="checklist-desc" data-i18n="cl_r103">Docker-Image-Registry.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
         <div class="checklist-label">mxengine-dev.k8s.vereign-cdn.com:443</div>
@@ -1886,7 +1842,7 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
         <div class="checklist-label">loki.infra.vereign-cdn.com:443</div>
-        <div class="checklist-desc">Nur wenn zentrales Logging aktiv. Sonst Regel trotzdem anlegen für Support-Cases.</div>
+        <div class="checklist-desc" data-i18n="cl_r104">Nur wenn zentrales Logging aktiv. Sonst Regel trotzdem anlegen für Support-Cases.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
         <div class="checklist-label">vereign-issuer.vrgnservices.eu:443</div>
@@ -1895,12 +1851,12 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
         <div class="checklist-label">vereign-verifier.vrgnservices.eu:4433</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Port 25/TCP zu beliebigen Destination-MX-Servern</div>
-        <div class="checklist-desc">Viele Corp-Firewalls blockieren outbound 25 standardmässig — explizit freischalten.</div>
+        <div class="checklist-label" data-i18n="cl_s204">Port 25/TCP zu beliebigen Destination-MX-Servern</div>
+        <div class="checklist-desc" data-i18n="cl_r105">Viele Corp-Firewalls blockieren outbound 25 standardmässig — explizit freischalten.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">DNS (Port 53) — UDP und TCP</div>
-        <div class="checklist-desc">Pflicht für MX-, SPF- und A-Record-Lookups.</div>
+        <div class="checklist-label" data-i18n="cl_s205">DNS (Port 53) — UDP und TCP</div>
+        <div class="checklist-desc" data-i18n="cl_r106">Pflicht für MX-, SPF- und A-Record-Lookups.</div>
       </div></div>
     </div>
 
@@ -1909,28 +1865,28 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
       <div class="section-desc">DNS-Records müssen <strong>vor</strong> dem Go-Live stehen, wegen TTL-Propagation.</div>
 
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">A-Record für Mail-Hostname</div>
+        <div class="checklist-label" data-i18n="cl_s206">A-Record für Mail-Hostname</div>
         <div class="checklist-desc"><code>mail.&lt;domain&gt;. A &lt;SERVER_STATIC_IP&gt;</code></div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">MX-Records pro Domain gesetzt</div>
-        <div class="checklist-desc">Für jede Domain: Exchange mit niedriger Priorität (z.B. 10), Stargate mit höherer Priorität (z.B. 20) — sonst hat Stargate kein Auslieferungsziel.</div>
+        <div class="checklist-label" data-i18n="cl_s207">MX-Records pro Domain gesetzt</div>
+        <div class="checklist-desc" data-i18n="cl_r107">Für jede Domain: Exchange mit niedriger Priorität (z.B. 10), Stargate mit höherer Priorität (z.B. 20) — sonst hat Stargate kein Auslieferungsziel.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">SPF-Record um Appliance-IP erweitert</div>
-        <div class="checklist-desc">Pro Domain: bestehendes <code>v=spf1 …</code>-Record um <code>ip4:&lt;SERVER_STATIC_IP&gt;</code> ergänzen. Sonst SPF-Fails bei ausgehender Mail.</div>
+        <div class="checklist-label" data-i18n="cl_s208">SPF-Record um Appliance-IP erweitert</div>
+        <div class="checklist-desc" data-i18n="cl_r108">Pro Domain: bestehendes <code>v=spf1 …</code>-Record um <code>ip4:&lt;SERVER_STATIC_IP&gt;</code> ergänzen. Sonst SPF-Fails bei ausgehender Mail.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Reverse-DNS (PTR) gesetzt</div>
-        <div class="checklist-desc">Die Appliance-IP sollte rückwärts auf <code>mail.&lt;domain&gt;</code> auflösen. Verbessert Reputation bei Microsoft und anderen grossen Providern.</div>
+        <div class="checklist-label" data-i18n="cl_s209">Reverse-DNS (PTR) gesetzt</div>
+        <div class="checklist-desc" data-i18n="cl_r109">Die Appliance-IP sollte rückwärts auf <code>mail.&lt;domain&gt;</code> auflösen. Verbessert Reputation bei Microsoft und anderen grossen Providern.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">TTLs vor Go-Live auf niedrige Werte (5 Min) gesetzt</div>
-        <div class="checklist-desc">Erleichtert Rollback. Nach erfolgreichem Go-Live auf produktive Werte zurücksetzen.</div>
+        <div class="checklist-label" data-i18n="cl_s210">TTLs vor Go-Live auf niedrige Werte (5 Min) gesetzt</div>
+        <div class="checklist-desc" data-i18n="cl_r110">Erleichtert Rollback. Nach erfolgreichem Go-Live auf produktive Werte zurücksetzen.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">DNS-Records verifiziert</div>
-        <div class="checklist-desc">Mit <code>host -t mx &lt;domain&gt;</code>, <code>host -t txt &lt;domain&gt;</code>, <code>host &lt;mail-hostname&gt;</code>.</div>
+        <div class="checklist-label" data-i18n="cl_s211">DNS-Records verifiziert</div>
+        <div class="checklist-desc" data-i18n="cl_r111">Mit <code>host -t mx &lt;domain&gt;</code>, <code>host -t txt &lt;domain&gt;</code>, <code>host &lt;mail-hostname&gt;</code>.</div>
       </div></div>
     </div>
 
@@ -1939,24 +1895,24 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
       <div class="section-desc">Die eigentlichen 30 Minuten.</div>
 
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label"><code>customer-config.sh</code> vorbereitet</div>
-        <div class="checklist-desc">Aus <code>customer-config.example</code> manuell abgeleitet und an die eigene Umgebung angepasst.</div>
+        <div class="checklist-label" data-i18n="cl_s212"><code>customer-config.sh</code> vorbereitet</div>
+        <div class="checklist-desc" data-i18n="cl_r112">Aus <code>customer-config.example</code> manuell abgeleitet und an die eigene Umgebung angepasst.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label"><code>./scripts/install.sh</code> erfolgreich durchgelaufen</div>
-        <div class="checklist-desc">Dauert 5–10 Minuten. Installiert Docker bei Bedarf, startet Stack, initialisiert Vault, führt initiales Onboarding aus.</div>
+        <div class="checklist-label" data-i18n="cl_s213"><code>./scripts/install.sh</code> erfolgreich durchgelaufen</div>
+        <div class="checklist-desc" data-i18n="cl_r113">Dauert 5–10 Minuten. Installiert Docker bei Bedarf, startet Stack, initialisiert Vault, führt initiales Onboarding aus.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Alle Container laufen healthy</div>
-        <div class="checklist-desc"><code>docker ps --format 'table {{.Names}}\t{{.Status}}'</code> zeigt keine restarts.</div>
+        <div class="checklist-label" data-i18n="cl_s214">Alle Container laufen healthy</div>
+        <div class="checklist-desc" data-i18n="cl_r114"><code>docker ps --format 'table {{.Names}}\t{{.Status}}'</code> zeigt keine restarts.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label"><code>./scripts/health-check.sh</code> läuft grün</div>
-        <div class="checklist-desc">Alles ausser Zertifikat und WireGuard-Handshake sollte ok sein — die kommen nach Peer-Registrierung.</div>
+        <div class="checklist-label" data-i18n="cl_healthcheck"><code>./scripts/health-check.sh</code> läuft grün</div>
+        <div class="checklist-desc" data-i18n="cl_r115">Alles ausser Zertifikat und WireGuard-Handshake sollte ok sein — die kommen nach Peer-Registrierung.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Secrets-Backup-Verzeichnis extern gesichert</div>
-        <div class="checklist-desc"><code>secrets/vault-keys.json</code> und <code>customer-config.sh</code> (mit auto-generiertem WG-Private-Key) mindestens auf einen anderen Storage kopiert.</div>
+        <div class="checklist-label" data-i18n="cl_label_28">Secrets-Backup-Verzeichnis extern gesichert</div>
+        <div class="checklist-desc" data-i18n="cl_r116"><code>secrets/vault-keys.json</code> und <code>customer-config.sh</code> (mit auto-generiertem WG-Private-Key) mindestens auf einen anderen Storage kopiert.</div>
       </div></div>
     </div>
 
@@ -1965,27 +1921,27 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
       <div class="section-desc">Ohne diesen Schritt kein Zertifikat. Betrifft jeden Rollout.</div>
 
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">WireGuard-Public-Key aus idagent-Logs ausgelesen</div>
+        <div class="checklist-label" data-i18n="cl_label_5">WireGuard-Public-Key aus idagent-Logs ausgelesen</div>
         <div class="checklist-desc"><code>docker compose logs idagent | grep "public key"</code></div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">E-Mail an HIN versendet</div>
-        <div class="checklist-desc">Enthält WG-Public-Key, DEPLOYMENT_NAME, SERVER_STATIC_IP, bei abweichendem Port auch WG_INTERFACE_PORT.</div>
+        <div class="checklist-label" data-i18n="cl_label_6">E-Mail an HIN versendet</div>
+        <div class="checklist-desc" data-i18n="cl_desc_33">Enthält WG-Public-Key, DEPLOYMENT_NAME, SERVER_STATIC_IP, bei abweichendem Port auch WG_INTERFACE_PORT.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Bestätigung von HIN erhalten</div>
+        <div class="checklist-label" data-i18n="cl_label_7">Bestätigung von HIN erhalten</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Zertifikat-Regenerierung ausgeführt</div>
+        <div class="checklist-label" data-i18n="cl_label_8">Zertifikat-Regenerierung ausgeführt</div>
         <div class="checklist-desc"><code>./scripts/onboard.sh --regenerate-cert</code></div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">WireGuard-Handshake bestätigt</div>
-        <div class="checklist-desc"><code>docker exec stargate-idagent wg show</code> zeigt <code>latest handshake: &lt; 2 min ago</code>.</div>
+        <div class="checklist-label" data-i18n="cl_label_9">WireGuard-Handshake bestätigt</div>
+        <div class="checklist-desc" data-i18n="cl_s220"><code>docker exec stargate-idagent wg show</code> zeigt <code>latest handshake: &lt; 2 min ago</code>.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">S/MIME-Zertifikat in smimekeys-client sichtbar</div>
-        <div class="checklist-desc"><code>docker logs stargate-smimekeys-client | grep -i "certificate"</code> — Issuer sollte HIN Test CA (bzw. HIN CA in Produktion) sein.</div>
+        <div class="checklist-label" data-i18n="cl_label_10">S/MIME-Zertifikat in smimekeys-client sichtbar</div>
+        <div class="checklist-desc" data-i18n="cl_s221"><code>docker logs stargate-smimekeys-client | grep -i "certificate"</code> — Issuer sollte HIN Test CA (bzw. HIN CA in Produktion) sein.</div>
       </div></div>
     </div>
 
@@ -1994,24 +1950,24 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
       <div class="section-desc">Setup im Exchange-System (M365 oder on-prem).</div>
 
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Outbound-Connector erstellt</div>
-        <div class="checklist-desc">Exchange → Stargate, Smart-Host = SERVER_STATIC_IP, nur via Transport-Rule getriggert.</div>
+        <div class="checklist-label" data-i18n="cl_label_11">Outbound-Connector erstellt</div>
+        <div class="checklist-desc" data-i18n="cl_desc_34">Exchange → Stargate, Smart-Host = SERVER_STATIC_IP, nur via Transport-Rule getriggert.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Inbound-Connector erstellt</div>
-        <div class="checklist-desc">Stargate → Exchange, IP-basierte Authentifizierung mit SERVER_STATIC_IP.</div>
+        <div class="checklist-label" data-i18n="cl_label_12">Inbound-Connector erstellt</div>
+        <div class="checklist-desc" data-i18n="cl_desc_35">Stargate → Exchange, IP-basierte Authentifizierung mit SERVER_STATIC_IP.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Transport-Rule angelegt und aktiviert</div>
-        <div class="checklist-desc">Rule wird im Disabled-Zustand erstellt — <strong>aktivieren nicht vergessen</strong>.</div>
+        <div class="checklist-label" data-i18n="cl_label_13">Transport-Rule angelegt und aktiviert</div>
+        <div class="checklist-desc" data-i18n="cl_desc_36">Rule wird im Disabled-Zustand erstellt — <strong>aktivieren nicht vergessen</strong>.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">IP-Exception in der Transport-Rule gesetzt</div>
-        <div class="checklist-desc"><em>Except if sender IP is &lt;SERVER_STATIC_IP&gt;</em> — verhindert Mail-Loops. Häufig vergessen, immer prüfen.</div>
+        <div class="checklist-label" data-i18n="cl_label_14">IP-Exception in der Transport-Rule gesetzt</div>
+        <div class="checklist-desc" data-i18n="cl_desc_37"><em>Except if sender IP is &lt;SERVER_STATIC_IP&gt;</em> — verhindert Mail-Loops. Häufig vergessen, immer prüfen.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Connector-Validierung erfolgreich</div>
-        <div class="checklist-desc">Im Exchange-Admin-Center den Validate-Button mit einer echten Empfängeradresse geklickt.</div>
+        <div class="checklist-label" data-i18n="cl_label_15">Connector-Validierung erfolgreich</div>
+        <div class="checklist-desc" data-i18n="cl_desc_38">Im Exchange-Admin-Center den Validate-Button mit einer echten Empfängeradresse geklickt.</div>
       </div></div>
     </div>
 
@@ -2020,24 +1976,24 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
       <div class="section-desc">Bevor der Rollout produktiv geht, Testmails durchlaufen lassen.</div>
 
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Testmail extern → intern erfolgreich</div>
-        <div class="checklist-desc">Von einer externen Adresse (z.B. Gmail, Web.de) an eine interne Adresse — sollte via Stargate ins Postfach kommen.</div>
+        <div class="checklist-label" data-i18n="cl_label_16">Testmail extern → intern erfolgreich</div>
+        <div class="checklist-desc" data-i18n="cl_desc_39">Von einer externen Adresse (z.B. Gmail, Web.de) an eine interne Adresse — sollte via Stargate ins Postfach kommen.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Testmail intern → extern erfolgreich</div>
-        <div class="checklist-desc">Aus Outlook an externe Adresse — sollte via Stargate relayt werden, SPF-Check beim Empfänger muss bestehen.</div>
+        <div class="checklist-label" data-i18n="cl_label_17">Testmail intern → extern erfolgreich</div>
+        <div class="checklist-desc" data-i18n="cl_desc_40">Aus Outlook an externe Adresse — sollte via Stargate relayt werden, SPF-Check beim Empfänger muss bestehen.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Testmail intern → HIN-Empfänger (S/MIME)</div>
-        <div class="checklist-desc">An eine HIN-Empfängeradresse — sollte signiert und verschlüsselt durchgehen.</div>
+        <div class="checklist-label" data-i18n="cl_label_18">Testmail intern → HIN-Empfänger (S/MIME)</div>
+        <div class="checklist-desc" data-i18n="cl_desc_41">An eine HIN-Empfängeradresse — sollte signiert und verschlüsselt durchgehen.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Keine Mail-Loops in Exchange-Trace</div>
-        <div class="checklist-desc">Im Exchange-Message-Trace keine Mails mit mehreren Weiterleitungen an Stargate-IP sichtbar.</div>
+        <div class="checklist-label" data-i18n="cl_label_19">Keine Mail-Loops in Exchange-Trace</div>
+        <div class="checklist-desc" data-i18n="cl_desc_42">Im Exchange-Message-Trace keine Mails mit mehreren Weiterleitungen an Stargate-IP sichtbar.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Queue leer</div>
-        <div class="checklist-desc"><code>docker exec stargate-postfix-relay mailq</code> zeigt leere Queue.</div>
+        <div class="checklist-label" data-i18n="cl_label_20">Queue leer</div>
+        <div class="checklist-desc" data-i18n="cl_s222"><code>docker exec stargate-postfix-relay mailq</code> zeigt leere Queue.</div>
       </div></div>
     </div>
 
@@ -2046,32 +2002,32 @@ docker exec stargate-postfix-relay postconf | grep -E 'relayhost|content_filter'
       <div class="section-desc">Bevor ihr das System an den regulären Betrieb übergebt.</div>
 
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Monitoring angebunden</div>
-        <div class="checklist-desc">Prometheus-Scraping auf Ports :2113/:2114/:2115/:2116/:9100 konfiguriert. Mindest-Alerts: Container down, Zertifikat-Ablauf &lt; 30 Tage, Queue &gt; 100 Mails, WireGuard-Handshake älter als 10 Minuten.</div>
+        <div class="checklist-label" data-i18n="cl_label_21">Monitoring angebunden</div>
+        <div class="checklist-desc" data-i18n="cl_r117">Prometheus-Scraping auf Ports :2113/:2114/:2115/:2116/:9100 konfiguriert. Mindest-Alerts: Container down, Zertifikat-Ablauf &lt; 30 Tage, Queue &gt; 100 Mails, WireGuard-Handshake älter als 10 Minuten.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Backup-Cronjob verifiziert</div>
-        <div class="checklist-desc"><code>crontab -l</code> zeigt den 02:00-Job, ein manueller Testlauf erzeugt ein Backup-Archiv.</div>
+        <div class="checklist-label" data-i18n="cl_label_22">Backup-Cronjob verifiziert</div>
+        <div class="checklist-desc" data-i18n="cl_r118"><code>crontab -l</code> zeigt den 02:00-Job, ein manueller Testlauf erzeugt ein Backup-Archiv.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Externe Backup-Replikation läuft</div>
-        <div class="checklist-desc">Nach 24 h: Backup-Archiv von gestern ist im externen Storage angekommen.</div>
+        <div class="checklist-label" data-i18n="cl_label_23">Externe Backup-Replikation läuft</div>
+        <div class="checklist-desc" data-i18n="cl_r119">Nach 24 h: Backup-Archiv von gestern ist im externen Storage angekommen.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Restore-Test auf Stage-VM durchgeführt</div>
-        <div class="checklist-desc">Einmalig das Backup auf einer frischen VM mit <code>./scripts/restore.sh</code> einspielen — um zu beweisen, dass es wirklich funktioniert. Ohne Test ist ein Backup kein Backup.</div>
+        <div class="checklist-label" data-i18n="cl_label_24">Restore-Test auf Stage-VM durchgeführt</div>
+        <div class="checklist-desc" data-i18n="cl_r120">Einmalig das Backup auf einer frischen VM mit <code>./scripts/restore.sh</code> einspielen — um zu beweisen, dass es wirklich funktioniert. Ohne Test ist ein Backup kein Backup.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Runbook an Betriebsteam übergeben</div>
-        <div class="checklist-desc">Dokumentiert: SSH-Zugang, Start/Stop, Update-Prozess, Monitoring-Dashboards, Eskalations-Kontakt bei HIN.</div>
+        <div class="checklist-label" data-i18n="cl_label_25">Runbook an Betriebsteam übergeben</div>
+        <div class="checklist-desc" data-i18n="cl_r121">Dokumentiert: SSH-Zugang, Start/Stop, Update-Prozess, Monitoring-Dashboards, Eskalations-Kontakt bei HIN.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">2nd-Level-Kontakt bei HIN dokumentiert</div>
-        <div class="checklist-desc">Name, Mail, Telefonnummer, SLA.</div>
+        <div class="checklist-label" data-i18n="cl_label_26">2nd-Level-Kontakt bei HIN dokumentiert</div>
+        <div class="checklist-desc" data-i18n="cl_desc_43">Name, Mail, Telefonnummer, SLA.</div>
       </div></div>
       <div class="checklist-item"><input type="checkbox"><div class="checklist-item-body">
-        <div class="checklist-label">Go-Live-Entscheidung im Projekt-Steuerungs-Meeting getroffen</div>
-        <div class="checklist-desc">Go/No-Go mit allen Stakeholdern (IT, Security, Mail-Team, HIN-Ansprechpartner).</div>
+        <div class="checklist-label" data-i18n="cl_label_27">Go-Live-Entscheidung im Projekt-Steuerungs-Meeting getroffen</div>
+        <div class="checklist-desc" data-i18n="cl_desc_44">Go/No-Go mit allen Stakeholdern (IT, Security, Mail-Team, HIN-Ansprechpartner).</div>
       </div></div>
     </div>
 
@@ -2198,12 +2154,7 @@ const I18N = {
   '#section-architecture h3:nth-of-type(1)': 'Mail Flow · Inbound Mail',
   '#section-architecture h3:nth-of-type(1) + p': 'From the external sender to the Exchange mailbox of the recipient. Every arrow is a real network hop, every block is a container.',
 
-  // Architecture SVG text
-  '#section-architecture .arch-svg text.label:nth-of-type(1)': 'External Mail Server',
-  '#section-architecture .arch-svg text.sub:nth-of-type(1)': 'Internet · Sender of the mail',
-  '#section-architecture .arch-svg text.label:nth-of-type(2)': 'Postfix Relay · stargate-postfix-relay',
-  '#section-architecture .arch-svg text.sub:nth-of-type(2)': 'Receives on port 25 · auto config from DNS (MX + SPF)',
-  '#section-architecture .arch-svg text.label:last-of-type': 'Destination Mail Server',
+
 
   // Architecture sections
   '#section-architecture h3:nth-of-type(2)': 'Services in the Stack',
@@ -2230,7 +2181,6 @@ const I18N = {
   '#section-faq .faq-nav a[href="#faq-ops"]': 'Operations & Maintenance',
   '#section-faq .faq-nav a[href="#faq-migr"]': 'Migration from Legacy MGW',
   '#section-faq .faq-nav a[href="#faq-sp"]': 'Service Provider Questions',
-  '#section-faq .faq-nav a[href="#faq-open"]': 'Open Questions to HIN',
 
   // FAQ section headers
   '#faq-arch': 'Architecture & Scaling',
@@ -2241,7 +2191,6 @@ const I18N = {
   '#faq-ops': 'Operations & Maintenance',
   '#faq-migr': 'Migration from Legacy MGW',
   '#faq-sp': 'Service Provider Questions',
-  '#faq-open': 'Open Questions to HIN',
 
   // ── TROUBLESHOOT ──
   '#section-troubleshoot > .wrap > .eyebrow': 'Diagnosis & Resolution',
@@ -2278,6 +2227,239 @@ const I18N = {
   '#section-checklist .checklist-section:nth-child(7) .section-desc': 'Before the rollout goes to production, run test mails.',
   '#section-checklist .checklist-section:nth-child(8) h3': '8 · Operations Handover',
   '#section-checklist .checklist-section:nth-child(8) .section-desc': 'Before handing the system over to regular operations.',
+
+
+  // ── Architecture: SVG texts ──
+  '[data-i18n="svg_ext_mail"]': 'External Mail Server',
+  '[data-i18n="svg_ext_mail_sub"]': 'Internet · Sender of the mail',
+  '[data-i18n="svg_postfix_sub"]': 'Receives on port 25 · auto config from DNS (MX + SPF)',
+  '[data-i18n="svg_transport_maps"]': 'transport_maps = per-domain routing via MX lookup',
+  '[data-i18n="svg_mx_line1"]': 'Core work: S/MIME signature, policy decision (OPA/Rego),',
+  '[data-i18n="svg_mx_line2"]': 'Seal creation/resolution, recipient lookup',
+  '[data-i18n="svg_mx_callback"]': 'Callback port :8084 for remote sealer (public!)',
+  '[data-i18n="svg_policy_sub"]': 'OPA/Rego · :8082',
+  '[data-i18n="svg_smime_sub"]': 'Keys from Vault · :8081',
+  '[data-i18n="svg_postfix_out"]': 'Postfix Relay · same container, port 10026',
+  '[data-i18n="svg_postfix_out_sub1"]': 'Receives processed mail and delivers to the actual destination MX',
+  '[data-i18n="svg_dest_mail"]': 'Destination Mail Server',
+  '[data-i18n="svg_dest_mail_sub"]': 'Exchange / Exchange Online / other system',
+  '[data-i18n="flow_step1"]': '<strong>Inbound</strong> — external mail arrives on port 25. Postfix decides via <code>content_filter</code> to forward the mail to MXEngine for processing.',
+  '[data-i18n="flow_step2"]': '<strong>Processing</strong> — MXEngine does the actual work: policy lookup (how should this mail be handled?), S/MIME signature, seal creation. Keys come from Vault via smimekeys-client.',
+  '[data-i18n="flow_step3"]': '<strong>Reinjection</strong> — Processed mail goes back to Postfix on port 10026 (internal listener).',
+  '[data-i18n="flow_step4"]': '<strong>Delivery</strong> — Postfix delivers via MX lookup (or <code>RELAYHOST</code>/<code>DOMAIN_RELAY_MAP</code>) to the actual destination mail server.',
+  '[data-i18n="svg_wg_your_appliance"]': 'Your Stargate Appliance',
+  '[data-i18n="arch_wg_title"]': 'WireGuard · Appliance-to-Appliance',
+  '[data-i18n="arch_wg_desc2"]': 'Each Stargate instance is its own WireGuard peer. The server\'s <em>public</em> IP serves as the unique tunnel address — no central coordinator for WG IPs needed.',
+  '[data-i18n="arch_services_title"]': 'Services in the Stack',
+  '[data-i18n="arch_svc_app"]': 'Application Services',
+  '[data-i18n="svc_mxengine"]': 'Mail processing · :8084 HTTP · :1587 SMTP · :2116 Metrics',
+  '[data-i18n="svc_smimekeys"]': 'S/MIME key management · :8081 · :2113 Metrics',
+  '[data-i18n="svc_policy"]': 'OPA/Rego policy engine · :8082 · :2115 Metrics',
+  '[data-i18n="svc_idagent"]': 'WireGuard tunnel &amp; peer communication · :8083 · :19818 WG · :2114 Metrics',
+  '[data-i18n="svc_policysync"]': 'Cron-like sync of Rego policies from Git into DB (hourly)',
+  '[data-i18n="svc_postfix"]': 'Mail transport · :25 external · :10026 reinjection · :1587 MXEngine input',
+  '[data-i18n="arch_svc_infra"]': 'Infrastructure',
+  '[data-i18n="svc_vault"]': 'HashiCorp Vault 1.19 · :8200 · KV-v2 for all secrets and S/MIME keys',
+  '[data-i18n="svc_minio"]': 'S3-compatible object storage · :9000 API · :9001 Console',
+  '[data-i18n="svc_promtail"]': 'Log shipper to Loki (optional)',
+  '[data-i18n="svc_nodeexp"]': 'Host metrics for Prometheus · :9100',
+  '[data-i18n="svc_vercoll"]': 'Collects app versions from /liveness for metrics',
+  '[data-i18n="svg_wg_keygen"]': 'generates keypair · :19818 tcp+udp',
+  '[data-i18n="svg_wg_addr"]': 'WG tunnel address = SERVER_STATIC_IP',
+  '[data-i18n="svg_wg_tunnel"]': 'WireGuard Tunnel',
+  '[data-i18n="svg_wg_hin_ca_sub"]': 'signs CSR and returns certificate',
+  '[data-i18n="svg_wg_hin_addr"]': 'WG address of the HIN side',
+
+  // ── Architecture: other elements ──
+  '[data-i18n="arch_wg_desc"]': 'Each Stargate instance is its own WireGuard peer. The server\'s public IP serves as the unique tunnel address — no central coordinator for WG IPs needed.',
+  '[data-i18n="arch_critical_step_title"]': 'The Critical Manual Step',
+  '[data-i18n="arch_critical_step_body"]': 'After the first install, your appliance has generated a public key — but <strong>it is not yet registered on the HIN side</strong>. Until that happens, no handshake occurs and therefore no certificate issuance. See Troubleshoot for the exact symptoms.',
+  '[data-i18n="arch_port_title"]': 'Port & Network Overview',
+  '[data-i18n="arch_port_inbound"]': 'Inbound (external)',
+  '[data-i18n="arch_port_outbound"]': 'Outbound (external)',
+  '[data-i18n="port_smtp_in"]': 'SMTP — Mail reception',
+  '[data-i18n="port_required"]': 'required',
+  '[data-i18n="port_seal_cb"]': 'HTTP — Seal Callback',
+  '[data-i18n="port_required2"]': 'required',
+  '[data-i18n="port_wg"]': 'WireGuard — Peer Tunnel',
+  '[data-i18n="port_required3"]': 'required',
+  '[data-i18n="port_required4"]': 'required',
+  '[data-i18n="port_required5"]': 'required',
+  '[data-i18n="port_required6"]': 'required',
+  '[data-i18n="port_required7"]': 'required',
+  '[data-i18n="port_required8"]': 'required',
+  '[data-i18n="arch_port_local"]': 'Host-local (Diagnostics)',
+  '[data-i18n="arch_port_metrics"]': 'Metrics (Prometheus)',
+  '[data-i18n="arch_data_title"]': 'Where is which data stored?',
+  '[data-i18n="arch_backup_title"]': 'Backup Criticality',
+  '[data-i18n="arch_backup_body"]': 'The backup script (<code>./scripts/backup.sh</code>) runs daily at 02:00 automatically and saves DB dumps, Vault keys, customer-config and certificates to <code>backups/</code>. <strong>This directory must be replicated externally</strong> — in case of total server loss, the WG private key is gone and there is no way back: the HIN side expects the old public key and must be manually re-registered.',
+
+  // ── Decisions ──
+  '[data-i18n="dec1_eyebrow"]': 'Decision 01',
+  '[data-i18n="dec1_title"]': 'Mail Routing Strategy',
+  '[data-i18n="dec1_desc"]': 'How does outbound mail find its destination — after processing by MXEngine? Three mutually exclusive paths.',
+  '[data-i18n="dec1_mx_pill"]': 'MX-based',
+  '[data-i18n="dec1_mx_rec"]': 'Recommended for single to multi-domain with own infra',
+  '[data-i18n="dec1_mx_desc"]': 'Postfix does DNS MX lookup per domain, filters itself out, delivers to the rest. <strong>Pro:</strong> Zero config in the appliance — you control via DNS. Works for any number of domains. <strong>Contra:</strong> Requires that you manage MX records and at least 2 MX per domain exist.',
+  '[data-i18n="dec1_relay_rec"]': 'One target for all',
+  '[data-i18n="dec1_relay_desc"]': 'All domains go to exactly one smart host, e.g. <code>[smtp.office365.com]</code>. <strong>Pro:</strong> Trivially simple. <strong>Contra:</strong> No per-domain routing. Unsuitable for multi-domain setups with different targets. SASL auth currently missing.',
+  '[data-i18n="dec1_drm_rec"]': 'Service provider case',
+  '[data-i18n="dec1_drm_desc"]': 'Explicit mapping <code>domain:[host]:port</code>, comma-separated. <strong>Pro:</strong> Clean for many domains with different targets without DNS control. <strong>Contra:</strong> Config maintenance on every change. Precedence &gt; RELAYHOST &gt; MX lookup.',
+  '[data-i18n="dec2_eyebrow"]': 'Decision 02',
+  '[data-i18n="dec2_title"]': 'Deployment Platform',
+  '[data-i18n="dec2_desc"]': 'VM image, existing Linux host or K8s — all three paths lead to the identical stack, only the effort differs.',
+  '[data-i18n="dec2_vm_title"]': 'VM Image (Azure · VMware · Proxmox · Hyper-V)',
+  '[data-i18n="dec2_vm_desc"]': 'Pre-built Alma Linux image with all dependencies. <strong>Pro:</strong> Fast, reproducible, no OS maintenance needed. <strong>Contra:</strong> You need to go through the platform-specific import ceremony.',
+  '[data-i18n="dec2_docker_title"]': 'Existing Linux Host (Docker Install)',
+  '[data-i18n="dec2_docker_desc"]': 'Clone repo, run <code>install.sh</code>. Docker is installed if needed. <strong>Pro:</strong> Full control over host OS, patch cycle in your own standard. <strong>Contra:</strong> You are responsible for OS hardening.',
+  '[data-i18n="dec2_k8s_title"]': 'Kubernetes (Helm)',
+  '[data-i18n="dec2_k8s_desc"]': 'Helm chart for existing clusters. <strong>Pro:</strong> Fits existing K8s operations. <strong>Contra:</strong> WireGuard host networking and static IP require elevated privileges — not possible in every managed K8s. Request documentation from HIN.',
+  '[data-i18n="dec3_eyebrow"]': 'Decision 03',
+  '[data-i18n="dec3_title"]': 'Phase · Alpha / Beta / Production',
+  '[data-i18n="dec3_desc"]': 'Determines CA endpoint, peer target and expectations.',
+  '[data-i18n="dec3_alpha_label"]': 'current',
+  '[data-i18n="dec3_alpha_desc"]': 'Connection to HIN Test CA (<code>hintest.ch</code>). CSR is signed automatically. <strong>No production mail</strong>. Use a test domain. Frequent updates expected.',
+  '[data-i18n="dec3_beta_desc"]': 'Still Test CA, but real traffic test possible after separate approval. Timing will be communicated separately.',
+  '[data-i18n="dec3_prod_pill"]': 'Production',
+  '[data-i18n="dec3_prod_label"]': 'from 18.05.2026',
+  '[data-i18n="dec3_prod_desc"]': 'Connection to HIN Production CA. Regular S/MIME certificates with 1-year validity. Peer must be manually registered at HIN.',
+  '[data-i18n="dec4_eyebrow"]': 'Decision 04',
+  '[data-i18n="dec4_title"]': 'Exchange Integration Pattern',
+  '[data-i18n="dec4_desc"]': 'Both patterns are possible and work — the difference is whether Stargate is the primary MX or mail is redirected via transport rule.',
+  '[data-i18n="dec4_a_label"]': 'Stargate as primary MX',
+  '[data-i18n="dec4_a_desc"]': 'Stargate MX 15, Exchange MX 20. Internet → Stargate → Exchange. <strong>Recommended</strong>: Inbound S/MIME processing happens automatically for all mails. Transport rule only needed for outbound.',
+  '[data-i18n="dec4_b_label"]': 'Pattern B · Exchange as primary MX',
+  '[data-i18n="dec4_b_desc"]': 'Exchange remains the main MX, transport rule routes mails through Stargate based on criteria. Useful when you only want to route some mails through Stargate. More configuration.',
+  '[data-i18n="dec4_c_label"]': 'Both: Outbound transport rule with IP exception',
+  '[data-i18n="dec4_c_desc"]': '<strong>Critical:</strong> In both patterns, the transport rule must have <em>"Except if sender IP is &lt;STARGATE_IP&gt;"</em> set — otherwise mail loop.',
+  '[data-i18n="dec5_eyebrow"]': 'Decision 05',
+  '[data-i18n="dec5_title"]': 'WireGuard Transport · TCP vs. UDP',
+  '[data-i18n="dec5_desc"]': 'WireGuard is originally UDP-only, HIN uses a variant that supports TCP — this makes firewall passage easier.',
+  '[data-i18n="dec5_tcp_desc"]': 'Works through most firewalls, even with deep packet inspection. <strong>Tip:</strong> Start with this and only switch if specific problems occur.',
+  '[data-i18n="dec5_udp_desc"]': 'Native WireGuard performance. <strong>When useful:</strong> With stateful firewalls that aggressively drop long-lived TCP connections, or when latency is critical (rarely relevant for S/MIME between institutions).',
+  '[data-i18n="dec6_eyebrow"]': 'Decision 06',
+  '[data-i18n="dec6_title"]': 'Central Log Shipping',
+  '[data-i18n="dec6_desc"]': 'Whether logs are sent to HIN\'s Loki — or remain exclusively local.',
+  '[data-i18n="dec6_loki_on_pill"]': 'Loki enabled',
+  '[data-i18n="dec6_loki_on_desc"]': 'Promtail sends logs from the 4 application containers to <code>loki.infra.vereign-cdn.com</code>. <strong>Pro:</strong> HIN support can directly view problems. <strong>Contra:</strong> Your appliance IP must be in HIN\'s Loki ingress whitelist.',
+  '[data-i18n="dec6_loki_off_title"]': 'Loki disabled',
+  '[data-i18n="dec6_loki_off_desc"]': 'Set <code>LOKI_URL=""</code> and remove/comment out Promtail service in docker-compose.yml. <strong>Pro:</strong> Logs remain strictly local. <strong>Contra:</strong> You must manually provide logs for HIN support (<code>docker compose logs</code>).',
+  '[data-i18n="dec7_eyebrow"]': 'Decision 07',
+  '[data-i18n="dec7_title"]': 'Backup Strategy',
+  '[data-i18n="dec7_desc"]': 'The built-in backup covers the appliance — but <em>where to</em> must be solved by your infrastructure policy.',
+  '[data-i18n="dec7_cron_title"]': 'Built-in Cron Backup',
+  '[data-i18n="dec7_cron_desc"]': 'Runs daily at 02:00 locally via <code>./scripts/backup.sh</code>. Contains PG dump, Vault keys, customer-config, certificates. Retention 7 days local.',
+  '[data-i18n="dec7_ext_pill"]': 'External Replication · Mandatory',
+  '[data-i18n="dec7_ext_desc"]': '<strong>Critical:</strong> The backup directory must be replicated externally daily (S3, Azure Blob, Veeam, rsync to remote storage — whatever). In case of total loss without external backup, the WG private key is gone and you need a new peer registration at HIN.',
+  '[data-i18n="dec7_snap_title"]': 'Snapshot-based (additional)',
+  '[data-i18n="dec7_snap_desc"]': 'Regular snapshots at VM level (Azure, vSphere, Proxmox, Hyper-V). Additionally covers the host filesystem. For fast recovery scenarios (back up in 15 min) often more convenient than file-based restore.',
+
+
+  // ── Checklist items ──
+  '[data-i18n="cl_label_1"]': 'Static public IPv4 address reserved',
+  '[data-i18n="cl_label_2"]': 'VM or host provisioned',
+  '[data-i18n="cl_label_3"]': 'Deployment platform chosen',
+  '[data-i18n="cl_label_4"]': 'SSH access set up for operations team',
+  '[data-i18n="cl_label_5"]': 'WireGuard public key read from idagent logs',
+  '[data-i18n="cl_label_6"]': 'Email sent to HIN',
+  '[data-i18n="cl_label_7"]': 'Confirmation received from HIN',
+  '[data-i18n="cl_label_8"]': 'Certificate regeneration executed',
+  '[data-i18n="cl_label_9"]': 'WireGuard handshake confirmed',
+  '[data-i18n="cl_label_10"]': 'S/MIME certificate visible in smimekeys-client',
+  '[data-i18n="cl_label_11"]': 'Outbound connector created',
+  '[data-i18n="cl_label_12"]': 'Inbound connector created',
+  '[data-i18n="cl_label_13"]': 'Transport rule created and activated',
+  '[data-i18n="cl_label_14"]': 'IP exception set in transport rule',
+  '[data-i18n="cl_label_15"]': 'Connector validation successful',
+  '[data-i18n="cl_label_16"]': 'Test mail external → internal successful',
+  '[data-i18n="cl_label_17"]': 'Test mail internal → external successful',
+  '[data-i18n="cl_label_18"]': 'Test mail internal → HIN recipient (S/MIME)',
+  '[data-i18n="cl_label_19"]': 'No mail loops in Exchange trace',
+  '[data-i18n="cl_label_20"]': 'Queue empty',
+  '[data-i18n="cl_label_21"]': 'Monitoring connected',
+  '[data-i18n="cl_label_22"]': 'Backup cron job verified',
+  '[data-i18n="cl_label_23"]': 'External backup replication running',
+  '[data-i18n="cl_label_24"]': 'Restore test performed on stage VM',
+  '[data-i18n="cl_label_25"]': 'Runbook handed over to operations team',
+  '[data-i18n="cl_label_26"]': '2nd level contact at HIN documented',
+  '[data-i18n="cl_label_27"]': 'Go-live decision made in project steering meeting',
+  '[data-i18n="cl_label_28"]': 'Secrets backup directory externally secured',
+  '[data-i18n="cl_desc_29"]': 'Real routable IP, no NAT with dynamic mapping. Needed for both WireGuard tunnel and MXEngine callback.',
+  '[data-i18n="cl_desc_30"]': 'Minimum 4 CPU · 8 GB RAM · 30 GB Storage. OS: RHEL 8/9/10, Alma, Rocky, CentOS Stream, Ubuntu 22/24 or Debian 11/12/13.',
+  '[data-i18n="cl_desc_31"]': 'Azure VHD, VMware OVA, Proxmox qcow2, Hyper-V image, Docker on existing host, or Kubernetes Helm.',
+  '[data-i18n="cl_desc_32"]': 'Who may access the appliance? Two-person rule or privileged operations account.',
+  '[data-i18n="cl_desc_33"]': 'Contains WG public key, DEPLOYMENT_NAME, SERVER_STATIC_IP, and WG_INTERFACE_PORT if non-default.',
+  '[data-i18n="cl_desc_34"]': 'Exchange → Stargate, smart host = SERVER_STATIC_IP, triggered only via transport rule.',
+  '[data-i18n="cl_desc_35"]': 'Stargate → Exchange, IP-based authentication with SERVER_STATIC_IP.',
+  '[data-i18n="cl_desc_36"]': 'Rule is created in disabled state — <strong>don\'t forget to activate</strong>.',
+  '[data-i18n="cl_desc_37"]': '<em>Except if sender IP is &lt;SERVER_STATIC_IP&gt;</em> — prevents mail loops. Often forgotten, always verify.',
+  '[data-i18n="cl_desc_38"]': 'In Exchange Admin Center, clicked the Validate button with a real recipient address.',
+  '[data-i18n="cl_desc_39"]': 'From an external address (e.g. Gmail, Web.de) to an internal address — should arrive in mailbox via Stargate.',
+  '[data-i18n="cl_desc_40"]': 'From Outlook to external address — should be relayed via Stargate, SPF check at recipient must pass.',
+  '[data-i18n="cl_desc_41"]': 'To a HIN recipient address — should go through signed and encrypted.',
+  '[data-i18n="cl_desc_42"]': 'In Exchange message trace, no mails with multiple redirections to Stargate IP visible.',
+  '[data-i18n="cl_desc_43"]': 'Name, email, phone number, SLA.',
+  '[data-i18n="cl_desc_44"]': 'Go/No-Go with all stakeholders (IT, Security, Mail team, HIN contact person).',
+  '[data-i18n="cl_healthcheck"]': '<code>./scripts/health-check.sh</code> runs green',
+
+
+
+  // ── Data persistence ──
+  '[data-i18n="dp_pg"]': 'All 4 DBs: smimekeys_client, policy, idagent, mxengine',
+  '[data-i18n="dp_vault"]': 'Master keys, S/MIME keys, WG private key',
+  '[data-i18n="dp_minio"]': 'Object storage: message bodies, attachments',
+  '[data-i18n="dp_postfix"]': 'Mail queue (transient)',
+  '[data-i18n="dp_secrets"]': '<strong>vault-keys.json</strong> — Unseal keys &amp; root token. <em>Back up externally!</em>',
+  '[data-i18n="dp_config"]': 'Auto-populated with WG_PRIVATE_KEY and VAULT_TOKEN after first install',
+
+
+  // ── Checklist section 2-4 labels ──
+  '[data-i18n="cl_s213"]': '<code>./scripts/install.sh</code> ran successfully',
+  '[data-i18n="cl_s214"]': 'All containers running healthy',
+  '[data-i18n="cl_s200"]': 'External backup target defined',
+  '[data-i18n="cl_s201"]': 'Port 25/TCP — SMTP (mail reception from external)',
+  '[data-i18n="cl_s202"]': 'Port 8084/TCP — HTTP Seal Callback',
+  '[data-i18n="cl_s203"]': 'Port 19818/TCP and UDP — WireGuard',
+  '[data-i18n="cl_s204"]': 'Port 25/TCP to any destination MX servers',
+  '[data-i18n="cl_s205"]': 'DNS (Port 53) — UDP and TCP',
+  '[data-i18n="cl_s206"]': 'A record for mail hostname',
+  '[data-i18n="cl_s207"]': 'MX records set per domain',
+  '[data-i18n="cl_s208"]': 'SPF record extended with appliance IP',
+  '[data-i18n="cl_s209"]': 'Reverse DNS (PTR) set',
+  '[data-i18n="cl_s210"]': 'TTLs set to low values (5 min) before go-live',
+  '[data-i18n="cl_s211"]': 'DNS records verified',
+  '[data-i18n="cl_s212"]': '<code>customer-config.sh</code> prepared',
+
+  '[data-i18n="cl_s220"]': '<code>docker exec stargate-idagent wg show</code> shows <code>latest handshake: &lt; 2 min ago</code>.',
+  '[data-i18n="cl_s221"]': '<code>docker logs stargate-smimekeys-client | grep -i "certificate"</code> — Issuer should be HIN Test CA (or HIN CA in production).',
+  '[data-i18n="cl_s222"]': '<code>docker exec stargate-postfix-relay mailq</code> shows empty queue.',
+  // ── Remaining checklist + troubleshoot items ──
+  '[data-i18n="cl_r100"]': 'External storage for daily replication of the <code>backups/</code> and <code>secrets/</code> directories. Without external backup, total loss means everything is gone.',
+  '[data-i18n="cl_r101"]': 'For remote sealer from the HIN side. <code>http://</code> is correct — TLS not needed because the seal payload is already encrypted.',
+  '[data-i18n="cl_r102"]': '<strong>Both protocols</strong>, even if you only use TCP mode — makes later switch to UDP easier if needed.',
+  '[data-i18n="cl_r103"]': 'Docker image registry.',
+  '[data-i18n="cl_r104"]': 'Only if central logging active. Otherwise create rule anyway for support cases.',
+  '[data-i18n="cl_r105"]': 'Many corporate firewalls block outbound 25 by default — explicitly allow.',
+  '[data-i18n="cl_r106"]': 'Required for MX, SPF and A record lookups.',
+  '[data-i18n="cl_r107"]': 'For each domain: Exchange with low priority (e.g. 10), Stargate with higher priority (e.g. 20) — otherwise Stargate has no delivery target.',
+  '[data-i18n="cl_r108"]': 'Per domain: add <code>ip4:&lt;SERVER_STATIC_IP&gt;</code> to existing <code>v=spf1 …</code> record. Otherwise SPF fails on outbound mail.',
+  '[data-i18n="cl_r109"]': 'The appliance IP should reverse-resolve to <code>mail.&lt;domain&gt;</code>. Improves reputation with Microsoft and other large providers.',
+  '[data-i18n="cl_r110"]': 'Eases rollback. After successful go-live, reset to production values.',
+  '[data-i18n="cl_r111"]': 'With <code>host -t mx &lt;domain&gt;</code>, <code>host -t txt &lt;domain&gt;</code>, <code>host &lt;mail-hostname&gt;</code>.',
+  '[data-i18n="cl_r112"]': 'Manually derived from <code>customer-config.example</code> and adapted to your own environment.',
+  '[data-i18n="cl_r113"]': 'Takes 5–10 minutes. Installs Docker if needed, starts stack, initializes Vault, performs initial onboarding.',
+  '[data-i18n="cl_r114"]': '<code>docker ps --format \'table {{.Names}}\t{{.Status}}\'</code> shows no restarts.',
+  '[data-i18n="cl_r115"]': 'Everything except certificate and WireGuard handshake should be ok — those come after peer registration.',
+  '[data-i18n="cl_r116"]': '<code>secrets/vault-keys.json</code> and <code>customer-config.sh</code> (with auto-generated WG private key) copied to at least one other storage.',
+  '[data-i18n="cl_r117"]': 'Prometheus scraping configured on ports :2113/:2114/:2115/:2116/:9100. Minimum alerts: container down, certificate expiry &lt; 30 days, queue &gt; 100 mails, WireGuard handshake older than 10 minutes.',
+  '[data-i18n="cl_r118"]': '<code>crontab -l</code> shows the 02:00 job, a manual test run produces a backup archive.',
+  '[data-i18n="cl_r119"]': 'After 24h: yesterday\'s backup archive has arrived in external storage.',
+  '[data-i18n="cl_r120"]': 'Restore the backup once on a fresh VM with <code>./scripts/restore.sh</code> — to prove it actually works. Without a test, a backup is not a backup.',
+  '[data-i18n="cl_r121"]': 'Documented: SSH access, start/stop, update process, monitoring dashboards, escalation contact at HIN.',
+  '[data-i18n="tt_healthcheck_desc"]': 'Checks containers, liveness endpoints, Vault, DB, MinIO, WireGuard, Postfix, metrics.',
+  '[data-i18n="tt_reset_soft"]': '<strong>Soft (data preserved):</strong>',
+  '[data-i18n="tt_reset_hard"]': '<strong>Hard (ALL data gone · only if nothing else works):</strong>',
+  '[data-i18n="tt_purge_note"]': 'After <code>purge</code>, the WireGuard peer registration at HIN must be renewed (new public key). Only as a last resort.',
 
   // Resources
   '#section-checklist .card:last-of-type h4': 'Resources & Links',
@@ -2334,14 +2516,6 @@ const FAQ_EN = {
   'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': 'We are a service provider with 30+ customers on a legacy MGW. What now?',
   'Gibt es Sonder-Lizenzmodelle für SPs?': 'Are there special licensing models for SPs?',
   // Open
-  'Datenverarbeitung — gibt es Sub-Verarbeiter ausserhalb CH/EU?': 'Data processing — are there sub-processors outside CH/EU?',
-  'Vulnerability-Management — SLAs für Fixes kritischer CVEs?': 'Vulnerability management — SLAs for fixing critical CVEs?',
-  'Incident-Management — Prozess bei Security-Vorfällen?': 'Incident management — process for security incidents?',
-  'SBOM — Software Bill of Materials verfügbar?': 'SBOM — Software Bill of Materials available?',
-  'Verantwortungs-Modell — Zuständigkeit HIN vs. Betreiber vs. Kunde?': 'Responsibility model — HIN vs. operator vs. customer?',
-  'Business-Continuity auf HIN-Seite — BCM-Prozesse?': 'Business continuity on HIN side — BCM processes?',
-  'Vertrags-Anpassungen durch Stargate?': 'Contract adjustments due to Stargate?',
-  'M365-Exchange-Online-Connector-Dokumentation': 'M365 Exchange Online connector documentation',
 };
 
 // FAQ answer body translations (keyed by DE summary text)
@@ -2386,17 +2560,8 @@ const FAQ_BODY_EN = {
   'Referenzkunden mit produktivem Stargate?': '<p>Currently <strong>none</strong> — no customer is in production with the new appliance. This is expected in the alpha phase. Production approval from May 18, 2026.</p>',
   'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': '<p>Under the current architecture: <strong>30 separate Stargate appliances</strong>, one per customer. That\'s approx. 120 CPUs, 240 GB RAM and 30 public IPs compared to the one old MGW (3 CPU, 6 GB RAM).</p><p>This is a <strong>critical open point</strong>. HIN has been made aware of the problem, a multi-tenant or shared appliance model is being evaluated. <strong>Actively inquire at HIN</strong> and document the use case — multiple SPs are affected.</p>',
   'Gibt es Sonder-Lizenzmodelle für SPs?': '<p><span class="pill pill-amber">Open Question</span> Currently not documented. Licensing/pricing structure will be communicated separately. When in doubt, inquire directly with HIN.</p>',
-  'Datenverarbeitung — gibt es Sub-Verarbeiter ausserhalb CH/EU?': '<p>Open. Request a concrete list of sub-processors and jurisdictions from HIN.</p>',
-  'Vulnerability-Management — SLAs für Fixes kritischer CVEs?': '<p>Open. Request customer notification process and time targets from HIN.</p>',
-  'Incident-Management — Prozess bei Security-Vorfällen?': '<p>Open. How quickly are customers informed? What information is provided?</p>',
-  'SBOM — Software Bill of Materials verfügbar?': '<p>Open. Request update frequency and format from HIN.</p>',
-  'Verantwortungs-Modell — Zuständigkeit HIN vs. Betreiber vs. Kunde?': '<p>Open. A clear RACI matrix is expected with the rollout.</p>',
-  'Business-Continuity auf HIN-Seite — BCM-Prozesse?': '<p>Open. How does the appliance behave during HIN CA outage? During Loki outage?</p>',
-  'Vertrags-Anpassungen durch Stargate?': '<p>Open. Licensing, pricing, migration costs will be communicated separately.</p>',
-  'M365-Exchange-Online-Connector-Dokumentation': '<p><span class="pill pill-sage">In Progress</span> A separate, dedicated integration guide for M365 customers is being prepared — will be included in the deployment repo. Currently covered in the Hub under Checklist.</p>',
 };
 
-const FAQ_OPEN_INTRO_EN = 'These questions came up during the rollout and are not yet conclusively documented. Current knowledge base status — if a customer asks one of these, honestly say "open, being clarified" and escalate if needed.';
 
 // Troubleshoot tree EN translations
 const TT_TREE_EN = {
@@ -2700,12 +2865,7 @@ const I18N_FR = {
   '#section-architecture h3:nth-of-type(1)': 'Flux de courrier · Courrier entrant',
   '#section-architecture h3:nth-of-type(1) + p': 'Depuis l\'expéditeur externe jusqu\'à la boîte aux lettres Exchange du destinataire. Chaque flèche est un saut réseau réel, chaque bloc un container.',
 
-  // Architecture SVG text
-  '#section-architecture .arch-svg text.label:nth-of-type(1)': 'Serveur de courrier externe',
-  '#section-architecture .arch-svg text.sub:nth-of-type(1)': 'Internet · Expéditeur du courrier',
-  '#section-architecture .arch-svg text.label:nth-of-type(2)': 'Postfix Relay · stargate-postfix-relay',
-  '#section-architecture .arch-svg text.sub:nth-of-type(2)': 'Reçoit sur le port 25 · config auto via DNS (MX + SPF)',
-  '#section-architecture .arch-svg text.label:last-of-type': 'Serveur de courrier de destination',
+
 
   // Architecture sections
   '#section-architecture h3:nth-of-type(2)': 'Services dans la stack',
@@ -2732,7 +2892,7 @@ const I18N_FR = {
   '#section-faq .faq-nav a[href="#faq-ops"]': 'Exploitation & maintenance',
   '#section-faq .faq-nav a[href="#faq-migr"]': 'Migration depuis l\'ancienne MGW',
   '#section-faq .faq-nav a[href="#faq-sp"]': 'Questions des prestataires',
-  '#section-faq .faq-nav a[href="#faq-open"]': 'Questions ouvertes vers HIN',
+
 
   // FAQ section headers
   '#faq-arch': 'Architecture & dimensionnement',
@@ -2743,7 +2903,7 @@ const I18N_FR = {
   '#faq-ops': 'Exploitation & maintenance',
   '#faq-migr': 'Migration depuis l\'ancienne MGW',
   '#faq-sp': 'Questions des prestataires',
-  '#faq-open': 'Questions ouvertes vers HIN',
+
 
   // ── TROUBLESHOOT ──
   '#section-troubleshoot > .wrap > .eyebrow': 'Diagnostic & résolution',
@@ -2780,6 +2940,239 @@ const I18N_FR = {
   '#section-checklist .checklist-section:nth-child(7) .section-desc': 'Avant que le déploiement passe en production, faire passer des courriels de test.',
   '#section-checklist .checklist-section:nth-child(8) h3': '8 · Passation à l\'exploitation',
   '#section-checklist .checklist-section:nth-child(8) .section-desc': 'Avant de remettre le système à l\'exploitation régulière.',
+
+
+  // ── Architecture: SVG texts ──
+  '[data-i18n="svg_ext_mail"]': 'Serveur de courrier externe',
+  '[data-i18n="svg_ext_mail_sub"]': 'Internet · Expéditeur du courrier',
+  '[data-i18n="svg_postfix_sub"]': 'Reçoit sur le port 25 · config auto via DNS (MX + SPF)',
+  '[data-i18n="svg_transport_maps"]': 'transport_maps = routage par domaine via MX lookup',
+  '[data-i18n="svg_mx_line1"]': 'Travail principal : signature S/MIME, décision de politique (OPA/Rego),',
+  '[data-i18n="svg_mx_line2"]': 'Création/résolution de seal, lookup destinataire',
+  '[data-i18n="svg_mx_callback"]': 'Port callback :8084 pour sealer distant (public !)',
+  '[data-i18n="svg_policy_sub"]': 'OPA/Rego · :8082',
+  '[data-i18n="svg_smime_sub"]': 'Clés depuis Vault · :8081',
+  '[data-i18n="svg_postfix_out"]': 'Postfix Relay · même container, port 10026',
+  '[data-i18n="svg_postfix_out_sub1"]': 'Reçoit le courrier traité et le livre au MX de destination réel',
+  '[data-i18n="svg_dest_mail"]': 'Serveur de courrier de destination',
+  '[data-i18n="svg_dest_mail_sub"]': 'Exchange / Exchange Online / autre système',
+  '[data-i18n="flow_step1"]': '<strong>Entrant</strong> — le courrier externe arrive sur le port 25. Postfix décide via <code>content_filter</code> de transmettre le courrier à MXEngine pour traitement.',
+  '[data-i18n="flow_step2"]': '<strong>Traitement</strong> — MXEngine fait le travail réel : lookup de politique (comment traiter ce courrier ?), signature S/MIME, création de seal. Les clés viennent du Vault via smimekeys-client.',
+  '[data-i18n="flow_step3"]': '<strong>Réinjection</strong> — Le courrier traité retourne à Postfix sur le port 10026 (listener interne).',
+  '[data-i18n="flow_step4"]': '<strong>Livraison</strong> — Postfix livre via MX lookup (ou <code>RELAYHOST</code>/<code>DOMAIN_RELAY_MAP</code>) au serveur de courrier de destination réel.',
+  '[data-i18n="svg_wg_your_appliance"]': 'Votre appliance Stargate',
+  '[data-i18n="arch_wg_title"]': 'WireGuard · Appliance-à-Appliance',
+  '[data-i18n="arch_wg_desc2"]': 'Chaque instance Stargate est son propre pair WireGuard. L\'IP <em>publique</em> du serveur sert d\'adresse tunnel unique — aucun coordinateur central pour les IP WG nécessaire.',
+  '[data-i18n="arch_services_title"]': 'Services dans la stack',
+  '[data-i18n="arch_svc_app"]': 'Services applicatifs',
+  '[data-i18n="svc_mxengine"]': 'Traitement de courrier · :8084 HTTP · :1587 SMTP · :2116 Metrics',
+  '[data-i18n="svc_smimekeys"]': 'Gestion des clés S/MIME · :8081 · :2113 Metrics',
+  '[data-i18n="svc_policy"]': 'Moteur de politique OPA/Rego · :8082 · :2115 Metrics',
+  '[data-i18n="svc_idagent"]': 'Tunnel WireGuard &amp; communication pair · :8083 · :19818 WG · :2114 Metrics',
+  '[data-i18n="svc_policysync"]': 'Sync type cron des politiques Rego depuis Git vers la DB (toutes les heures)',
+  '[data-i18n="svc_postfix"]': 'Transport de courrier · :25 externe · :10026 réinjection · :1587 entrée MXEngine',
+  '[data-i18n="arch_svc_infra"]': 'Infrastructure',
+  '[data-i18n="svc_vault"]': 'HashiCorp Vault 1.19 · :8200 · KV-v2 pour tous les secrets et clés S/MIME',
+  '[data-i18n="svc_minio"]': 'Stockage objet compatible S3 · :9000 API · :9001 Console',
+  '[data-i18n="svc_promtail"]': 'Expéditeur de logs vers Loki (optionnel)',
+  '[data-i18n="svc_nodeexp"]': 'Métriques hôte pour Prometheus · :9100',
+  '[data-i18n="svc_vercoll"]': 'Collecte les versions des apps depuis /liveness pour les métriques',
+  '[data-i18n="svg_wg_keygen"]': 'génère la paire de clés · :19818 tcp+udp',
+  '[data-i18n="svg_wg_addr"]': 'Adresse tunnel WG = SERVER_STATIC_IP',
+  '[data-i18n="svg_wg_tunnel"]': 'Tunnel WireGuard',
+  '[data-i18n="svg_wg_hin_ca_sub"]': 'signe le CSR et renvoie le certificat',
+  '[data-i18n="svg_wg_hin_addr"]': 'Adresse WG côté HIN',
+
+  // ── Architecture: other elements ──
+  '[data-i18n="arch_wg_desc"]': 'Chaque instance Stargate est son propre pair WireGuard. L\'IP publique du serveur sert d\'adresse tunnel unique — aucun coordinateur central pour les IP WG nécessaire.',
+  '[data-i18n="arch_critical_step_title"]': 'L\'étape manuelle critique',
+  '[data-i18n="arch_critical_step_body"]': 'Après la première installation, votre appliance a généré une clé publique — mais <strong>elle n\'est pas encore enregistrée côté HIN</strong>. Tant que cela n\'est pas fait, aucun handshake n\'a lieu et donc aucune émission de certificat. Voir Troubleshoot pour les symptômes exacts.',
+  '[data-i18n="arch_port_title"]': 'Aperçu des ports et du réseau',
+  '[data-i18n="arch_port_inbound"]': 'Entrant (externe)',
+  '[data-i18n="arch_port_outbound"]': 'Sortant (externe)',
+  '[data-i18n="port_smtp_in"]': 'SMTP — Réception de courrier',
+  '[data-i18n="port_required"]': 'requis',
+  '[data-i18n="port_seal_cb"]': 'HTTP — Callback Seal',
+  '[data-i18n="port_required2"]': 'requis',
+  '[data-i18n="port_wg"]': 'WireGuard — Tunnel pair',
+  '[data-i18n="port_required3"]': 'requis',
+  '[data-i18n="port_required4"]': 'requis',
+  '[data-i18n="port_required5"]': 'requis',
+  '[data-i18n="port_required6"]': 'requis',
+  '[data-i18n="port_required7"]': 'requis',
+  '[data-i18n="port_required8"]': 'requis',
+  '[data-i18n="arch_port_local"]': 'Local hôte (diagnostic)',
+  '[data-i18n="arch_port_metrics"]': 'Métriques (Prometheus)',
+  '[data-i18n="arch_data_title"]': 'Où sont stockées les données ?',
+  '[data-i18n="arch_backup_title"]': 'Criticité de la sauvegarde',
+  '[data-i18n="arch_backup_body"]': 'Le script de sauvegarde (<code>./scripts/backup.sh</code>) s\'exécute automatiquement tous les jours à 02h00 et sauvegarde les dumps DB, les clés Vault, la customer-config et les certificats dans <code>backups/</code>. <strong>Ce répertoire doit être répliqué en externe</strong> — en cas de perte totale du serveur, la clé privée WG est perdue et il n\'y a pas de retour : le côté HIN attend l\'ancienne clé publique et doit être ré-enregistré manuellement.',
+
+  // ── Decisions ──
+  '[data-i18n="dec1_eyebrow"]': 'Décision 01',
+  '[data-i18n="dec1_title"]': 'Stratégie de routage du courrier',
+  '[data-i18n="dec1_desc"]': 'Comment le courrier sortant trouve-t-il sa destination — après traitement par MXEngine ? Trois voies mutuellement exclusives.',
+  '[data-i18n="dec1_mx_pill"]': 'Basé MX',
+  '[data-i18n="dec1_mx_rec"]': 'Recommandé pour mono/multi-domaine avec infra propre',
+  '[data-i18n="dec1_mx_desc"]': 'Postfix fait un lookup DNS MX par domaine, s\'exclut lui-même, livre au reste. <strong>Pro :</strong> Zéro config dans l\'appliance — vous contrôlez via DNS. Fonctionne pour n\'importe quel nombre de domaines. <strong>Contra :</strong> Nécessite que vous gériez les enregistrements MX et qu\'au moins 2 MX par domaine existent.',
+  '[data-i18n="dec1_relay_rec"]': 'Une cible pour tous',
+  '[data-i18n="dec1_relay_desc"]': 'Tous les domaines vont vers exactement un smart host, p.ex. <code>[smtp.office365.com]</code>. <strong>Pro :</strong> Trivialement simple. <strong>Contra :</strong> Pas de routage par domaine. Inadapté pour les setups multi-domaines avec différentes cibles. Auth SASL actuellement absente.',
+  '[data-i18n="dec1_drm_rec"]': 'Cas prestataire',
+  '[data-i18n="dec1_drm_desc"]': 'Mapping explicite <code>domain:[host]:port</code>, séparé par des virgules. <strong>Pro :</strong> Propre pour beaucoup de domaines avec différentes cibles sans contrôle DNS. <strong>Contra :</strong> Maintenance de la config à chaque changement. Préséance &gt; RELAYHOST &gt; MX lookup.',
+  '[data-i18n="dec2_eyebrow"]': 'Décision 02',
+  '[data-i18n="dec2_title"]': 'Plateforme de déploiement',
+  '[data-i18n="dec2_desc"]': 'Image VM, hôte Linux existant ou K8s — les trois chemins mènent à la stack identique, seul l\'effort diffère.',
+  '[data-i18n="dec2_vm_title"]': 'Image VM (Azure · VMware · Proxmox · Hyper-V)',
+  '[data-i18n="dec2_vm_desc"]': 'Image Alma Linux pré-construite avec toutes les dépendances. <strong>Pro :</strong> Rapide, reproductible, pas de maintenance OS nécessaire. <strong>Contra :</strong> Vous devez passer par la cérémonie d\'import spécifique à la plateforme.',
+  '[data-i18n="dec2_docker_title"]': 'Hôte Linux existant (install Docker)',
+  '[data-i18n="dec2_docker_desc"]': 'Cloner le repo, exécuter <code>install.sh</code>. Docker est installé si nécessaire. <strong>Pro :</strong> Contrôle total de l\'OS hôte, cycle de patch selon vos standards. <strong>Contra :</strong> Vous êtes responsable du hardening OS.',
+  '[data-i18n="dec2_k8s_title"]': 'Kubernetes (Helm)',
+  '[data-i18n="dec2_k8s_desc"]': 'Chart Helm pour clusters existants. <strong>Pro :</strong> S\'intègre aux opérations K8s existantes. <strong>Contra :</strong> Le host networking WireGuard et l\'IP statique nécessitent des privilèges élevés — pas possible dans chaque K8s géré. Demander la documentation à HIN.',
+  '[data-i18n="dec3_eyebrow"]': 'Décision 03',
+  '[data-i18n="dec3_title"]': 'Phase · Alpha / Bêta / Production',
+  '[data-i18n="dec3_desc"]': 'Détermine l\'endpoint CA, la cible pair et les attentes.',
+  '[data-i18n="dec3_alpha_label"]': 'actuel',
+  '[data-i18n="dec3_alpha_desc"]': 'Connexion à la CA de test HIN (<code>hintest.ch</code>). Le CSR est signé automatiquement. <strong>Pas de courrier de production</strong>. Utiliser un domaine de test. Mises à jour fréquentes à prévoir.',
+  '[data-i18n="dec3_beta_desc"]': 'Encore CA de test, mais test de trafic réel possible après approbation séparée. Le calendrier sera communiqué séparément.',
+  '[data-i18n="dec3_prod_pill"]': 'Production',
+  '[data-i18n="dec3_prod_label"]': 'à partir du 18.05.2026',
+  '[data-i18n="dec3_prod_desc"]': 'Connexion à la CA de production HIN. Certificats S/MIME réguliers avec validité d\'1 an. Le pair doit être enregistré manuellement chez HIN.',
+  '[data-i18n="dec4_eyebrow"]': 'Décision 04',
+  '[data-i18n="dec4_title"]': 'Pattern d\'intégration Exchange',
+  '[data-i18n="dec4_desc"]': 'Les deux patterns sont possibles et fonctionnent — la différence est si Stargate est le MX primaire ou si le courrier est redirigé via une règle de transport.',
+  '[data-i18n="dec4_a_label"]': 'Stargate comme MX primaire',
+  '[data-i18n="dec4_a_desc"]': 'Stargate MX 15, Exchange MX 20. Internet → Stargate → Exchange. <strong>Recommandé</strong> : Le traitement S/MIME entrant se fait automatiquement pour tous les courriels. Règle de transport nécessaire uniquement pour le sortant.',
+  '[data-i18n="dec4_b_label"]': 'Pattern B · Exchange comme MX primaire',
+  '[data-i18n="dec4_b_desc"]': 'Exchange reste le MX principal, la règle de transport route les courriels via Stargate selon des critères. Utile quand vous ne voulez router qu\'une partie des courriels via Stargate. Plus de configuration.',
+  '[data-i18n="dec4_c_label"]': 'Les deux : règle de transport sortant avec exception IP',
+  '[data-i18n="dec4_c_desc"]': '<strong>Critique :</strong> Dans les deux patterns, la règle de transport doit avoir <em>« Sauf si l\'IP de l\'expéditeur est &lt;STARGATE_IP&gt; »</em> — sinon boucle de courrier.',
+  '[data-i18n="dec5_eyebrow"]': 'Décision 05',
+  '[data-i18n="dec5_title"]': 'Transport WireGuard · TCP vs. UDP',
+  '[data-i18n="dec5_desc"]': 'WireGuard est à l\'origine uniquement UDP, HIN utilise une variante supportant TCP — cela facilite le passage des pare-feux.',
+  '[data-i18n="dec5_tcp_desc"]': 'Fonctionne à travers la plupart des pare-feux, même avec inspection profonde des paquets. <strong>Conseil :</strong> Commencer avec ceci et ne changer que si des problèmes spécifiques surviennent.',
+  '[data-i18n="dec5_udp_desc"]': 'Performance WireGuard native. <strong>Quand utile :</strong> Avec des pare-feux stateful qui coupent agressivement les connexions TCP longues, ou quand la latence est critique (rarement pertinent pour S/MIME entre institutions).',
+  '[data-i18n="dec6_eyebrow"]': 'Décision 06',
+  '[data-i18n="dec6_title"]': 'Envoi centralisé des logs',
+  '[data-i18n="dec6_desc"]': 'Si les logs sont envoyés au Loki de HIN — ou restent exclusivement locaux.',
+  '[data-i18n="dec6_loki_on_pill"]': 'Loki activé',
+  '[data-i18n="dec6_loki_on_desc"]': 'Promtail envoie les logs des 4 containers applicatifs à <code>loki.infra.vereign-cdn.com</code>. <strong>Pro :</strong> Le support HIN peut voir directement les problèmes. <strong>Contra :</strong> L\'IP de votre appliance doit être dans la whitelist d\'ingress Loki chez HIN.',
+  '[data-i18n="dec6_loki_off_title"]': 'Loki désactivé',
+  '[data-i18n="dec6_loki_off_desc"]': 'Définir <code>LOKI_URL=""</code> et supprimer/commenter le service Promtail dans docker-compose.yml. <strong>Pro :</strong> Les logs restent strictement locaux. <strong>Contra :</strong> Vous devez fournir manuellement les logs au support HIN (<code>docker compose logs</code>).',
+  '[data-i18n="dec7_eyebrow"]': 'Décision 07',
+  '[data-i18n="dec7_title"]': 'Stratégie de sauvegarde',
+  '[data-i18n="dec7_desc"]': 'La sauvegarde intégrée couvre l\'appliance — mais <em>vers où</em> doit être résolu par votre politique d\'infrastructure.',
+  '[data-i18n="dec7_cron_title"]': 'Sauvegarde Cron intégrée',
+  '[data-i18n="dec7_cron_desc"]': 'S\'exécute quotidiennement à 02h00 localement via <code>./scripts/backup.sh</code>. Contient le dump PG, les clés Vault, la customer-config, les certificats. Rétention 7 jours locale.',
+  '[data-i18n="dec7_ext_pill"]': 'Réplication externe · Obligatoire',
+  '[data-i18n="dec7_ext_desc"]': '<strong>Critique :</strong> Le répertoire de sauvegarde doit être répliqué en externe quotidiennement (S3, Azure Blob, Veeam, rsync vers stockage distant — peu importe). En cas de perte totale sans sauvegarde externe, la clé privée WG est perdue et vous devez refaire l\'enregistrement de pair chez HIN.',
+  '[data-i18n="dec7_snap_title"]': 'Basé sur les snapshots (supplémentaire)',
+  '[data-i18n="dec7_snap_desc"]': 'Snapshots réguliers au niveau VM (Azure, vSphere, Proxmox, Hyper-V). Couvre en plus le filesystem hôte. Pour des scénarios de recovery rapide (up en 15 min) souvent plus pratique qu\'un restore basé sur fichiers.',
+
+
+  // ── Éléments de la liste de contrôle ──
+  '[data-i18n="cl_label_1"]': 'Adresse IPv4 publique statique réservée',
+  '[data-i18n="cl_label_2"]': 'VM ou hôte provisionné',
+  '[data-i18n="cl_label_3"]': 'Plateforme de déploiement choisie',
+  '[data-i18n="cl_label_4"]': 'Accès SSH configuré pour l\'équipe d\'exploitation',
+  '[data-i18n="cl_label_5"]': 'Clé publique WireGuard lue depuis les logs idagent',
+  '[data-i18n="cl_label_6"]': 'Email envoyé à HIN',
+  '[data-i18n="cl_label_7"]': 'Confirmation reçue de HIN',
+  '[data-i18n="cl_label_8"]': 'Régénération du certificat exécutée',
+  '[data-i18n="cl_label_9"]': 'Handshake WireGuard confirmé',
+  '[data-i18n="cl_label_10"]': 'Certificat S/MIME visible dans smimekeys-client',
+  '[data-i18n="cl_label_11"]': 'Connecteur sortant créé',
+  '[data-i18n="cl_label_12"]': 'Connecteur entrant créé',
+  '[data-i18n="cl_label_13"]': 'Règle de transport créée et activée',
+  '[data-i18n="cl_label_14"]': 'Exception IP définie dans la règle de transport',
+  '[data-i18n="cl_label_15"]': 'Validation du connecteur réussie',
+  '[data-i18n="cl_label_16"]': 'Courriel test externe → interne réussi',
+  '[data-i18n="cl_label_17"]': 'Courriel test interne → externe réussi',
+  '[data-i18n="cl_label_18"]': 'Courriel test interne → destinataire HIN (S/MIME)',
+  '[data-i18n="cl_label_19"]': 'Pas de boucles de courrier dans le trace Exchange',
+  '[data-i18n="cl_label_20"]': 'File vide',
+  '[data-i18n="cl_label_21"]': 'Monitoring connecté',
+  '[data-i18n="cl_label_22"]': 'Tâche cron de sauvegarde vérifiée',
+  '[data-i18n="cl_label_23"]': 'Réplication externe de sauvegarde en cours',
+  '[data-i18n="cl_label_24"]': 'Test de restauration effectué sur VM de staging',
+  '[data-i18n="cl_label_25"]': 'Runbook remis à l\'équipe d\'exploitation',
+  '[data-i18n="cl_label_26"]': 'Contact 2nd niveau chez HIN documenté',
+  '[data-i18n="cl_label_27"]': 'Décision de mise en production prise en réunion de pilotage',
+  '[data-i18n="cl_label_28"]': 'Répertoire de sauvegarde des secrets sécurisé en externe',
+  '[data-i18n="cl_desc_29"]': 'IP réelle routable, pas de NAT avec mappage dynamique. Nécessaire pour le tunnel WireGuard et le callback MXEngine.',
+  '[data-i18n="cl_desc_30"]': 'Minimum 4 CPU · 8 Go RAM · 30 Go Stockage. OS : RHEL 8/9/10, Alma, Rocky, CentOS Stream, Ubuntu 22/24 ou Debian 11/12/13.',
+  '[data-i18n="cl_desc_31"]': 'Azure VHD, VMware OVA, Proxmox qcow2, image Hyper-V, Docker sur hôte existant, ou Kubernetes Helm.',
+  '[data-i18n="cl_desc_32"]': 'Qui peut accéder à l\'appliance ? Règle des deux personnes ou compte d\'exploitation privilégié.',
+  '[data-i18n="cl_desc_33"]': 'Contient la clé publique WG, DEPLOYMENT_NAME, SERVER_STATIC_IP, et WG_INTERFACE_PORT si différent du défaut.',
+  '[data-i18n="cl_desc_34"]': 'Exchange → Stargate, smart host = SERVER_STATIC_IP, déclenché uniquement via règle de transport.',
+  '[data-i18n="cl_desc_35"]': 'Stargate → Exchange, authentification basée sur IP avec SERVER_STATIC_IP.',
+  '[data-i18n="cl_desc_36"]': 'La règle est créée en état désactivé — <strong>ne pas oublier d\'activer</strong>.',
+  '[data-i18n="cl_desc_37"]': '<em>Sauf si l\'IP de l\'expéditeur est &lt;SERVER_STATIC_IP&gt;</em> — empêche les boucles de courrier. Souvent oublié, toujours vérifier.',
+  '[data-i18n="cl_desc_38"]': 'Dans le Centre d\'administration Exchange, cliqué sur le bouton Valider avec une adresse de destinataire réelle.',
+  '[data-i18n="cl_desc_39"]': 'Depuis une adresse externe (p.ex. Gmail, Web.de) vers une adresse interne — devrait arriver dans la boîte aux lettres via Stargate.',
+  '[data-i18n="cl_desc_40"]': 'Depuis Outlook vers une adresse externe — devrait être relayé via Stargate, le contrôle SPF chez le destinataire doit passer.',
+  '[data-i18n="cl_desc_41"]': 'Vers une adresse de destinataire HIN — devrait passer signé et chiffré.',
+  '[data-i18n="cl_desc_42"]': 'Dans le suivi de messages Exchange, aucun courriel avec plusieurs redirections vers l\'IP Stargate visible.',
+  '[data-i18n="cl_desc_43"]': 'Nom, email, numéro de téléphone, SLA.',
+  '[data-i18n="cl_desc_44"]': 'Go/No-Go avec toutes les parties prenantes (IT, Sécurité, équipe Mail, interlocuteur HIN).',
+  '[data-i18n="cl_healthcheck"]': '<code>./scripts/health-check.sh</code> passe au vert',
+
+
+
+  // ── Persistance des données ──
+  '[data-i18n="dp_pg"]': 'Les 4 BDs : smimekeys_client, policy, idagent, mxengine',
+  '[data-i18n="dp_vault"]': 'Clés maîtres, clés S/MIME, clé privée WG',
+  '[data-i18n="dp_minio"]': 'Stockage objet : corps de messages, pièces jointes',
+  '[data-i18n="dp_postfix"]': 'File de courrier (transitoire)',
+  '[data-i18n="dp_secrets"]': '<strong>vault-keys.json</strong> — Clés de déverrouillage &amp; root token. <em>Sauvegarder en externe !</em>',
+  '[data-i18n="dp_config"]': 'Auto-rempli avec WG_PRIVATE_KEY et VAULT_TOKEN après la première installation',
+
+
+  // ── Labels sections 2-4 ──
+  '[data-i18n="cl_s213"]': '<code>./scripts/install.sh</code> exécuté avec succès',
+  '[data-i18n="cl_s214"]': 'Tous les containers fonctionnent en bonne santé',
+  '[data-i18n="cl_s200"]': 'Cible de sauvegarde externe définie',
+  '[data-i18n="cl_s201"]': 'Port 25/TCP — SMTP (réception de courrier depuis l\'extérieur)',
+  '[data-i18n="cl_s202"]': 'Port 8084/TCP — HTTP Callback Seal',
+  '[data-i18n="cl_s203"]': 'Port 19818/TCP et UDP — WireGuard',
+  '[data-i18n="cl_s204"]': 'Port 25/TCP vers n\'importe quel serveur MX de destination',
+  '[data-i18n="cl_s205"]': 'DNS (Port 53) — UDP et TCP',
+  '[data-i18n="cl_s206"]': 'Enregistrement A pour le hostname mail',
+  '[data-i18n="cl_s207"]': 'Enregistrements MX définis par domaine',
+  '[data-i18n="cl_s208"]': 'Enregistrement SPF étendu avec l\'IP de l\'appliance',
+  '[data-i18n="cl_s209"]': 'DNS inverse (PTR) défini',
+  '[data-i18n="cl_s210"]': 'TTL réglés sur des valeurs basses (5 min) avant le go-live',
+  '[data-i18n="cl_s211"]': 'Enregistrements DNS vérifiés',
+  '[data-i18n="cl_s212"]': '<code>customer-config.sh</code> préparé',
+
+  '[data-i18n="cl_s220"]': '<code>docker exec stargate-idagent wg show</code> affiche <code>latest handshake: &lt; 2 min ago</code>.',
+  '[data-i18n="cl_s221"]': '<code>docker logs stargate-smimekeys-client | grep -i "certificate"</code> — L\'émetteur devrait être HIN Test CA (ou HIN CA en production).',
+  '[data-i18n="cl_s222"]': '<code>docker exec stargate-postfix-relay mailq</code> affiche une file vide.',
+  // ── Éléments restants ──
+  '[data-i18n="cl_r100"]': 'Stockage externe pour la réplication quotidienne des répertoires <code>backups/</code> et <code>secrets/</code>. Sans sauvegarde externe, une perte totale signifie que tout est perdu.',
+  '[data-i18n="cl_r101"]': 'Pour le sealer distant côté HIN. <code>http://</code> est correct — TLS non nécessaire car le payload du seal est déjà chiffré.',
+  '[data-i18n="cl_r102"]': '<strong>Les deux protocoles</strong>, même si vous n\'utilisez que le mode TCP — facilite un éventuel passage à UDP plus tard.',
+  '[data-i18n="cl_r103"]': 'Registre d\'images Docker.',
+  '[data-i18n="cl_r104"]': 'Uniquement si le logging centralisé est actif. Sinon créer la règle quand même pour les cas de support.',
+  '[data-i18n="cl_r105"]': 'Beaucoup de pare-feux d\'entreprise bloquent le port 25 sortant par défaut — autoriser explicitement.',
+  '[data-i18n="cl_r106"]': 'Requis pour les lookups MX, SPF et A record.',
+  '[data-i18n="cl_r107"]': 'Pour chaque domaine : Exchange avec priorité basse (p.ex. 10), Stargate avec priorité plus haute (p.ex. 20) — sinon Stargate n\'a pas de cible de livraison.',
+  '[data-i18n="cl_r108"]': 'Par domaine : ajouter <code>ip4:&lt;SERVER_STATIC_IP&gt;</code> à l\'enregistrement <code>v=spf1 …</code> existant. Sinon échecs SPF sur le courrier sortant.',
+  '[data-i18n="cl_r109"]': 'L\'IP de l\'appliance devrait se résoudre en inverse vers <code>mail.&lt;domain&gt;</code>. Améliore la réputation chez Microsoft et d\'autres grands fournisseurs.',
+  '[data-i18n="cl_r110"]': 'Facilite le rollback. Après un go-live réussi, remettre les valeurs de production.',
+  '[data-i18n="cl_r111"]': 'Avec <code>host -t mx &lt;domain&gt;</code>, <code>host -t txt &lt;domain&gt;</code>, <code>host &lt;mail-hostname&gt;</code>.',
+  '[data-i18n="cl_r112"]': 'Dérivé manuellement de <code>customer-config.example</code> et adapté à votre propre environnement.',
+  '[data-i18n="cl_r113"]': 'Dure 5 à 10 minutes. Installe Docker si nécessaire, démarre la stack, initialise Vault, effectue l\'onboarding initial.',
+  '[data-i18n="cl_r114"]': '<code>docker ps --format \'table {{.Names}}\t{{.Status}}\'</code> ne montre aucun redémarrage.',
+  '[data-i18n="cl_r115"]': 'Tout sauf le certificat et le handshake WireGuard devrait être ok — ceux-ci viennent après l\'enregistrement de pair.',
+  '[data-i18n="cl_r116"]': '<code>secrets/vault-keys.json</code> et <code>customer-config.sh</code> (avec clé privée WG auto-générée) copiés vers au moins un autre stockage.',
+  '[data-i18n="cl_r117"]': 'Scraping Prometheus configuré sur les ports :2113/:2114/:2115/:2116/:9100. Alertes minimum : container down, expiration certificat &lt; 30 jours, file &gt; 100 courriels, handshake WireGuard plus vieux que 10 minutes.',
+  '[data-i18n="cl_r118"]': '<code>crontab -l</code> montre la tâche de 02h00, un test manuel produit une archive de sauvegarde.',
+  '[data-i18n="cl_r119"]': 'Après 24h : l\'archive de sauvegarde d\'hier est arrivée dans le stockage externe.',
+  '[data-i18n="cl_r120"]': 'Restaurer une fois la sauvegarde sur une VM fraîche avec <code>./scripts/restore.sh</code> — pour prouver que ça fonctionne vraiment. Sans test, une sauvegarde n\'est pas une sauvegarde.',
+  '[data-i18n="cl_r121"]': 'Documenté : accès SSH, démarrage/arrêt, processus de mise à jour, tableaux de bord monitoring, contact d\'escalade chez HIN.',
+  '[data-i18n="tt_healthcheck_desc"]': 'Vérifie les containers, les endpoints liveness, Vault, DB, MinIO, WireGuard, Postfix, les métriques.',
+  '[data-i18n="tt_reset_soft"]': '<strong>Doux (données conservées) :</strong>',
+  '[data-i18n="tt_reset_hard"]': '<strong>Dur (TOUTES les données perdues · uniquement si plus rien ne fonctionne) :</strong>',
+  '[data-i18n="tt_purge_note"]': 'Après <code>purge</code>, l\'enregistrement de pair WireGuard chez HIN doit être renouvelé (nouvelle clé publique). Uniquement en dernier recours.',
 
   // Resources
   '#section-checklist .card:last-of-type h4': 'Ressources & liens',
@@ -2836,14 +3229,6 @@ const FAQ_FR = {
   'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': 'Nous sommes prestataire avec 30+ clients sur une MGW legacy. Comment procéder ?',
   'Gibt es Sonder-Lizenzmodelle für SPs?': 'Existe-t-il des modèles de licence spéciaux pour les prestataires ?',
   // Questions ouvertes
-  'Datenverarbeitung — gibt es Sub-Verarbeiter ausserhalb CH/EU?': 'Traitement des données — y a-t-il des sous-traitants hors CH/UE ?',
-  'Vulnerability-Management — SLAs für Fixes kritischer CVEs?': 'Gestion des vulnérabilités — SLA pour les correctifs des CVE critiques ?',
-  'Incident-Management — Prozess bei Security-Vorfällen?': 'Gestion des incidents — processus en cas d\'incident de sécurité ?',
-  'SBOM — Software Bill of Materials verfügbar?': 'SBOM — Software Bill of Materials disponible ?',
-  'Verantwortungs-Modell — Zuständigkeit HIN vs. Betreiber vs. Kunde?': 'Modèle de responsabilité — répartition HIN vs. exploitant vs. client ?',
-  'Business-Continuity auf HIN-Seite — BCM-Prozesse?': 'Continuité d\'activité côté HIN — processus BCM ?',
-  'Vertrags-Anpassungen durch Stargate?': 'Modifications contractuelles dues à Stargate ?',
-  'M365-Exchange-Online-Connector-Dokumentation': 'Documentation du connecteur M365 Exchange Online',
 };
 
 // FAQ answer bodies — keys are DE originals, values are FR HTML
@@ -2888,17 +3273,8 @@ const FAQ_BODY_FR = {
   'Referenzkunden mit produktivem Stargate?': '<p>Actuellement <strong>aucun</strong> — aucun client n\'est en production avec la nouvelle appliance. C\'est attendu en phase alpha. Approbation production à partir du 18 mai 2026.</p>',
   'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': '<p>Avec l\'architecture actuelle : <strong>30 appliances Stargate séparées</strong>, une par client. C\'est environ 120 CPU, 240 Go RAM et 30 IP publiques contre l\'unique ancienne MGW (3 CPU, 6 Go RAM).</p><p>C\'est un <strong>point ouvert critique</strong>. HIN est informé du problème, un modèle multi-tenant ou d\'appliance partagée est en évaluation. <strong>Se renseigner activement auprès de HIN</strong> et documenter le cas d\'usage — plusieurs prestataires sont concernés.</p>',
   'Gibt es Sonder-Lizenzmodelle für SPs?': '<p><span class="pill pill-amber">Question ouverte</span> Pas documenté actuellement. La structure de licence/tarification sera communiquée séparément. En cas de doute, se renseigner directement auprès de HIN.</p>',
-  'Datenverarbeitung — gibt es Sub-Verarbeiter ausserhalb CH/EU?': '<p>Ouvert. Demander à HIN une liste concrète des sous-traitants et juridictions.</p>',
-  'Vulnerability-Management — SLAs für Fixes kritischer CVEs?': '<p>Ouvert. Demander à HIN le processus de notification client et les délais cibles.</p>',
-  'Incident-Management — Prozess bei Security-Vorfällen?': '<p>Ouvert. À quelle vitesse les clients sont-ils informés ? Quelles informations sont fournies ?</p>',
-  'SBOM — Software Bill of Materials verfügbar?': '<p>Ouvert. Demander à HIN la fréquence de mise à jour et le format.</p>',
-  'Verantwortungs-Modell — Zuständigkeit HIN vs. Betreiber vs. Kunde?': '<p>Ouvert. Une matrice RACI claire est attendue avec le déploiement.</p>',
-  'Business-Continuity auf HIN-Seite — BCM-Prozesse?': '<p>Ouvert. Comment l\'appliance se comporte-t-elle pendant une indisponibilité de la CA HIN ? Pendant une indisponibilité de Loki ?</p>',
-  'Vertrags-Anpassungen durch Stargate?': '<p>Ouvert. Licence, tarification, coûts de migration seront communiqués séparément.</p>',
-  'M365-Exchange-Online-Connector-Dokumentation': '<p><span class="pill pill-sage">En cours</span> Un guide d\'intégration séparé et dédié pour les clients M365 est en préparation — sera intégré au repo de déploiement. Actuellement couvert dans le hub sous Liste de contrôle.</p>',
 };
 
-const FAQ_OPEN_INTRO_FR = 'Ces questions sont apparues lors du déploiement et ne sont pas encore définitivement documentées. État actuel de la base de connaissances — si un client en pose une, dire honnêtement « ouvert, en cours de clarification » et escalader si nécessaire.';
 
 // Troubleshoot tree FR
 const TT_TREE_FR = {
@@ -3114,7 +3490,6 @@ function applyI18n(lang) {
   const I18N_MAP = lang === 'en' ? I18N : lang === 'fr' ? I18N_FR : null;
   const FAQ_MAP = lang === 'en' ? FAQ_EN : lang === 'fr' ? FAQ_FR : null;
   const FAQ_BODY_MAP = lang === 'en' ? FAQ_BODY_EN : lang === 'fr' ? FAQ_BODY_FR : null;
-  const FAQ_OPEN_INTRO = lang === 'en' ? FAQ_OPEN_INTRO_EN : lang === 'fr' ? FAQ_OPEN_INTRO_FR : null;
 
   if (lang === 'de') {
     // Restore DE originals from cache
@@ -3142,11 +3517,7 @@ function applyI18n(lang) {
       }
     });
 
-    // Restore open questions intro
-    const openIntro = document.querySelector('#faq-open + p');
-    if (openIntro && deCache['faq-open-intro']) {
-      openIntro.textContent = deCache['faq-open-intro'];
-    }
+
 
     // Re-render troubleshoot tree in DE
     ttHistory = [];
@@ -3188,12 +3559,7 @@ function applyI18n(lang) {
     }
   });
 
-  // Open questions intro paragraph
-  const openIntro = document.querySelector('#faq-open + p');
-  if (openIntro && FAQ_OPEN_INTRO) {
-    if (deCache['faq-open-intro'] === undefined) deCache['faq-open-intro'] = openIntro.textContent;
-    openIntro.textContent = FAQ_OPEN_INTRO;
-  }
+
 
   // Re-render troubleshoot tree in target language
   ttHistory = [];
