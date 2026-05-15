@@ -1337,6 +1337,27 @@ docker logs stargate-idagent | grep -i handshake</pre>
           </div>
         </details>
 
+        <details class="qa">
+          <summary>Was passiert mit Mails von Legacy-MGWs während einer Zertifikats-Rotation auf Stargate-Seite?</summary>
+          <div class="qa-body">
+            <p>Bestehende MGWs synchronisieren die Zertifikate ihrer Peers periodisch — aktuell alle <strong>6 Stunden</strong>. Wenn auf Stargate-Seite ein neues Zertifikat aktiv wird und das alte invalidiert ist, kann es im Worst Case bis zu 6 Stunden dauern, bis ein Legacy-MGW das neue Zertifikat hat.</p>
+            <p><strong>Auswirkung im Sync-Fenster:</strong></p>
+            <ul>
+              <li>Nur <strong>MGW → Stargate</strong> ist betroffen. Stargate → MGW läuft unverändert.</li>
+              <li>Mails, die ein noch nicht synchronisierter MGW mit dem alten Schlüssel verschlüsselt absendet, kann Stargate nicht entschlüsseln.</li>
+              <li>Diese Mails müssen vom Absender erneut zugestellt werden, sobald der MGW synchronisiert hat.</li>
+            </ul>
+            <p><strong>Was Customer-Support bei Meldung „Mail nicht angekommen" tun sollte:</strong></p>
+            <ol>
+              <li>Prüfen, ob das Sende-Datum innerhalb von 6 h nach einer Zertifikats-Aktivierung liegt.</li>
+              <li>Den Absender bitten, die Mail erneut zu senden — der MGW sollte zu diesem Zeitpunkt bereits synchronisiert sein.</li>
+              <li>Falls weiterhin Probleme: HIN-Support mit Zeitstempel und Absender-MGW kontaktieren.</li>
+            </ol>
+            <p><strong>Geplante Mitigation:</strong> Eine Verkürzung des Sync-Intervalls mit SEPPmail wird evaluiert. Voraussetzung ist, dass alle Kunden das aktuelle MGW-Update installiert haben — in der Praxis nicht kurzfristig durchsetzbar.</p>
+          </div>
+        </details>
+
+
         <!-- Service Provider -->
         <h3 id="faq-sp" style="margin-top:3rem">Service-Provider-Fragen</h3>
 
@@ -2512,6 +2533,7 @@ const FAQ_EN = {
   'Welche Daten werden vom alten MGW migriert?': 'What data is migrated from the old MGW?',
   'Kann ich alten und neuen MGW parallel betreiben während der Migration?': 'Can I run old and new MGW in parallel during migration?',
   'Referenzkunden mit produktivem Stargate?': 'Reference customers with productive Stargate?',
+  'Was passiert mit Mails von Legacy-MGWs während einer Zertifikats-Rotation auf Stargate-Seite?': 'What happens to mail from legacy MGWs during a certificate rotation on the Stargate side?',
   // Service Provider
   'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': 'We are a service provider with 30+ customers on a legacy MGW. What now?',
   'Gibt es Sonder-Lizenzmodelle für SPs?': 'Are there special licensing models for SPs?',
@@ -2558,6 +2580,7 @@ const FAQ_BODY_EN = {
   'Welche Daten werden vom alten MGW migriert?': '<p>Actually <strong>no user data</strong>. Stargate is stateless regarding mail history — mails are processed and forwarded, not permanently stored. What needs to be migrated is the <em>configuration</em>:</p><ul><li><strong>Domain list</strong> → <code>MAIL_DOMAINS</code></li><li><strong>Routing configuration</strong> → moved to DNS MX records (or <code>DOMAIN_RELAY_MAP</code>)</li><li><strong>SPF records</strong> → add appliance IP</li><li><strong>Exchange connectors</strong> → reconfigure to new appliance IP</li></ul>',
   'Kann ich alten und neuen MGW parallel betreiben während der Migration?': '<p>Yes, conditionally. Methods:</p><ul><li><strong>Split per domain</strong>: New domains via Stargate, old ones still via legacy — separated via MX records.</li><li><strong>Split per recipient group</strong>: Transport rules in Exchange Online allow routing certain mails through Stargate as a test.</li></ul><p>Details on migration strategy to be clarified with HIN project management — depends on your own setup.</p>',
   'Referenzkunden mit produktivem Stargate?': '<p>Currently <strong>none</strong> — no customer is in production with the new appliance. This is expected in the alpha phase. Production approval from May 18, 2026.</p>',
+  'Was passiert mit Mails von Legacy-MGWs während einer Zertifikats-Rotation auf Stargate-Seite?': '<p>Existing MGWs synchronize their peers\' certificates periodically — currently every <strong>6 hours</strong>. When a new certificate becomes active on the Stargate side and the old one is invalidated, it can take up to 6 hours in the worst case for a legacy MGW to receive the new certificate.</p><p><strong>Impact during the sync window:</strong></p><ul><li>Only <strong>MGW → Stargate</strong> is affected. Stargate → MGW operates unchanged.</li><li>Mail that a not-yet-synchronized MGW sends encrypted with the old key cannot be decrypted by Stargate.</li><li>These mails must be resent by the sender once their MGW has synchronized.</li></ul><p><strong>What customer support should do for a "mail not delivered" report:</strong></p><ol><li>Check whether the send timestamp falls within 6 hours of a certificate activation.</li><li>Ask the sender to resend the mail — their MGW should now be synchronized.</li><li>If the issue persists: contact HIN support with timestamp and sender MGW.</li></ol><p><strong>Planned mitigation:</strong> Shortening the sync interval with SEPPmail is under evaluation. Prerequisite is that all customers have installed the latest MGW update — which is not feasible short-term in practice.</p>',
   'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': '<p>Under the current architecture: <strong>30 separate Stargate appliances</strong>, one per customer. That\'s approx. 120 CPUs, 240 GB RAM and 30 public IPs compared to the one old MGW (3 CPU, 6 GB RAM).</p><p>This is a <strong>critical open point</strong>. HIN has been made aware of the problem, a multi-tenant or shared appliance model is being evaluated. <strong>Actively inquire at HIN</strong> and document the use case — multiple SPs are affected.</p>',
   'Gibt es Sonder-Lizenzmodelle für SPs?': '<p><span class="pill pill-amber">Open Question</span> Currently not documented. Licensing/pricing structure will be communicated separately. When in doubt, inquire directly with HIN.</p>',
 };
@@ -3225,6 +3248,7 @@ const FAQ_FR = {
   'Welche Daten werden vom alten MGW migriert?': 'Quelles données sont migrées depuis l\'ancienne MGW ?',
   'Kann ich alten und neuen MGW parallel betreiben während der Migration?': 'Puis-je exploiter l\'ancienne et la nouvelle MGW en parallèle pendant la migration ?',
   'Referenzkunden mit produktivem Stargate?': 'Y a-t-il des clients de référence avec Stargate en production ?',
+  'Was passiert mit Mails von Legacy-MGWs während einer Zertifikats-Rotation auf Stargate-Seite?': 'Que se passe-t-il avec les courriels des MGW legacy pendant une rotation de certificat côté Stargate ?',
   // Prestataires
   'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': 'Nous sommes prestataire avec 30+ clients sur une MGW legacy. Comment procéder ?',
   'Gibt es Sonder-Lizenzmodelle für SPs?': 'Existe-t-il des modèles de licence spéciaux pour les prestataires ?',
@@ -3271,6 +3295,7 @@ const FAQ_BODY_FR = {
   'Welche Daten werden vom alten MGW migriert?': '<p>En réalité <strong>aucune donnée utilisateur</strong>. Stargate est sans état concernant l\'historique des courriels — les courriels sont traités et transmis, pas stockés durablement. Ce qui doit être migré, c\'est la <em>configuration</em> :</p><ul><li><strong>Liste des domaines</strong> → <code>MAIL_DOMAINS</code></li><li><strong>Configuration de routage</strong> → déplacée vers les enregistrements DNS MX (ou <code>DOMAIN_RELAY_MAP</code>)</li><li><strong>Enregistrements SPF</strong> → ajouter l\'IP de l\'appliance</li><li><strong>Connecteurs Exchange</strong> → reconfigurer vers la nouvelle IP de l\'appliance</li></ul>',
   'Kann ich alten und neuen MGW parallel betreiben während der Migration?': '<p>Oui, sous conditions. Méthodes :</p><ul><li><strong>Split par domaine</strong> : nouveaux domaines via Stargate, anciens encore via legacy — séparés via les enregistrements MX.</li><li><strong>Split par groupe de destinataires</strong> : des règles de transport dans Exchange Online permettent de router certains courriels via Stargate à titre de test.</li></ul><p>Détails de la stratégie de migration à clarifier avec la gestion de projet HIN — dépend de votre propre setup.</p>',
   'Referenzkunden mit produktivem Stargate?': '<p>Actuellement <strong>aucun</strong> — aucun client n\'est en production avec la nouvelle appliance. C\'est attendu en phase alpha. Approbation production à partir du 18 mai 2026.</p>',
+  'Was passiert mit Mails von Legacy-MGWs während einer Zertifikats-Rotation auf Stargate-Seite?': '<p>Les MGW existants synchronisent périodiquement les certificats de leurs pairs — actuellement toutes les <strong>6 heures</strong>. Lorsqu\'un nouveau certificat devient actif côté Stargate et que l\'ancien est invalidé, il peut s\'écouler jusqu\'à 6 heures dans le pire des cas avant qu\'un MGW legacy reçoive le nouveau certificat.</p><p><strong>Impact pendant la fenêtre de synchronisation :</strong></p><ul><li>Seul <strong>MGW → Stargate</strong> est concerné. Stargate → MGW fonctionne sans changement.</li><li>Les courriels qu\'un MGW non encore synchronisé envoie chiffrés avec l\'ancienne clé ne peuvent pas être déchiffrés par Stargate.</li><li>Ces courriels doivent être renvoyés par l\'expéditeur dès que son MGW a synchronisé.</li></ul><p><strong>Que doit faire le support client lors d\'un signalement « courriel non reçu » :</strong></p><ol><li>Vérifier si la date d\'envoi se situe dans les 6 h suivant une activation de certificat.</li><li>Demander à l\'expéditeur de renvoyer le courriel — son MGW devrait à présent être synchronisé.</li><li>Si le problème persiste : contacter le support HIN avec l\'horodatage et le MGW expéditeur.</li></ol><p><strong>Mitigation prévue :</strong> Une réduction de l\'intervalle de synchronisation avec SEPPmail est en cours d\'évaluation. Cela nécessite que tous les clients aient installé la dernière mise à jour MGW — ce qui n\'est pas réalisable à court terme en pratique.</p>',
   'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': '<p>Avec l\'architecture actuelle : <strong>30 appliances Stargate séparées</strong>, une par client. C\'est environ 120 CPU, 240 Go RAM et 30 IP publiques contre l\'unique ancienne MGW (3 CPU, 6 Go RAM).</p><p>C\'est un <strong>point ouvert critique</strong>. HIN est informé du problème, un modèle multi-tenant ou d\'appliance partagée est en évaluation. <strong>Se renseigner activement auprès de HIN</strong> et documenter le cas d\'usage — plusieurs prestataires sont concernés.</p>',
   'Gibt es Sonder-Lizenzmodelle für SPs?': '<p><span class="pill pill-amber">Question ouverte</span> Pas documenté actuellement. La structure de licence/tarification sera communiquée séparément. En cas de doute, se renseigner directement auprès de HIN.</p>',
 };
