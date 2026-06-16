@@ -512,8 +512,8 @@
         </div>
         <div class="hero-meta">
           <div class="hero-meta-item">
-            <div class="v">TBA</div>
-            <div class="k">Rollout-Start · verschoben</div>
+            <div class="v">22.06.2026</div>
+            <div class="k">Rollout · Nicht-Cluster</div>
           </div>
           <div class="hero-meta-item">
             <div class="v">6</div>
@@ -877,8 +877,8 @@
             <div class="decision-option-desc" data-i18n="dec3_beta_desc">Noch Test-CA, aber echter Traffic-Test nach separater Freigabe möglich. Zeitpunkt wird separat kommuniziert.</div>
           </div>
           <div class="decision-option">
-            <div class="decision-option-title"><span class="pill pill-sage" data-i18n="dec3_prod_pill">Produktion</span> <span data-i18n="dec3_prod_label">Termin verschoben</span></div>
-            <div class="decision-option-desc" data-i18n="dec3_prod_desc">Verbindung zur HIN Produktions-CA. Reguläre S/MIME-Zertifikate mit 1 Jahr Gültigkeit. Peer muss manuell bei HIN registriert werden. <strong>Hinweis:</strong> Der ursprünglich für 18.05.2026 geplante Rollout der PRD-Images wurde von HIN verschoben — das Engineering-Team arbeitet aktuell an offenen Punkten. Neuer Termin wird kommuniziert, sobald die PRD-Images verfügbar sind.</div>
+            <div class="decision-option-title"><span class="pill pill-sage" data-i18n="dec3_prod_pill">Produktion</span> <span data-i18n="dec3_prod_label">Rollout ab 22.06.2026</span></div>
+            <div class="decision-option-desc" data-i18n="dec3_prod_desc">Verbindung zur HIN Produktions-CA. Reguläre S/MIME-Zertifikate mit 1 Jahr Gültigkeit. Peer muss manuell bei HIN registriert werden. <strong>Hinweis:</strong> Der Rollout für Nicht-Cluster-Setups (Einzelinstanzen) startet am <strong>22.06.2026</strong>. Cluster-/Redundanz-Setups folgen später (ab September 2026).</div>
           </div>
         </div>
       </div>
@@ -1538,12 +1538,12 @@ docker logs irisagent | grep -i handshake</pre>
             <ul>
               <li>Testing-Phase: bis Ende April 2026</li>
               <li>Produktions-Appliance (mit eingearbeitetem Feedback): Mai 2026</li>
-              <li>Rollout-Start mit finaler Doku: <strong>verschoben</strong> (ursprünglich 18.05.2026)</li>
+              <li>Rollout-Start (Nicht-Cluster / Einzelinstanzen): <strong>22.06.2026</strong></li>
               <li>Penetrations-Test: 2. Hälfte April 2026</li>
               <li>Cluster-/Redundanz-Support: geplant ab <strong>September 2026</strong></li>
               <li>Ziel-Datum für den erfolgreichen Projektabschluss: weiterhin <strong>30.11.2026</strong></li>
             </ul>
-            <p><span class="pill pill-amber">Update Juni 2026</span> Der <strong>Roll-out</strong> verschiebt sich zeitlich nach hinten; das auf der Website teils noch sichtbare „Ende November"-Datum bezieht sich auf den <strong>Projektabschluss</strong>, der weiterhin auf den 30.11.2026 terminiert ist. Ob dieses Datum noch Änderungen unterliegt, ist derzeit offen.</p>
+            <p><span class="pill pill-amber">Update Juni 2026</span> Der <strong>Roll-out für Nicht-Cluster-Setups (Einzelinstanzen)</strong> startet am <strong>22.06.2026</strong> — alle VM-Images, die finale Doku und die Produktions-Appliance stehen bereit. Cluster-/Redundanz-Setups folgen später und werden <strong>ab September 2026</strong> erwartet. Das auf der Website teils noch sichtbare „Ende November"-Datum bezieht sich auf den <strong>Projektabschluss</strong> (weiterhin 30.11.2026).</p>
           </div>
         </details>
 
@@ -1573,9 +1573,10 @@ docker logs irisagent | grep -i handshake</pre>
         </details>
 
         <details class="qa">
-          <summary>Referenzkunden mit produktivem Stargate?</summary>
+          <summary>Ist Stargate ab dem Rollout produktiv einsatzbereit?</summary>
           <div class="qa-body">
-            <p>Aktuell <strong>keine</strong> — kein Kunde ist mit dem neuen Appliance in Produktion. Das ist in der Alpha-Phase erwartbar. <strong>Termin verschoben:</strong> Die für den 18.05.2026 geplante Produktions-Freigabe wurde von HIN verschoben — das Engineering-Team arbeitet noch an offenen Punkten, bevor die PRD-Images auf der Webseite verfügbar gemacht werden. Neuer Termin folgt.</p>
+            <p><span class="pill pill-sage">Status</span> <strong>Ja.</strong> Ab dem <strong>22.06.2026</strong> läuft der Rollout — die <strong>VM-Images für alle Hypervisoren</strong> (Azure, VMware, Proxmox, Hyper-V), die <strong>finale Dokumentation</strong> und die <strong>Produktions-Appliance</strong> stehen bereit und können produktiv installiert werden.</p>
+            <p>Das gilt für <strong>Einzelinstanzen (Nicht-Cluster-Setups)</strong>. <strong>Cluster-/Redundanz-Setups</strong> folgen später und werden <strong>ab September 2026</strong> erwartet.</p>
           </div>
         </details>
 
@@ -2446,11 +2447,11 @@ const I18N = {
   '#section-home .hero .btn-outline': 'Go to Checklist',
 
   // Hero meta
-  '#section-home .hero-meta-item:nth-child(1) .k': 'Rollout Start · postponed',
+  '#section-home .hero-meta-item:nth-child(1) .k': 'Rollout · non-cluster',
   '#section-home .hero-meta-item:nth-child(2) .k': 'Services in Stack',
   '#section-home .hero-meta-item:nth-child(3) .k': 'Appliance per Customer',
   '#section-home .hero-meta-item:nth-child(4) .k': 'Ports Inbound',
-  '#section-home .hero-meta-item:nth-child(1) .v': 'TBA',
+  '#section-home .hero-meta-item:nth-child(1) .v': '22 Jun 2026',
 
   // Hero card
 
@@ -2649,8 +2650,8 @@ const I18N = {
   '[data-i18n="dec3_alpha_desc"]': 'Connection to HIN Test CA (<code>hintest.ch</code>). CSR is signed automatically. <strong>No production mail</strong>. Use a test domain. Frequent updates expected.',
   '[data-i18n="dec3_beta_desc"]': 'Still Test CA, but real traffic test possible after separate approval. Timing will be communicated separately.',
   '[data-i18n="dec3_prod_pill"]': 'Production',
-  '[data-i18n="dec3_prod_label"]': 'date postponed',
-  '[data-i18n="dec3_prod_desc"]': 'Connection to HIN Production CA. Regular S/MIME certificates with 1-year validity. Peer must be manually registered at HIN. <strong>Note:</strong> The 18.05.2026 rollout of the PRD images has been postponed by HIN — the engineering team is working on open issues. A new date will be communicated once the PRD images are available.',
+  '[data-i18n="dec3_prod_label"]': 'from 22 Jun 2026',
+  '[data-i18n="dec3_prod_desc"]': 'Connection to HIN Production CA. Regular S/MIME certificates with 1-year validity. Peer must be manually registered at HIN. <strong>Note:</strong> The rollout for non-cluster setups (single instances) starts on <strong>22 Jun 2026</strong>. Cluster/redundancy setups follow later (from September 2026).',
   '[data-i18n="dec4_eyebrow"]': 'Decision 04',
   '[data-i18n="dec4_title"]': 'Exchange Integration Pattern',
   '[data-i18n="dec4_desc"]': 'Both patterns are possible and work — the difference is whether Stargate is the primary MX or mail is redirected via transport rule.',
@@ -2846,7 +2847,7 @@ const FAQ_EN = {
   'Wann ist das genaue Timing?': 'What is the exact timing?',
   'Welche Daten werden vom alten MGW migriert?': 'What data is migrated from the old MGW?',
   'Kann ich alten und neuen MGW parallel betreiben während der Migration?': 'Can I run old and new MGW in parallel during migration?',
-  'Referenzkunden mit produktivem Stargate?': 'Reference customers with productive Stargate?',
+  'Ist Stargate ab dem Rollout produktiv einsatzbereit?': 'Is Stargate ready for production at rollout?',
   'Was passiert mit Mails von Legacy-MGWs während einer Zertifikats-Rotation auf Stargate-Seite?': 'What happens to mail from legacy MGWs during a certificate rotation on the Stargate side?',
   'Unterstützt Stargate das Authenticated-Received-Chain (ARC) Protokoll?': 'Does Stargate support the Authenticated-Received-Chain (ARC) protocol?',
   'Kann ich die WireGuard-Verbindungen auf bestimmte Endpunkte einschränken (statt any↔any)?': 'Can I restrict WireGuard connections to specific endpoints (instead of any↔any)?',
@@ -2920,10 +2921,10 @@ const FAQ_BODY_EN = {
   'Wie funktionieren Service-Updates?': '<p>Two ways:</p><ul><li><strong>Individual:</strong> Set version in <code>.env</code> (e.g. <code>MXENGINE_VERSION=v0.0.31</code>), then <code>docker compose pull mxengine &amp;&amp; docker compose up -d --force-recreate mxengine</code></li><li><strong>All:</strong> <code>docker compose pull &amp;&amp; docker compose up -d --force-recreate</code></li></ul><p>Rollback: Set version in <code>.env</code> to previous and <code>--force-recreate</code> again.</p><p>After updates, clean up old images: <code>docker image prune -f</code>.</p>',
   'Wie prüfe ich, ob alles gesund läuft?': '<p><code>./scripts/health-check.sh</code> checks:</p><ul><li>All container statuses (running, healthy)</li><li>Liveness endpoints of the 4 application services</li><li>Vault seal status</li><li>PostgreSQL connectivity and all 4 DBs</li><li>MinIO health</li><li>WireGuard tunnel status and peer handshakes</li><li>Stalwart (port 25, 10026, queue)</li><li>Prometheus endpoints</li><li>Disk and memory usage</li></ul><p>Exit 0 = all ok. Use <code>-v</code> for details.</p>',
   'Wo sind die Logs zu finden?': '<p>Locally: <code>docker compose logs -f [service]</code>. Centrally (if enabled) in Grafana/Loki via labels like <code>{environment="stargate-acme"}</code> or <code>{service="mxengine"}</code>.</p><p>Quick checks:</p><pre style="margin-top:.5rem">docker logs mxengine --tail 10\ndocker logs irisagent | grep -i handshake</pre>',
-  'Wann ist das genaue Timing?': "<ul><li>Testing phase: until end of April 2026</li><li>Production appliance (with incorporated feedback): May 2026</li><li>Rollout start with final docs: <strong>postponed</strong> (originally 18 May 2026)</li><li>Penetration test: second half of April 2026</li><li>Cluster/redundancy support: planned from <strong>September 2026</strong></li><li>Target date for successful project completion: still <strong>30 Nov 2026</strong></li></ul><p><span class=\"pill pill-amber\">Update June 2026</span> The <strong>rollout</strong> is being pushed back; the \"end of November\" date still partly visible on the website refers to <strong>project completion</strong>, which is still set for 30 Nov 2026. Whether this date will still change is currently open.</p>",
+  'Wann ist das genaue Timing?': "<ul><li>Testing phase: until end of April 2026</li><li>Production appliance (with incorporated feedback): May 2026</li><li>Rollout start (non-cluster / single instances): <strong>22 Jun 2026</strong></li><li>Penetration test: second half of April 2026</li><li>Cluster/redundancy support: planned from <strong>September 2026</strong></li><li>Target date for successful project completion: still <strong>30 Nov 2026</strong></li></ul><p><span class=\"pill pill-amber\">Update June 2026</span> The <strong>rollout for non-cluster setups (single instances)</strong> starts on <strong>22 Jun 2026</strong> — all VM images, the final documentation and the production appliance are ready. Cluster/redundancy setups follow later and are expected <strong>from September 2026</strong>. The \"end of November\" date still partly visible on the website refers to <strong>project completion</strong> (still 30 Nov 2026).</p>",
   'Welche Daten werden vom alten MGW migriert?': "<p>Actually <strong>no user data</strong>. Stargate is stateless regarding mail history — mails are processed and forwarded, not permanently stored. What needs to be migrated is the <em>configuration</em>:</p><ul><li><strong>Domain list</strong> → enter in the dashboard on <code>/mail</code></li><li><strong>Routing/relay</strong> → per domain in the dashboard (<code>/mail</code>) or via DNS MX records</li><li><strong>SPF records</strong> → add appliance IP</li><li><strong>Exchange connectors</strong> → reconfigure to new appliance IP</li></ul>",
   'Kann ich alten und neuen MGW parallel betreiben während der Migration?': '<p>Yes, conditionally. Methods:</p><ul><li><strong>Split per domain</strong>: New domains via Stargate, old ones still via legacy — separated via MX records.</li><li><strong>Split per recipient group</strong>: Transport rules in Exchange Online allow routing certain mails through Stargate as a test.</li></ul><p>Details on migration strategy to be clarified with HIN project management — depends on your own setup.</p>',
-  'Referenzkunden mit produktivem Stargate?': '<p>Currently <strong>none</strong> — no customer is in production with the new appliance. This is expected in the alpha phase. <strong>Date postponed:</strong> The 18.05.2026 production approval has been postponed by HIN — the engineering team is still working on open issues before the PRD images go live on the website. A new date will follow.</p>',
+  'Ist Stargate ab dem Rollout produktiv einsatzbereit?': '<p><span class="pill pill-sage">Status</span> <strong>Yes.</strong> From <strong>22 Jun 2026</strong> the rollout is live — the <strong>VM images for all hypervisors</strong> (Azure, VMware, Proxmox, Hyper-V), the <strong>final documentation</strong> and the <strong>production appliance</strong> are ready and can be installed in production.</p><p>This applies to <strong>single instances (non-cluster setups)</strong>. <strong>Cluster/redundancy setups</strong> follow later and are expected <strong>from September 2026</strong>.</p>',
   'Was passiert mit Mails von Legacy-MGWs während einer Zertifikats-Rotation auf Stargate-Seite?': '<p>Existing MGWs synchronize their peers\' certificates periodically — currently every <strong>6 hours</strong>. When a new certificate becomes active on the Stargate side and the old one is invalidated, it can take up to 6 hours in the worst case for a legacy MGW to receive the new certificate.</p><p><strong>Impact during the sync window:</strong></p><ul><li>Only <strong>MGW → Stargate</strong> is affected. Stargate → MGW operates unchanged.</li><li>Mail that a not-yet-synchronized MGW sends encrypted with the old key cannot be decrypted by Stargate.</li><li>These mails must be resent by the sender once their MGW has synchronized.</li></ul><p><strong>What customer support should do for a "mail not delivered" report:</strong></p><ol><li>Check whether the send timestamp falls within 6 hours of a certificate activation.</li><li>Ask the sender to resend the mail — their MGW should now be synchronized.</li><li>If the issue persists: contact HIN support with timestamp and sender MGW.</li></ol><p><strong>Planned mitigation:</strong> Shortening the sync interval with SEPPmail is under evaluation. Prerequisite is that all customers have installed the latest MGW update — which is not feasible short-term in practice.</p>',
   'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': '<p>Under the current architecture: <strong>30 separate Stargate appliances</strong>, one per customer. That\'s approx. 120 CPUs, 240 GB RAM and 30 public IPs compared to the one old MGW (3 CPU, 6 GB RAM).</p><p>This is a <strong>critical open point</strong>. HIN has been made aware of the problem, a multi-tenant or shared appliance model is being evaluated. <strong>Actively inquire at HIN</strong> and document the use case — multiple SPs are affected.</p>',
   'Gibt es Sonder-Lizenzmodelle für SPs?': '<p><span class="pill pill-amber">Open Question</span> Currently not documented. Licensing/pricing structure will be communicated separately. When in doubt, inquire directly with HIN.</p>',
@@ -3214,11 +3215,11 @@ const I18N_FR = {
   '#section-home .hero .btn-outline': 'Voir la liste de contrôle',
 
   // Hero meta
-  '#section-home .hero-meta-item:nth-child(1) .k': 'Début du déploiement · reporté',
+  '#section-home .hero-meta-item:nth-child(1) .k': 'Déploiement · hors cluster',
   '#section-home .hero-meta-item:nth-child(2) .k': 'Services dans la stack',
   '#section-home .hero-meta-item:nth-child(3) .k': 'Appliance par client',
   '#section-home .hero-meta-item:nth-child(4) .k': 'Ports entrants',
-  '#section-home .hero-meta-item:nth-child(1) .v': 'TBA',
+  '#section-home .hero-meta-item:nth-child(1) .v': '22 juin 2026',
 
   // Hero card
 
@@ -3417,8 +3418,8 @@ const I18N_FR = {
   '[data-i18n="dec3_alpha_desc"]': 'Connexion à la CA de test HIN (<code>hintest.ch</code>). Le CSR est signé automatiquement. <strong>Pas de courrier de production</strong>. Utiliser un domaine de test. Mises à jour fréquentes à prévoir.',
   '[data-i18n="dec3_beta_desc"]': 'Encore CA de test, mais test de trafic réel possible après approbation séparée. Le calendrier sera communiqué séparément.',
   '[data-i18n="dec3_prod_pill"]': 'Production',
-  '[data-i18n="dec3_prod_label"]': 'date reportée',
-  '[data-i18n="dec3_prod_desc"]': 'Connexion à la CA de production HIN. Certificats S/MIME réguliers avec validité d\'1 an. Le pair doit être enregistré manuellement chez HIN. <strong>Note :</strong> Le déploiement des images PRD, initialement prévu pour le 18.05.2026, a été reporté par HIN — l\'équipe Engineering travaille sur des points ouverts. Une nouvelle date sera communiquée dès que les images PRD seront disponibles.',
+  '[data-i18n="dec3_prod_label"]': 'dès le 22 juin 2026',
+  '[data-i18n="dec3_prod_desc"]': 'Connexion à la CA de production HIN. Certificats S/MIME réguliers avec validité d\'1 an. Le pair doit être enregistré manuellement chez HIN. <strong>Note :</strong> Le déploiement pour les configurations hors cluster (instances uniques) démarre le <strong>22.06.2026</strong>. Les configurations cluster/redondance suivront plus tard (dès septembre 2026).',
   '[data-i18n="dec4_eyebrow"]': 'Décision 04',
   '[data-i18n="dec4_title"]': 'Pattern d\'intégration Exchange',
   '[data-i18n="dec4_desc"]': 'Les deux patterns sont possibles et fonctionnent — la différence est si Stargate est le MX primaire ou si le courrier est redirigé via une règle de transport.',
@@ -3614,7 +3615,7 @@ const FAQ_FR = {
   'Wann ist das genaue Timing?': 'Quel est le calendrier exact ?',
   'Welche Daten werden vom alten MGW migriert?': 'Quelles données sont migrées depuis l\'ancienne MGW ?',
   'Kann ich alten und neuen MGW parallel betreiben während der Migration?': 'Puis-je exploiter l\'ancienne et la nouvelle MGW en parallèle pendant la migration ?',
-  'Referenzkunden mit produktivem Stargate?': 'Y a-t-il des clients de référence avec Stargate en production ?',
+  'Ist Stargate ab dem Rollout produktiv einsatzbereit?': 'Stargate est-il prêt pour la production au déploiement ?',
   'Was passiert mit Mails von Legacy-MGWs während einer Zertifikats-Rotation auf Stargate-Seite?': 'Que se passe-t-il avec les courriels des MGW legacy pendant une rotation de certificat côté Stargate ?',
   'Unterstützt Stargate das Authenticated-Received-Chain (ARC) Protokoll?': 'Stargate prend-il en charge le protocole Authenticated-Received-Chain (ARC) ?',
   'Kann ich die WireGuard-Verbindungen auf bestimmte Endpunkte einschränken (statt any↔any)?': 'Puis-je restreindre les connexions WireGuard à des endpoints spécifiques (au lieu de any↔any) ?',
@@ -3688,10 +3689,10 @@ const FAQ_BODY_FR = {
   'Wie funktionieren Service-Updates?': '<p><code>./scripts/update.sh</code> tire les nouvelles images depuis <code>hub.docker.com</code> et redémarre les services. Toujours créer une sauvegarde avant la mise à jour.</p>',
   'Wie prüfe ich, ob alles gesund läuft?': '<p><code>./scripts/health-check.sh</code> donne un statut consolidé. Pour le détail : <code>docker ps</code> et les endpoints liveness sur <code>:2113-2116</code>.</p>',
   'Wo sind die Logs zu finden?': '<p>Localement : <code>docker compose logs &lt;service&gt;</code>. Centralisés (si Loki activé) : Grafana sur la plateforme HIN.</p>',
-  'Wann ist das genaue Timing?': "<ul><li>Phase de test : jusqu'à fin avril 2026</li><li>Appliance de production (avec retours intégrés) : mai 2026</li><li>Début du déploiement avec doc finale : <strong>reporté</strong> (initialement 18.05.2026)</li><li>Test d'intrusion : seconde moitié d'avril 2026</li><li>Support cluster/redondance : prévu dès <strong>septembre 2026</strong></li><li>Date cible d'achèvement du projet : toujours <strong>30.11.2026</strong></li></ul><p><span class=\"pill pill-amber\">Mise à jour juin 2026</span> Le <strong>déploiement</strong> est repoussé ; la date « fin novembre » encore partiellement visible sur le site web se réfère à l'<strong>achèvement du projet</strong>, toujours fixé au 30.11.2026. La possibilité d'un changement de cette date reste ouverte pour l'instant.</p>",
+  'Wann ist das genaue Timing?': "<ul><li>Phase de test : jusqu'à fin avril 2026</li><li>Appliance de production (avec retours intégrés) : mai 2026</li><li>Début du déploiement (hors cluster / instances uniques) : <strong>22.06.2026</strong></li><li>Test d'intrusion : seconde moitié d'avril 2026</li><li>Support cluster/redondance : prévu dès <strong>septembre 2026</strong></li><li>Date cible d'achèvement du projet : toujours <strong>30.11.2026</strong></li></ul><p><span class=\"pill pill-amber\">Mise à jour juin 2026</span> Le <strong>déploiement pour les configurations hors cluster (instances uniques)</strong> démarre le <strong>22.06.2026</strong> — toutes les images VM, la documentation finale et l'appliance de production sont prêtes. Les configurations cluster/redondance suivront plus tard et sont attendues <strong>dès septembre 2026</strong>. La date « fin novembre » encore partiellement visible sur le site web se réfère à l'<strong>achèvement du projet</strong> (toujours 30.11.2026).</p>",
   'Welche Daten werden vom alten MGW migriert?': "<p>En réalité <strong>aucune donnée utilisateur</strong>. Stargate est sans état concernant l'historique des courriels — les courriels sont traités et transmis, pas stockés durablement. Ce qui doit être migré, c'est la <em>configuration</em> :</p><ul><li><strong>Liste des domaines</strong> → à saisir dans le dashboard sur <code>/mail</code></li><li><strong>Routage/relais</strong> → par domaine dans le dashboard (<code>/mail</code>) ou via les enregistrements DNS MX</li><li><strong>Enregistrements SPF</strong> → ajouter l'IP de l'appliance</li><li><strong>Connecteurs Exchange</strong> → reconfigurer vers la nouvelle IP de l'appliance</li></ul>",
   'Kann ich alten und neuen MGW parallel betreiben während der Migration?': '<p>Oui, sous conditions. Méthodes :</p><ul><li><strong>Split par domaine</strong> : nouveaux domaines via Stargate, anciens encore via legacy — séparés via les enregistrements MX.</li><li><strong>Split par groupe de destinataires</strong> : des règles de transport dans Exchange Online permettent de router certains courriels via Stargate à titre de test.</li></ul><p>Détails de la stratégie de migration à clarifier avec la gestion de projet HIN — dépend de votre propre setup.</p>',
-  'Referenzkunden mit produktivem Stargate?': '<p>Actuellement <strong>aucun</strong> — aucun client n\'est en production avec la nouvelle appliance. C\'est attendu en phase alpha. <strong>Date reportée :</strong> L\'approbation production prévue pour le 18.05.2026 a été reportée par HIN — l\'équipe Engineering travaille encore sur des points ouverts avant la mise en ligne des images PRD. Une nouvelle date suivra.</p>',
+  'Ist Stargate ab dem Rollout produktiv einsatzbereit?': '<p><span class="pill pill-sage">Statut</span> <strong>Oui.</strong> À partir du <strong>22.06.2026</strong>, le déploiement est actif — les <strong>images VM pour tous les hyperviseurs</strong> (Azure, VMware, Proxmox, Hyper-V), la <strong>documentation finale</strong> et l\'<strong>appliance de production</strong> sont prêtes et peuvent être installées en production.</p><p>Valable pour les <strong>instances uniques (configurations hors cluster)</strong>. Les <strong>configurations cluster/redondance</strong> suivront plus tard et sont attendues <strong>dès septembre 2026</strong>.</p>',
   'Was passiert mit Mails von Legacy-MGWs während einer Zertifikats-Rotation auf Stargate-Seite?': '<p>Les MGW existants synchronisent périodiquement les certificats de leurs pairs — actuellement toutes les <strong>6 heures</strong>. Lorsqu\'un nouveau certificat devient actif côté Stargate et que l\'ancien est invalidé, il peut s\'écouler jusqu\'à 6 heures dans le pire des cas avant qu\'un MGW legacy reçoive le nouveau certificat.</p><p><strong>Impact pendant la fenêtre de synchronisation :</strong></p><ul><li>Seul <strong>MGW → Stargate</strong> est concerné. Stargate → MGW fonctionne sans changement.</li><li>Les courriels qu\'un MGW non encore synchronisé envoie chiffrés avec l\'ancienne clé ne peuvent pas être déchiffrés par Stargate.</li><li>Ces courriels doivent être renvoyés par l\'expéditeur dès que son MGW a synchronisé.</li></ul><p><strong>Que doit faire le support client lors d\'un signalement « courriel non reçu » :</strong></p><ol><li>Vérifier si la date d\'envoi se situe dans les 6 h suivant une activation de certificat.</li><li>Demander à l\'expéditeur de renvoyer le courriel — son MGW devrait à présent être synchronisé.</li><li>Si le problème persiste : contacter le support HIN avec l\'horodatage et le MGW expéditeur.</li></ol><p><strong>Mitigation prévue :</strong> Une réduction de l\'intervalle de synchronisation avec SEPPmail est en cours d\'évaluation. Cela nécessite que tous les clients aient installé la dernière mise à jour MGW — ce qui n\'est pas réalisable à court terme en pratique.</p>',
   'Wir sind Service Provider mit 30+ Kunden auf einem Legacy-MGW. Wie jetzt?': '<p>Avec l\'architecture actuelle : <strong>30 appliances Stargate séparées</strong>, une par client. C\'est environ 120 CPU, 240 Go RAM et 30 IP publiques contre l\'unique ancienne MGW (3 CPU, 6 Go RAM).</p><p>C\'est un <strong>point ouvert critique</strong>. HIN est informé du problème, un modèle multi-tenant ou d\'appliance partagée est en évaluation. <strong>Se renseigner activement auprès de HIN</strong> et documenter le cas d\'usage — plusieurs prestataires sont concernés.</p>',
   'Gibt es Sonder-Lizenzmodelle für SPs?': '<p><span class="pill pill-amber">Question ouverte</span> Pas documenté actuellement. La structure de licence/tarification sera communiquée séparément. En cas de doute, se renseigner directement auprès de HIN.</p>',
