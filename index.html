@@ -171,7 +171,8 @@ button{font:inherit;color:inherit}
 /* tasks */
 .tasks{list-style:none;margin:0 0 18px;padding:0;border-top:1px solid var(--rule)}
 .tasks li{border-bottom:1px solid var(--rule)}
-.tasks label{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;padding:11px 2px;cursor:pointer}
+.task-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:0 2px}
+.tasks label{display:grid;grid-template-columns:22px 1fr;gap:12px;align-items:start;padding:11px 0;cursor:pointer}
 .tasks input{
   appearance:none;-webkit-appearance:none;margin:2px 0 0;width:19px;height:19px;
   border:1.5px solid #B6C4CB;border-radius:5px;background:var(--surface);cursor:pointer;
@@ -181,6 +182,10 @@ button{font:inherit;color:inherit}
 .tasks input:checked:after{content:"";width:10px;height:6px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translateY(-1px)}
 .tasks .txt{max-width:66ch}
 .tasks input:checked + .txt{color:var(--muted);text-decoration:line-through;text-decoration-color:#BCC9D0}
+.tasks li.na .txt{color:var(--muted)}
+.na-btn{border:1px solid var(--rule);background:var(--surface);color:var(--muted);border-radius:6px;padding:4px 8px;font-size:12px;cursor:pointer;white-space:nowrap}
+.na-btn:hover{border-color:var(--warn);color:var(--warn)}
+.na-btn.on{background:var(--warn-soft);border-color:#D9B56A;color:var(--warn);font-weight:600}
 .tasks .v{
   font-family:var(--mono);font-size:11px;border:1px solid var(--rule);border-radius:4px;
   padding:0 5px;margin-left:7px;color:var(--muted);white-space:nowrap;vertical-align:1px;
@@ -424,7 +429,7 @@ de: {
   toolReport:'Protokoll', toolReportSub:'Stand als Text kopieren',
   toolRollback:'Rollback', toolRollbackSub:'Zurück auf das MGW, falls etwas schiefgeht',
   toolPrint:'Ganze Anleitung drucken', toolPrintSub:'Alle Schritte auf einer Seite',
-  toolReset:'Fortschritt zurücksetzen', toolResetSub:'Häkchen und Werte löschen',
+  toolReset:'Fortschritt zurücksetzen', toolResetSub:'Status und Werte löschen',
   cutline:'Ab hier wirkt es produktiv',
   stepWord:'Schritt {n}', finalWord:'Freigabe',
   onlyA:'nur Drop-In', onlyB:'nur neue IP',
@@ -445,11 +450,12 @@ de: {
   dlgReportTitle:'Protokoll',
   dlgReportIntro:'Stand Ihrer Migration als Text – zum Weitergeben an den HIN Support oder für die interne Dokumentation.',
   copyReport:'Protokoll kopieren',
-  resetConfirm:'Alle Häkchen und Angaben in diesem Browser löschen?',
+  resetConfirm:'Alle Statusangaben und Werte in diesem Browser löschen?',
   repTitle:'HIN Gateway – Migrationsprotokoll', repCreated:'Erstellt', repVariant:'Variante',
   repVariantA:'A – Drop-In (bestehende MGW-IP)', repVariantB:'B – neue IP',
-  repProgress:'Fortschritt: {d} von {t} Aufgaben erledigt',
-  repValues:'Angaben', repOpen:'Offene Punkte', repNone:'keine – alle Aufgaben erledigt',
+  repProgress:'Fortschritt: {d} von {t} Aufgaben abgeschlossen',
+  repValues:'Angaben', repOpen:'Offene Punkte', repNone:'keine – alle Aufgaben abgeschlossen',
+  notApplicable:'Nicht zutreffend', repNA:'Nicht verwendet / nicht zutreffend',
   repStep:'Schritt {n} – {t}', repFinal:'Freigabe – {t}'
 },
 
@@ -481,7 +487,7 @@ en: {
   toolReport:'Status report', toolReportSub:'Copy your current state as text',
   toolRollback:'Rollback', toolRollbackSub:'Back to the MGW if something goes wrong',
   toolPrint:'Print the whole guide', toolPrintSub:'All steps on one page',
-  toolReset:'Reset progress', toolResetSub:'Clear tick marks and values',
+  toolReset:'Reset progress', toolResetSub:'Clear statuses and values',
   cutline:'Production impact starts here',
   stepWord:'Step {n}', finalWord:'Sign-off',
   onlyA:'drop-in only', onlyB:'new IP only',
@@ -502,11 +508,12 @@ en: {
   dlgReportTitle:'Status report',
   dlgReportIntro:'The state of your migration as text – to hand to HIN Support or keep for your own records.',
   copyReport:'Copy report',
-  resetConfirm:'Clear all tick marks and values in this browser?',
+  resetConfirm:'Clear all task statuses and values in this browser?',
   repTitle:'HIN Gateway – migration status report', repCreated:'Created', repVariant:'Option',
   repVariantA:'A – drop-in (existing MGW IP)', repVariantB:'B – new IP',
-  repProgress:'Progress: {d} of {t} tasks done',
-  repValues:'Values', repOpen:'Open items', repNone:'none – all tasks done',
+  repProgress:'Progress: {d} of {t} tasks completed',
+  repValues:'Values', repOpen:'Open items', repNone:'none – all tasks completed',
+  notApplicable:'Not applicable', repNA:'Not used / not applicable',
   repStep:'Step {n} – {t}', repFinal:'Sign-off – {t}'
 },
 
@@ -538,7 +545,7 @@ fr: {
   toolReport:'Rapport', toolReportSub:'Copier l’état actuel sous forme de texte',
   toolRollback:'Retour arrière', toolRollbackSub:'Revenir au MGW en cas de problème',
   toolPrint:'Imprimer tout le guide', toolPrintSub:'Toutes les étapes sur une page',
-  toolReset:'Réinitialiser la progression', toolResetSub:'Effacer les coches et les valeurs',
+  toolReset:'Réinitialiser la progression', toolResetSub:'Effacer les statuts et les valeurs',
   cutline:'À partir d’ici, l’impact est productif',
   stepWord:'Étape {n}', finalWord:'Réception',
   onlyA:'drop-in uniquement', onlyB:'nouvelle IP uniquement',
@@ -559,11 +566,12 @@ fr: {
   dlgReportTitle:'Rapport',
   dlgReportIntro:'L’état de votre migration sous forme de texte – à transmettre au support HIN ou à conserver pour votre documentation.',
   copyReport:'Copier le rapport',
-  resetConfirm:'Effacer toutes les coches et valeurs dans ce navigateur ?',
+  resetConfirm:'Effacer tous les statuts de tâches et les valeurs dans ce navigateur ?',
   repTitle:'HIN Gateway – rapport de migration', repCreated:'Créé le', repVariant:'Variante',
   repVariantA:'A – drop-in (IP MGW existante)', repVariantB:'B – nouvelle IP',
   repProgress:'Progression : {d} tâches sur {t} terminées',
   repValues:'Valeurs', repOpen:'Points ouverts', repNone:'aucun – toutes les tâches sont terminées',
+  notApplicable:'Non applicable', repNA:'Non utilisé / non applicable',
   repStep:'Étape {n} – {t}', repFinal:'Réception – {t}'
 }
 };
@@ -629,17 +637,17 @@ CONTENT.de.STEPS = [
     'Outgoing Server',
     'Forwarding Server pro Domäne',
     '„Send ALL outgoing mails …“',
-    'TLS-Einstellungen',
-    'Content Filter',
-    'Trusted Networks',
-    'SEC Prefix',
-    'MGW Header Check, falls verwendet'
+    {t:'TLS-Einstellungen', na:true},
+    {t:'Content Filter', na:true},
+    {t:'Trusted Networks', na:true},
+    {t:'SEC Prefix', na:true},
+    {t:'MGW Header Check, falls verwendet', na:true}
   ]},
   {k:'h', t:'Exchange Online prüfen'},
   {k:'todo', items:[
     'Exchange Online → Mail flow → Rules öffnen und alle für HIN und MGW relevanten benutzerdefinierten Header notieren'
   ]},
-  {k:'note', tone:'warn', title:'Mehrere Header sind der Normalfall', html:'<p>Werden in den Transportregeln mehrere benutzerdefinierte Header gesetzt oder geprüft, müssen diese später im HIN Gateway einzeln hinterlegt werden. Notieren Sie die Schreibweise exakt.</p>'}
+  {k:'note', tone:'warn', title:'Mehrere Header sind der Normalfall', html:'<p>Werden in den Transportregeln mehrere benutzerdefinierte Header gesetzt oder geprüft, müssen diese später im HIN Gateway einzeln hinterlegt werden. Notieren Sie den jeweiligen Header-Key. Das HIN Gateway WebGUI normalisiert die Darstellung später in CapitalCamelCase.</p>'}
 ]},
 
 /* ---------------------------------------------------------------- 2 */
@@ -691,13 +699,16 @@ CONTENT.de.STEPS = [
   {k:'table', head:['Ressource','Minimum','Empfohlen'], mono:[1,2], rows:[
     ['CPU','4 vCPU','6 vCPU'],
     ['RAM','8 GB','12 GB'],
-    ['SSD','60 GB','60 GB']
+    ['OS-Datenträger','60 GB','60 GB'],
+    ['Data Disk','30 GB','≥ 30 GB']
   ]},
+  {k:'note', tone:'danger', title:'Data Disk vor dem ersten Boot hinzufügen', html:'<p>Zusätzlich zum OS-Datenträger muss vor dem ersten Boot ein leerer zweiter Datenträger mit mindestens 30 GB angehängt werden. Den Datenträger nicht selbst formatieren oder partitionieren. Das HIN Gateway initialisiert ihn beim ersten Start als <code class="inl">VEREIGN-DATA</code> und verwendet ihn unter <code class="inl">/var/data</code>.</p>'},
   {k:'h', t:'4.1 Hyper-V unter Windows 11 Pro'},
   {k:'todo', items:[
     'Bereitstellung über „Hyper-V Quick Create“ – so ist es bei HIN dokumentiert',
     'Generation 2 verwenden',
     'Bei „Local installation source“ die heruntergeladene VHDX auswählen und „This machine will run Windows“ deaktivieren',
+    'Leeren zweiten Data Disk mit mindestens 30 GB vor dem ersten Boot anhängen – nicht formatieren oder partitionieren',
     'CPU und RAM kontrollieren und den Netzwerkadapter mit dem vorgesehenen vSwitch oder VLAN verbinden'
   ]},
   {k:'h', t:'4.2 Hyper-V auf Windows Server'},
@@ -705,9 +716,10 @@ CONTENT.de.STEPS = [
   {k:'todo', items:[
     'VM als Generation 2 erstellt – die Generation kann später nicht mehr geändert werden',
     'Vorhandene HIN-Gateway-VHDX als Boot-Datenträger angebunden',
+    'Leeren zweiten Data Disk mit mindestens 30 GB vor dem ersten Boot angehängt – nicht formatiert oder partitioniert',
     'Secure Boot aktiviert und für den Linux-Gast die Vorlage „Microsoft UEFI Certificate Authority“ verwendet',
     'Virtuellen Netzwerkadapter mit dem korrekten vSwitch oder VLAN verbunden, Firewall- und NAT-Erreichbarkeit sichergestellt',
-    'Mindestens 4 vCPU, 8 GB RAM und 60 GB SSD zugewiesen, empfohlen 6 vCPU und 12 GB RAM',
+    'Mindestens 4 vCPU, 8 GB RAM und 60 GB OS-Datenträger zugewiesen, empfohlen 6 vCPU und 12 GB RAM',
     'Bei DHCP-Reservation: statische MAC am virtuellen Netzwerkadapter konfiguriert und Reservation auf genau diese MAC gesetzt'
   ]},
   {k:'note', tone:'warn', title:'Bei Boot-Problemen', html:'<p>Kontrollieren Sie zuerst die Secure-Boot-Vorlage, bevor Sie Secure Boot deaktivieren.</p>'}
@@ -818,7 +830,7 @@ CONTENT.de.STEPS = [
 {ph:'p2', n:'11', title:'Domänen und bestehenden Private Key übernehmen', lead:'Hier importieren Sie den in Schritt 5 exportierten Schlüssel.', blocks:[
   {k:'todo', items:[
     'Alle Trusted Domains kontrolliert und die benötigten Domänen auf „Enabled“ gesetzt',
-    '„Use sec-prefix“ nur aktiviert, wenn sec.{domain} bereits verwendet wird',
+    {t:'„Use sec-prefix“ nur aktiviert, wenn sec.{domain} bereits verwendet wird', na:true},
     'Bestehende P12- oder PFX-Datei vom MGW importiert – Passwortfeld leer lassen, falls der Export ohne Passwort erfolgte',
     '„Save Configuration“ ausgeführt und erfolgreichen Zertifikatsimport kontrolliert'
   ]},
@@ -840,19 +852,23 @@ CONTENT.de.STEPS = [
   {k:'todo', items:[
     'Mail server host name und IP-Adressen gesetzt',
     'Relay Host pro Domäne übernommen',
-    'TLS, Trusted Networks, Content Filter und Default Relay Host geprüft, soweit im MGW verwendet'
+    {t:'TLS-Einstellungen übernommen', na:true},
+    {t:'Trusted Networks übernommen', na:true},
+    {t:'Content Filter übernommen', na:true},
+    {t:'Default Relay Host übernommen', na:true}
   ]}
 ]},
 
 /* --------------------------------------------------------------- 13 */
 {ph:'p2', n:'13', title:'Whitelist Headers vollständig übernehmen', lead:'Der häufigste Fehler ist, nur einen einzelnen bekannten Header zu übernehmen.', blocks:[
   {k:'note', tone:'danger', title:'Alle EXO-Transportregeln prüfen', html:'<p>Kontrollieren Sie in Exchange Online unter Mail flow → Rules alle für HIN und MGW relevanten Transportregeln. Wenn dort mehrere benutzerdefinierte Header gesetzt oder geprüft werden, muss jeder benötigte Header-Key im HIN Gateway unter Domains → Whitelist headers einzeln eingetragen werden.</p>'},
+  {k:'note', tone:'info', title:'Darstellung der Header im WebGUI', html:'<p>Das HIN Gateway WebGUI normalisiert Header-Namen in CapitalCamelCase. Beispiel: <code class="inl">X-HIN-Something</code> wird als <code class="inl">X-Hin-Something</code> dargestellt. Diese abweichende Gross-/Kleinschreibung in der Anzeige ist daher erwartetes Verhalten. Prüfen Sie die Funktion anschliessend mit dem Mailflow-Test.</p>'},
   {k:'todo', items:[
     'Exchange Admin Center → Mail flow → Rules geöffnet',
     'Alle HIN- und MGW-bezogenen Regeln geprüft, insbesondere Aktionen und Bedingungen mit benutzerdefinierten Message Headers',
-    'Header-Namen exakt dokumentiert, Gross- und Kleinschreibung unverändert übernommen',
-    'HIN Gateway → Domains → Whitelist headers geöffnet',
-    'Jeden benötigten Header-Key als eigenen Eintrag erfasst und gespeichert',
+    {t:'Header-Namen aus Exchange Online dokumentiert und im HIN Gateway übernommen; CapitalCamelCase-Darstellung im WebGUI berücksichtigt', na:true},
+    {t:'HIN Gateway → Domains → Whitelist headers geöffnet', na:true},
+    {t:'Jeden benötigten Header-Key als eigenen Eintrag erfasst und gespeichert', na:true},
     'Mailflow mit einer HIN-Nachricht und einer externen „(Vertraulich)“-Nachricht getestet'
   ]}
 ]},
@@ -881,7 +897,7 @@ CONTENT.de.STEPS = [
     'Transportregel: Ausnahme „Sender IP is in …“ von der alten auf die neue Gateway-IP geändert – sonst droht eine Mail-Schleife',
     'Firewall, NAT und Portfreigaben auf die neue Ziel-IP aktualisiert',
     'Bei geänderter Public-IP oder geändertem Mail-FQDN: A/AAAA, MX und SPF aktualisiert, PTR und rDNS geprüft',
-    'DKIM und DMARC anschliessend validiert'
+    {t:'DKIM und DMARC anschliessend validiert', na:true}
   ]},
   {k:'h', t:'15.3 Trusted Networks für Exchange Online'},
   {k:'p', html:'Gemäss aktueller HIN-Installationsanleitung sind für Microsoft 365 und Exchange Online die veröffentlichten ausgehenden IP-Netze unter Settings → Trusted networks zu hinterlegen.'},
@@ -908,7 +924,7 @@ CONTENT.de.STEPS = [
   {k:'todo', items:[
     'A/AAAA, MX und SPF aufgelöst und gegen den geplanten Zustand geprüft',
     {t:'Bei neuer Public-IP: PTR und rDNS kontrolliert', v:'B'},
-    'DKIM und DMARC validiert, soweit verwendet',
+    {t:'DKIM und DMARC validiert, soweit verwendet', na:true},
     'Peer-Zertifikat auf Status „Good“ und Mesh auf Status „Up“ bestätigt'
   ]}
 ]},
@@ -943,9 +959,10 @@ CONTENT.de.STEPS = [
     'Firewall inklusive 19818 TCP/UDP, DNS 53 TCP/UDP, NTP 123 UDP und Admin-Zugänge geprüft',
     'Port 8084 von aussen als geschlossen verifiziert',
     'Hyper-V Generation 2, Secure-Boot-Vorlage für Linux, vSwitch, CPU und RAM geprüft',
+    'Zweiter leerer Data Disk mit mindestens 30 GB vor dem ersten Boot angehängt und unter /var/data verfügbar',
     'Statische IP nach Reboot weiterhin vorhanden, cloud-init geprüft',
     'Private Key beziehungsweise P12 erfolgreich importiert',
-    'Alle benötigten EXO-Header einzeln in Whitelist headers hinterlegt',
+    {t:'Alle benötigten EXO-Header einzeln in Whitelist headers hinterlegt', na:true},
     'EXO Trusted Networks gegen die aktuelle HIN-Dokumentation geprüft',
     {t:'Connectoren, Transportregel-Ausnahme, NAT und DNS auf die neue IP angepasst', v:'B'},
     'Mesh „Up“, Peer-Zertifikat „Good“, Mailflow in beide Richtungen getestet',
@@ -1013,17 +1030,17 @@ CONTENT.en.STEPS = [
     'Outgoing Server',
     'Forwarding Server per domain',
     '„Send ALL outgoing mails …“',
-    'TLS settings',
-    'Content Filter',
-    'Trusted Networks',
-    'SEC Prefix',
-    'MGW Header Check, if used'
+    {t:'TLS settings', na:true},
+    {t:'Content Filter', na:true},
+    {t:'Trusted Networks', na:true},
+    {t:'SEC Prefix', na:true},
+    {t:'MGW Header Check, if used', na:true}
   ]},
   {k:'h', t:'Check Exchange Online'},
   {k:'todo', items:[
     'Open Exchange Online → Mail flow → Rules and note every custom header relevant to HIN and MGW'
   ]},
-  {k:'note', tone:'warn', title:'Several headers is the normal case', html:'<p>If the transport rules set or check several custom headers, each of them has to be entered individually in the HIN Gateway later. Note the exact spelling.</p>'}
+  {k:'note', tone:'warn', title:'Several headers is the normal case', html:'<p>If the transport rules set or check several custom headers, each of them has to be entered individually in the HIN Gateway later. Note each header key. The HIN Gateway WebGUI normalises the display to CapitalCamelCase.</p>'}
 ]},
 
 /* 2 */
@@ -1075,13 +1092,16 @@ CONTENT.en.STEPS = [
   {k:'table', head:['Resource','Minimum','Recommended'], mono:[1,2], rows:[
     ['CPU','4 vCPU','6 vCPU'],
     ['RAM','8 GB','12 GB'],
-    ['SSD','60 GB','60 GB']
+    ['OS disk','60 GB','60 GB'],
+    ['Data disk','30 GB','≥ 30 GB']
   ]},
+  {k:'note', tone:'danger', title:'Add the data disk before first boot', html:'<p>In addition to the OS disk, attach a second empty disk of at least 30 GB before the first boot. Do not format or partition it yourself. The HIN Gateway initialises it on first boot as <code class="inl">VEREIGN-DATA</code> and uses it under <code class="inl">/var/data</code>.</p>'},
   {k:'h', t:'4.1 Hyper-V on Windows 11 Pro'},
   {k:'todo', items:[
     'Deploy via „Hyper-V Quick Create“ – this is how HIN documents it',
     'Use generation 2',
     'Under „Local installation source“, select the downloaded VHDX and clear „This machine will run Windows“',
+    'Attach a second empty data disk of at least 30 GB before first boot – do not format or partition it',
     'Check CPU and RAM, and connect the network adapter to the intended vSwitch or VLAN'
   ]},
   {k:'h', t:'4.2 Hyper-V on Windows Server'},
@@ -1089,9 +1109,10 @@ CONTENT.en.STEPS = [
   {k:'todo', items:[
     'VM created as generation 2 – the generation cannot be changed later',
     'Existing HIN Gateway VHDX attached as the boot disk',
+    'Second empty data disk of at least 30 GB attached before first boot – not formatted or partitioned',
     'Secure Boot enabled, using the „Microsoft UEFI Certificate Authority“ template for the Linux guest',
     'Virtual network adapter connected to the correct vSwitch or VLAN, firewall and NAT reachability ensured',
-    'At least 4 vCPU, 8 GB RAM and 60 GB SSD assigned; 6 vCPU and 12 GB RAM recommended',
+    'At least 4 vCPU, 8 GB RAM and a 60 GB OS disk assigned; 6 vCPU and 12 GB RAM recommended',
     'With a DHCP reservation: static MAC configured on the virtual network adapter and the reservation bound to exactly that MAC'
   ]},
   {k:'note', tone:'warn', title:'If the VM will not boot', html:'<p>Check the Secure Boot template first, before disabling Secure Boot.</p>'}
@@ -1202,7 +1223,7 @@ CONTENT.en.STEPS = [
 {ph:'p2', n:'11', title:'Domains and taking over the existing private key', lead:'This is where you import the key exported in step 5.', blocks:[
   {k:'todo', items:[
     'All trusted domains checked and the required domains set to „Enabled“',
-    '„Use sec-prefix“ enabled only if sec.{domain} is already in use',
+    {t:'„Use sec-prefix“ enabled only if sec.{domain} is already in use', na:true},
     'Existing P12 or PFX file imported from the MGW – leave the password field empty if the export had no password',
     '„Save Configuration“ executed and a successful certificate import confirmed'
   ]},
@@ -1224,19 +1245,23 @@ CONTENT.en.STEPS = [
   {k:'todo', items:[
     'Mail server host name and IP addresses set',
     'Relay host carried over per domain',
-    'TLS, Trusted Networks, Content Filter and Default Relay Host checked, as far as they were used in the MGW'
+    {t:'TLS settings carried over', na:true},
+    {t:'Trusted Networks carried over', na:true},
+    {t:'Content Filter carried over', na:true},
+    {t:'Default Relay Host carried over', na:true}
   ]}
 ]},
 
 /* 13 */
 {ph:'p2', n:'13', title:'Carry over the whitelist headers in full', lead:'The most common mistake is carrying over only one known header.', blocks:[
   {k:'note', tone:'danger', title:'Check all EXO transport rules', html:'<p>In Exchange Online under Mail flow → Rules, check every transport rule relevant to HIN and MGW. If several custom headers are set or checked there, each required header key has to be entered individually in the HIN Gateway under Domains → Whitelist headers.</p>'},
+  {k:'note', tone:'info', title:'Header display in the WebGUI', html:'<p>The HIN Gateway WebGUI normalises header names to CapitalCamelCase. Example: <code class="inl">X-HIN-Something</code> is displayed as <code class="inl">X-Hin-Something</code>. This difference in capitalisation in the display is therefore expected behaviour. Confirm functionality with the mail flow test afterwards.</p>'},
   {k:'todo', items:[
     'Exchange Admin Center → Mail flow → Rules opened',
     'All HIN and MGW related rules checked, especially actions and conditions using custom message headers',
-    'Header names documented exactly, capitalisation carried over unchanged',
-    'HIN Gateway → Domains → Whitelist headers opened',
-    'Every required header key entered as its own record and saved',
+    {t:'Header names documented from Exchange Online and carried over into the HIN Gateway; CapitalCamelCase display in the WebGUI taken into account', na:true},
+    {t:'HIN Gateway → Domains → Whitelist headers opened', na:true},
+    {t:'Every required header key entered as its own record and saved', na:true},
     'Mail flow tested with a HIN message and an external „(Vertraulich)“ message'
   ]}
 ]},
@@ -1265,7 +1290,7 @@ CONTENT.en.STEPS = [
     'Transport rule: exception „Sender IP is in …“ changed from the old to the new gateway IP – otherwise a mail loop is likely',
     'Firewall, NAT and port forwarding updated to the new target IP',
     'If the public IP or mail FQDN changed: A/AAAA, MX and SPF updated, PTR and rDNS checked',
-    'DKIM and DMARC validated afterwards'
+    {t:'DKIM and DMARC validated afterwards', na:true}
   ]},
   {k:'h', t:'15.3 Trusted networks for Exchange Online'},
   {k:'p', html:'Per the current HIN installation instructions, the published outbound IP ranges for Microsoft 365 and Exchange Online belong under Settings → Trusted networks.'},
@@ -1292,7 +1317,7 @@ CONTENT.en.STEPS = [
   {k:'todo', items:[
     'A/AAAA, MX and SPF resolved and checked against the intended state',
     {t:'With a new public IP: PTR and rDNS checked', v:'B'},
-    'DKIM and DMARC validated, as far as they are used',
+    {t:'DKIM and DMARC validated, as far as they are used', na:true},
     'Peer certificate status „Good“ and mesh status „Up“ confirmed'
   ]}
 ]},
@@ -1327,9 +1352,10 @@ CONTENT.en.STEPS = [
     'Firewall checked, including 19818 TCP/UDP, DNS 53 TCP/UDP, NTP 123 UDP and admin access',
     'Port 8084 verified as closed from the outside',
     'Hyper-V generation 2, Secure Boot template for Linux, vSwitch, CPU and RAM checked',
+    'Second empty data disk of at least 30 GB attached before first boot and available under /var/data',
     'Static IP still present after reboot, cloud-init checked',
     'Private key or P12 imported successfully',
-    'All required EXO headers entered individually under Whitelist headers',
+    {t:'All required EXO headers entered individually under Whitelist headers', na:true},
     'EXO trusted networks checked against the current HIN documentation',
     {t:'Connectors, transport rule exception, NAT and DNS adjusted to the new IP', v:'B'},
     'Mesh „Up“, peer certificate „Good“, mail flow tested in both directions',
@@ -1397,17 +1423,17 @@ CONTENT.fr.STEPS = [
     'Outgoing Server',
     'Forwarding Server par domaine',
     '« Send ALL outgoing mails … »',
-    'Paramètres TLS',
-    'Content Filter',
-    'Trusted Networks',
-    'SEC Prefix',
-    'MGW Header Check, s’il est utilisé'
+    {t:'Paramètres TLS', na:true},
+    {t:'Content Filter', na:true},
+    {t:'Trusted Networks', na:true},
+    {t:'SEC Prefix', na:true},
+    {t:'MGW Header Check, s’il est utilisé', na:true}
   ]},
   {k:'h', t:'Contrôler Exchange Online'},
   {k:'todo', items:[
     'Ouvrir Exchange Online → Mail flow → Rules et noter tous les en-têtes personnalisés pertinents pour HIN et le MGW'
   ]},
-  {k:'note', tone:'warn', title:'Plusieurs en-têtes, c’est le cas normal', html:'<p>Si les règles de transport définissent ou contrôlent plusieurs en-têtes personnalisés, chacun devra être saisi individuellement dans le HIN Gateway. Notez l’orthographe exacte.</p>'}
+  {k:'note', tone:'warn', title:'Plusieurs en-têtes, c’est le cas normal', html:'<p>Si les règles de transport définissent ou contrôlent plusieurs en-têtes personnalisés, chacun devra être saisi individuellement dans le HIN Gateway. Notez chaque clé d’en-tête. Le WebGUI du HIN Gateway normalise ensuite l’affichage en CapitalCamelCase.</p>'}
 ]},
 
 /* 2 */
@@ -1459,13 +1485,16 @@ CONTENT.fr.STEPS = [
   {k:'table', head:['Ressource','Minimum','Recommandé'], mono:[1,2], rows:[
     ['CPU','4 vCPU','6 vCPU'],
     ['RAM','8 GB','12 GB'],
-    ['SSD','60 GB','60 GB']
+    ['Disque OS','60 GB','60 GB'],
+    ['Data Disk','30 GB','≥ 30 GB']
   ]},
+  {k:'note', tone:'danger', title:'Ajouter le Data Disk avant le premier démarrage', html:'<p>En plus du disque OS, ajoutez avant le premier démarrage un second disque vide d’au moins 30 GB. Ne le formatez et ne le partitionnez pas vous-même. Le HIN Gateway l’initialise au premier démarrage comme <code class="inl">VEREIGN-DATA</code> et l’utilise sous <code class="inl">/var/data</code>.</p>'},
   {k:'h', t:'4.1 Hyper-V sous Windows 11 Pro'},
   {k:'todo', items:[
     'Déploiement via « Hyper-V Quick Create » – c’est ainsi que HIN le documente',
     'Utiliser la génération 2',
     'Sous « Local installation source », sélectionner le VHDX téléchargé et décocher « This machine will run Windows »',
+    'Ajouter un second Data Disk vide d’au moins 30 GB avant le premier démarrage – ne pas le formater ni le partitionner',
     'Contrôler le CPU et la RAM et connecter la carte réseau au vSwitch ou VLAN prévu'
   ]},
   {k:'h', t:'4.2 Hyper-V sur Windows Server'},
@@ -1473,9 +1502,10 @@ CONTENT.fr.STEPS = [
   {k:'todo', items:[
     'VM créée en génération 2 – la génération ne peut plus être modifiée ensuite',
     'VHDX HIN Gateway existant attaché comme disque de démarrage',
+    'Second Data Disk vide d’au moins 30 GB ajouté avant le premier démarrage – non formaté et non partitionné',
     'Secure Boot activé, avec le modèle « Microsoft UEFI Certificate Authority » pour l’invité Linux',
     'Carte réseau virtuelle connectée au bon vSwitch ou VLAN, accessibilité pare-feu et NAT assurée',
-    'Au moins 4 vCPU, 8 GB de RAM et 60 GB de SSD attribués ; 6 vCPU et 12 GB de RAM recommandés',
+    'Au moins 4 vCPU, 8 GB de RAM et un disque OS de 60 GB attribués ; 6 vCPU et 12 GB de RAM recommandés',
     'En cas de réservation DHCP : MAC statique configurée sur la carte réseau virtuelle et réservation liée exactement à cette MAC'
   ]},
   {k:'note', tone:'warn', title:'En cas de problème de démarrage', html:'<p>Contrôlez d’abord le modèle Secure Boot avant de désactiver Secure Boot.</p>'}
@@ -1586,7 +1616,7 @@ CONTENT.fr.STEPS = [
 {ph:'p2', n:'11', title:'Domaines et reprise de la clé privée existante', lead:'C’est ici que vous importez la clé exportée à l’étape 5.', blocks:[
   {k:'todo', items:[
     'Tous les trusted domains contrôlés et les domaines nécessaires mis sur « Enabled »',
-    '« Use sec-prefix » activé uniquement si sec.{domain} est déjà utilisé',
+    {t:'« Use sec-prefix » activé uniquement si sec.{domain} est déjà utilisé', na:true},
     'Fichier P12 ou PFX existant importé depuis le MGW – laisser le champ mot de passe vide si l’export s’est fait sans mot de passe',
     '« Save Configuration » exécuté et import du certificat confirmé'
   ]},
@@ -1608,19 +1638,23 @@ CONTENT.fr.STEPS = [
   {k:'todo', items:[
     'Mail server host name et adresses IP définis',
     'Relay host repris par domaine',
-    'TLS, Trusted Networks, Content Filter et Default Relay Host contrôlés, dans la mesure où ils étaient utilisés dans le MGW'
+    {t:'Paramètres TLS repris', na:true},
+    {t:'Trusted Networks repris', na:true},
+    {t:'Content Filter repris', na:true},
+    {t:'Default Relay Host repris', na:true}
   ]}
 ]},
 
 /* 13 */
 {ph:'p2', n:'13', title:'Reprendre intégralement les whitelist headers', lead:'L’erreur la plus fréquente consiste à ne reprendre qu’un seul en-tête connu.', blocks:[
   {k:'note', tone:'danger', title:'Contrôler toutes les règles de transport EXO', html:'<p>Dans Exchange Online, sous Mail flow → Rules, contrôlez toutes les règles de transport pertinentes pour HIN et le MGW. Si plusieurs en-têtes personnalisés y sont définis ou contrôlés, chaque clé d’en-tête nécessaire doit être saisie individuellement dans le HIN Gateway sous Domains → Whitelist headers.</p>'},
+  {k:'note', tone:'info', title:'Affichage des en-têtes dans le WebGUI', html:'<p>Le WebGUI du HIN Gateway normalise les noms d’en-tête en CapitalCamelCase. Exemple : <code class="inl">X-HIN-Something</code> est affiché comme <code class="inl">X-Hin-Something</code>. Cette différence de casse dans l’affichage est donc un comportement attendu. Confirmez ensuite le fonctionnement avec le test du flux de messagerie.</p>'},
   {k:'todo', items:[
     'Exchange Admin Center → Mail flow → Rules ouvert',
     'Toutes les règles liées à HIN et au MGW contrôlées, en particulier les actions et conditions utilisant des message headers personnalisés',
-    'Noms des en-têtes documentés exactement, majuscules et minuscules reprises telles quelles',
-    'HIN Gateway → Domains → Whitelist headers ouvert',
-    'Chaque clé d’en-tête nécessaire saisie comme entrée distincte et enregistrée',
+    {t:'Noms des en-têtes documentés depuis Exchange Online et repris dans le HIN Gateway ; affichage CapitalCamelCase du WebGUI pris en compte', na:true},
+    {t:'HIN Gateway → Domains → Whitelist headers ouvert', na:true},
+    {t:'Chaque clé d’en-tête nécessaire saisie comme entrée distincte et enregistrée', na:true},
     'Flux de messagerie testé avec un message HIN et un message externe « (Vertraulich) »'
   ]}
 ]},
@@ -1649,7 +1683,7 @@ CONTENT.fr.STEPS = [
     'Règle de transport : exception « Sender IP is in … » modifiée de l’ancienne vers la nouvelle IP du gateway – sinon une boucle de messagerie est probable',
     'Pare-feu, NAT et redirections de ports mis à jour vers la nouvelle IP cible',
     'Si l’IP publique ou le FQDN de messagerie a changé : A/AAAA, MX et SPF mis à jour, PTR et rDNS contrôlés',
-    'DKIM et DMARC validés ensuite'
+    {t:'DKIM et DMARC validés ensuite', na:true}
   ]},
   {k:'h', t:'15.3 Trusted networks pour Exchange Online'},
   {k:'p', html:'Selon les instructions d’installation HIN actuelles, les plages IP sortantes publiées pour Microsoft 365 et Exchange Online sont à saisir sous Settings → Trusted networks.'},
@@ -1676,7 +1710,7 @@ CONTENT.fr.STEPS = [
   {k:'todo', items:[
     'A/AAAA, MX et SPF résolus et comparés à l’état prévu',
     {t:'En cas de nouvelle IP publique : PTR et rDNS contrôlés', v:'B'},
-    'DKIM et DMARC validés, dans la mesure où ils sont utilisés',
+    {t:'DKIM et DMARC validés, dans la mesure où ils sont utilisés', na:true},
     'Statut « Good » du certificat du pair et statut « Up » du mesh confirmés'
   ]}
 ]},
@@ -1711,9 +1745,10 @@ CONTENT.fr.STEPS = [
     'Pare-feu contrôlé, y compris 19818 TCP/UDP, DNS 53 TCP/UDP, NTP 123 UDP et accès administrateur',
     'Port 8084 vérifié comme fermé depuis l’extérieur',
     'Hyper-V génération 2, modèle Secure Boot pour Linux, vSwitch, CPU et RAM contrôlés',
+    'Second Data Disk vide d’au moins 30 GB ajouté avant le premier démarrage et disponible sous /var/data',
     'IP statique toujours présente après redémarrage, cloud-init contrôlé',
     'Clé privée ou P12 importée avec succès',
-    'Tous les en-têtes EXO nécessaires saisis individuellement sous Whitelist headers',
+    {t:'Tous les en-têtes EXO nécessaires saisis individuellement sous Whitelist headers', na:true},
     'Trusted networks EXO comparés à la documentation HIN actuelle',
     {t:'Connecteurs, exception de la règle de transport, NAT et DNS adaptés à la nouvelle IP', v:'B'},
     'Mesh « Up », certificat du pair « Good », flux de messagerie testé dans les deux sens',
@@ -1750,9 +1785,11 @@ function guessLang(){
   return 'de';
 }
 
-let S = {lang:null, variant:null, checks:{}, values:{}, cur:0};
+let S = {lang:null, variant:null, checks:{}, na:{}, values:{}, cur:0};
 try { const raw = store.get(KEY); if (raw) S = Object.assign(S, JSON.parse(raw)); } catch(e){}
 if (!LANGS.includes(S.lang)) S.lang = guessLang();
+if (!S.checks || typeof S.checks!=='object') S.checks = {};
+if (!S.na || typeof S.na!=='object') S.na = {};
 const save = () => store.set(KEY, JSON.stringify(S));
 
 let T, FIELDS, PHASES, STEPS;
@@ -1820,8 +1857,10 @@ function blockHTML(b, si, bi){
       return '<ul class="tasks">'+items.map(({it,ii})=>{
         const id = si+'.'+bi+'.'+ii, txt = typeof it==='string'?it:it.t;
         const vTag = (typeof it!=='string' && it.v) ? '<span class="v">'+esc(it.v==='A'?T.onlyA:T.onlyB)+'</span>' : '';
-        return '<li><label><input type="checkbox" data-task="'+id+'"'+(S.checks[id]?' checked':'')+
-               '><span class="txt">'+fill(esc(txt), true)+vTag+'</span></label></li>';
+        const naAllowed = typeof it!=='string' && !!it.na, isNA = !!S.na[id];
+        const naBtn = naAllowed ? '<button type="button" class="na-btn'+(isNA?' on':'')+'" data-na="'+id+'" aria-pressed="'+isNA+'">'+esc(T.notApplicable)+'</button>' : '';
+        return '<li class="'+(isNA?'na':'')+'"><div class="task-row"><label><input type="checkbox" data-task="'+id+'"'+(S.checks[id]?' checked':'')+
+               '><span class="txt">'+fill(esc(txt), true)+vTag+'</span></label>'+naBtn+'</div></li>';
       }).join('')+'</ul>';
     }
   }
@@ -1848,7 +1887,7 @@ function stepTasks(s, i){
     if (b.k!=='todo' || !applies(b)) return;
     b.items.forEach((it,ii)=>{
       if (!applies(typeof it==='string'?null:it)) return;
-      out.push({id:i+'.'+bi+'.'+ii, txt:(typeof it==='string'?it:it.t)});
+      out.push({id:i+'.'+bi+'.'+ii, txt:(typeof it==='string'?it:it.t), naAllowed:(typeof it!=='string' && !!it.na)});
     });
   });
   return out;
@@ -1864,7 +1903,7 @@ function renderNav(){
       last = s.ph;
     }
     if (s.cut) html += '</ul><div class="cutline"><span>'+esc(T.cutline)+'</span></div><ul class="nav">';
-    const tk = stepTasks(s,i), done = tk.filter(x=>S.checks[x.id]).length;
+    const tk = stepTasks(s,i), done = tk.filter(x=>S.checks[x.id] || S.na[x.id]).length;
     const all = tk.length>0 && done===tk.length;
     html += '<li><button data-go="'+i+'" class="'+(all?'done':'')+'" aria-current="'+(i===S.cur)+'">'+
       '<span class="n">'+(all?'✓':esc(s.n))+'</span><span class="lbl">'+esc(s.title)+
@@ -1875,7 +1914,7 @@ function renderNav(){
 
 function renderProgress(){
   let done=0, total=0;
-  STEPS.forEach((s,i)=>{ const tk=stepTasks(s,i); total+=tk.length; done+=tk.filter(x=>S.checks[x.id]).length; });
+  STEPS.forEach((s,i)=>{ const tk=stepTasks(s,i); total+=tk.length; done+=tk.filter(x=>S.checks[x.id] || S.na[x.id]).length; });
   const pct = total? Math.round(done/total*100) : 0;
   $('#progPct').textContent = pct+'%';
   $('#progTxt').textContent = t('progressTasks',{d:done,t:total});
@@ -1989,15 +2028,29 @@ function report(){
   L.push(T.repCreated+T.colon+new Date().toLocaleString(T.locale));
   L.push(T.repVariant+T.colon+(S.variant==='A'?T.repVariantA:T.repVariantB));
   let d=0, n=0;
-  STEPS.forEach((s,i)=>{const x=stepTasks(s,i); n+=x.length; d+=x.filter(y=>S.checks[y.id]).length;});
+  STEPS.forEach((s,i)=>{const x=stepTasks(s,i); n+=x.length; d+=x.filter(y=>S.checks[y.id] || S.na[y.id]).length;});
   L.push(t('repProgress',{d:d,t:n}));
   L.push('');
   const vals = FIELDS.filter(f=>(S.values[f.id]||'').trim());
   if (vals.length){ L.push(T.repValues); vals.forEach(f=>L.push('  '+f.label+T.colon+S.values[f.id].trim())); L.push(''); }
+  const naItems = [];
+  STEPS.forEach((s,i)=>{
+    stepTasks(s,i).filter(y=>S.na[y.id]).forEach(y=>naItems.push({s,y}));
+  });
+  if (naItems.length){
+    L.push(T.repNA);
+    let last = null;
+    naItems.forEach(({s,y})=>{
+      const key = s.n+'|'+s.title;
+      if (key!==last){ L.push('  '+(/^\d+$/.test(s.n) ? t('repStep',{n:s.n,t:s.title}) : t('repFinal',{t:s.title}))); last=key; }
+      L.push('    [N/A] '+fill(y.txt,false));
+    });
+    L.push('');
+  }
   L.push(T.repOpen);
   let open=0;
   STEPS.forEach((s,i)=>{
-    const x = stepTasks(s,i).filter(y=>!S.checks[y.id]);
+    const x = stepTasks(s,i).filter(y=>!S.checks[y.id] && !S.na[y.id]);
     if (!x.length) return;
     open += x.length;
     L.push('  '+(/^\d+$/.test(s.n) ? t('repStep',{n:s.n,t:s.title}) : t('repFinal',{t:s.title})));
@@ -2038,6 +2091,19 @@ document.addEventListener('click', e => {
   const go = e.target.closest('[data-go]');
   if (go) { goto(+go.dataset.go); return; }
 
+  const na = e.target.closest('[data-na]');
+  if (na) {
+    const id = na.dataset.na, on = !S.na[id];
+    if (on) { S.na[id] = true; delete S.checks[id]; }
+    else delete S.na[id];
+    save();
+    const li = na.closest('li'); if (li) li.classList.toggle('na', on);
+    na.classList.toggle('on', on); na.setAttribute('aria-pressed', String(on));
+    const cb = li ? li.querySelector('[data-task]') : null; if (cb && on) cb.checked = false;
+    renderNav(); renderProgress();
+    return;
+  }
+
   const cp = e.target.closest('[data-copy]');
   if (cp) { copyText(document.getElementById(cp.dataset.copy).innerText, T.copied); return; }
 
@@ -2067,7 +2133,7 @@ document.addEventListener('click', e => {
   if (id==='resetBtn'){
     if (confirm(T.resetConfirm)){
       store.del(KEY);
-      S = {lang:S.lang, variant:null, checks:{}, values:{}, cur:0};
+      S = {lang:S.lang, variant:null, checks:{}, na:{}, values:{}, cur:0};
       $('#app').classList.add('hidden'); $('#gate').classList.remove('hidden');
       ['variantBtn','valuesBtn','reportBtn'].forEach(x=>$('#'+x).hidden=true);
       $('#topProg').style.width='0%';
@@ -2078,7 +2144,16 @@ document.addEventListener('click', e => {
 
 document.addEventListener('change', e => {
   const tk = e.target.closest('[data-task]');
-  if (tk){ S.checks[tk.dataset.task] = tk.checked; save(); renderNav(); renderProgress(); return; }
+  if (tk){
+    const id = tk.dataset.task;
+    S.checks[id] = tk.checked;
+    if (tk.checked) delete S.na[id];
+    save();
+    const li = tk.closest('li'); if (li && tk.checked) li.classList.remove('na');
+    const naBtn = li ? li.querySelector('[data-na]') : null;
+    if (naBtn && tk.checked){ naBtn.classList.remove('on'); naBtn.setAttribute('aria-pressed','false'); }
+    renderNav(); renderProgress(); return;
+  }
   const f = e.target.closest('[data-field]');
   if (f){ S.values[f.dataset.field] = f.value; save(); }
 });
