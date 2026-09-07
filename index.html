@@ -401,7 +401,7 @@ de: {
   brandSub:'MGW-Migration für Microsoft 365',
   gateH1:'Migration auf das HIN Gateway, Schritt für Schritt.',
   gateSub:'Dieser Assistent führt Sie durch die Ablösung Ihres bestehenden MGW – von der Vorbereitung über das Onboarding bis zur Abnahme. Sie sehen jeweils nur den Schritt, an dem Sie gerade arbeiten.',
-  gateMeta:'Gültig für Single-Domain-Umgebungen mit Microsoft 365 und Exchange Online, VM zu VM. Stand 25. August 2026.',
+  gateMeta:'Gültig für Single-Domain-Umgebungen mit Microsoft 365 und Exchange Online, VM zu VM. Stand 7. September 2026 · HIN Gateway v0.6.1.',
   gateH2:'Zuerst: Wie migrieren Sie?',
   gateQ:'Diese Entscheidung bestimmt IP-Planung, Firewall und NAT, die Exchange-Connectoren und allenfalls Ihre DNS-Einträge. Der Assistent blendet danach nur die Schritte ein, die für Ihren Weg gelten.',
   tagA:'Variante A', tagB:'Variante B',
@@ -458,7 +458,7 @@ en: {
   brandSub:'MGW migration for Microsoft 365',
   gateH1:'Migrating to the HIN Gateway, one step at a time.',
   gateSub:'This assistant takes you through replacing your existing MGW – from preparation and onboarding to sign-off. You only ever see the step you are working on.',
-  gateMeta:'Applies to single-domain environments with Microsoft 365 and Exchange Online, VM to VM. As of 25 August 2026.',
+  gateMeta:'Applies to single-domain environments with Microsoft 365 and Exchange Online, VM to VM. As of 7 September 2026 · HIN Gateway v0.6.1.',
   gateH2:'First: how are you migrating?',
   gateQ:'This decision drives IP planning, firewall and NAT, the Exchange connectors and possibly your DNS records. The assistant then shows only the steps that apply to your path.',
   tagA:'Option A', tagB:'Option B',
@@ -515,7 +515,7 @@ fr: {
   brandSub:'Migration du MGW pour Microsoft 365',
   gateH1:'La migration vers le HIN Gateway, étape par étape.',
   gateSub:'Cet assistant vous accompagne dans le remplacement de votre MGW actuel – de la préparation à la réception, en passant par l’onboarding. Vous ne voyez que l’étape en cours.',
-  gateMeta:'Valable pour les environnements à domaine unique avec Microsoft 365 et Exchange Online, de VM à VM. État au 25 août 2026.',
+  gateMeta:'Valable pour les environnements à domaine unique avec Microsoft 365 et Exchange Online, de VM à VM. État au 7 septembre 2026 · HIN Gateway v0.6.1.',
   gateH2:'D’abord : comment migrez-vous ?',
   gateQ:'Ce choix détermine la planification IP, le pare-feu et le NAT, les connecteurs Exchange et, le cas échéant, vos entrées DNS. L’assistant n’affiche ensuite que les étapes qui vous concernent.',
   tagA:'Variante A', tagB:'Variante B',
@@ -569,7 +569,7 @@ fr: {
 };
 CONTENT.de = {};
 /* =====================================================================
-   Inhalt – abgeleitet aus „HIN Gateway Leitfaden“, Stand 25.08.2026
+   Inhalt – abgeleitet aus „HIN Gateway Leitfaden“, Stand 07.09.2026 / HIN Gateway v0.6.1
    Blocktypen: h | p | ul | todo | note | cmd | table | nets
    v: 'A' = nur Drop-In, 'B' = nur neue IP, sonst beide
    ===================================================================== */
@@ -720,6 +720,7 @@ CONTENT.de.STEPS = [
     'P12- oder PFX-Datei sicher ablegen und das Passwort dokumentieren, falls beim Export eines gesetzt wurde',
     'Rollback festlegen: neues HIN Gateway stoppen → altes MGW starten → Mailflow über MGW prüfen'
   ]},
+  {k:'note', tone:'warn', title:'Kein Windows-System verfügbar?', html:'<p>Das HIN Migration Tool benötigt eine Windows-Umgebung. Falls kein Windows-System verfügbar ist, kontaktieren Sie den HIN Support für den Export des bestehenden Private Keys.</p>'},
   {k:'note', tone:'danger', title:'MGW noch nicht löschen', html:'<p>Das bestehende MGW erst endgültig löschen, wenn Migration, Mailflow und Kundenabnahme erfolgreich abgeschlossen sind.</p>'}
 ]},
 
@@ -1103,6 +1104,7 @@ CONTENT.en.STEPS = [
     'Store the P12 or PFX file securely and document the password, if one was set during export',
     'Define the rollback: stop the new HIN Gateway → start the old MGW → verify mail flow through the MGW'
   ]},
+  {k:'note', tone:'warn', title:'No Windows system available?', html:'<p>The HIN Migration Tool requires a Windows environment. If no Windows system is available, contact HIN Support to export the existing private key.</p>'},
   {k:'note', tone:'danger', title:'Do not delete the MGW yet', html:'<p>Only delete the existing MGW once migration, mail flow and customer acceptance have completed successfully.</p>'}
 ]},
 
@@ -1486,6 +1488,7 @@ CONTENT.fr.STEPS = [
     'Stocker le fichier P12 ou PFX en lieu sûr et documenter le mot de passe, si un mot de passe a été défini lors de l’export',
     'Définir le retour arrière : arrêter le nouveau HIN Gateway → démarrer l’ancien MGW → vérifier le flux de messagerie via le MGW'
   ]},
+  {k:'note', tone:'warn', title:'Aucun système Windows disponible ?', html:'<p>Le HIN Migration Tool nécessite un environnement Windows. Si aucun système Windows n’est disponible, contactez le support HIN pour exporter la clé privée existante.</p>'},
   {k:'note', tone:'danger', title:'Ne pas encore supprimer le MGW', html:'<p>Ne supprimez définitivement le MGW existant qu’une fois la migration, le flux de messagerie et la réception client menés à bien.</p>'}
 ]},
 
