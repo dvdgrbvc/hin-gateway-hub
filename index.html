@@ -147,18 +147,46 @@ button{font:inherit;color:inherit}
 .gate .q{font-size:15px;color:var(--ink-2);max-width:66ch;margin:0 0 18px}
 .choices{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .choice{
-  background:var(--surface);border:1px solid var(--rule);border-radius:12px;
+  position:relative;background:var(--surface);border:1px solid var(--rule);border-radius:12px;
   padding:20px 20px 18px;text-align:left;cursor:pointer;display:block;
-  transition:border-color .15s ease,transform .15s ease;
+  transition:border-color .15s ease,transform .15s ease,box-shadow .15s ease,background .15s ease;
 }
 .choice:hover{border-color:var(--accent);transform:translateY(-2px)}
-.choice.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.choice.on{
+  border:3px solid var(--done);background:linear-gradient(180deg,var(--surface),var(--done-soft));
+  box-shadow:0 0 0 3px rgba(28,122,82,.10);padding:18px 18px 16px;
+}
+.choice.on::after{
+  content:"✓";position:absolute;top:12px;right:12px;width:26px;height:26px;border-radius:50%;
+  display:grid;place-items:center;background:var(--done);color:#fff;font-weight:800;font-size:15px;
+}
+.choice.on .tag{color:var(--done);background:var(--done-soft)}
 .choice .tag{font-family:var(--mono);font-size:12px;color:var(--accent-ink);background:var(--accent-soft);border-radius:5px;padding:2px 7px;display:inline-block}
 .choice h3{font-size:19px;font-weight:620;letter-spacing:-.01em;margin:10px 0 8px}
 .choice p{font-size:14.5px;color:var(--ink-2);margin:0 0 12px}
 .choice ul{margin:0;padding-left:17px;font-size:13.5px;color:var(--muted)}
 .choice li{margin:3px 0}
 .gate .later{font-size:13.5px;color:var(--muted);margin-top:22px}
+.gate-start{
+  margin:22px 0 26px;padding:16px 18px;border:1px solid #E5C78F;border-left:5px solid var(--accent);
+  border-radius:10px;background:var(--accent-soft);color:var(--ink-2);font-size:15px;
+}
+.gate-start b{color:var(--ink)}
+.gate-progress{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:0 0 30px}
+.gate-progress-step{
+  display:flex;align-items:center;gap:9px;padding:9px 11px;border:1px solid var(--rule);border-radius:9px;
+  background:var(--surface);font-size:13px;color:var(--muted);min-width:0;
+}
+.gate-progress-step .gp-n{
+  width:23px;height:23px;display:grid;place-items:center;border-radius:50%;border:1px solid var(--rule);
+  font-family:var(--mono);font-size:11px;flex:0 0 auto;background:var(--paper);
+}
+.gate-progress-step.active{border-color:var(--accent);color:var(--ink);box-shadow:0 0 0 2px var(--accent-soft)}
+.gate-progress-step.active .gp-n{border-color:var(--accent);background:var(--accent);color:#fff}
+.gate-progress-step.done{border-color:#B9D9C8;color:var(--done);background:var(--done-soft)}
+.gate-progress-step.done .gp-n{border-color:var(--done);background:var(--done);color:#fff}
+.question-kicker{display:block;font-family:var(--mono);font-size:11.5px;font-weight:700;letter-spacing:.035em;color:var(--accent-ink);margin:0 0 5px;text-transform:uppercase}
+.gate-question{scroll-margin-top:82px}
 
 /* ---------- Step ---------- */
 .crumb{font-size:13px;color:var(--muted);margin:0 0 8px}
@@ -342,6 +370,7 @@ dialog::backdrop{background:rgba(19,32,41,.42)}
   .main{padding:20px 0 80px;max-width:none}
   .menu-btn{display:inline-flex}
   .choices{grid-template-columns:1fr}
+  .gate-progress{grid-template-columns:1fr}
   .fields{grid-template-columns:1fr}
   .domain-grid{grid-template-columns:1fr}
   .gate{padding:32px 4px 60px}
@@ -434,6 +463,8 @@ de: {
   gateH1:'HIN Gateway Migration – Schritt für Schritt.',
   gateSub:'Dieser Assistent zeigt Ihnen Schritt für Schritt, was Sie für die Migration tun müssen. Ihre Eingaben werden später automatisch in die passenden Befehle eingesetzt.',
   gateMeta:'Für Single- und Multi-Domain-Migrationen. Der Assistent passt Mailumgebung, VM-Plattform und IP-Variante automatisch an. Stand 9. September 2026 · HIN Gateway v0.6.1.',
+  gateStartGuide:'Bitte beantworten Sie zum Start des Assistenten drei kurze Fragen. Wählen Sie bei jeder Frage eine der angebotenen Optionen per Klick aus. Danach startet automatisch der passende Migrationsweg.',
+  gateStepMail:'E-Mail-System', gateStepPlatform:'VM-Plattform', gateStepIP:'IP-Variante', gateQuestion:'Frage {n} von 3',
   gateMailH2:'Wo läuft Ihr E-Mail-System?',
   gateMailQ:'Wählen Sie aus, wo Ihre E-Mails verarbeitet werden. Wichtig: Microsoft 365 bedeutet nicht automatisch Exchange Online. Danach zeigt der Assistent nur die passenden Schritte.',
   mailM365:'Exchange Online (Microsoft 365)',
@@ -504,7 +535,7 @@ de: {
 compareTitle:'Kurzvergleich', compareHead:['','Bestehende IP','Neue IP'], compareRows:[['Ausfallzeit','ca. 1 Stunde','keine geplante Ausfallzeit bei Aufbau und Tests'],['Aufwand','geringer','höher'],['Parallelbetrieb','Nein','Ja'],['Tests vor Umschaltung','eingeschränkter','vollständig möglich'],['Anpassungen','wenige','Firewall, Routing, Connectoren, Trusted Networks, ggf. DNS']],
   domainSetupTitle:'Domains für die Migration', domainSetupIntro:'Tragen Sie die Domains jetzt ein. Bei mehreren Domains führt der Assistent die domain-spezifischen Schritte später für jede Domain separat auf.',
   domainModeQ:'Wie viele HIN geschützte Domains migrieren Sie?', oneDomain:'Eine Domain', multiDomain:'Mehrere Domains',
-  strategyQ:'Wie möchten Sie mehrere Domains migrieren?', strategyAll:'Alle Domains zusammen (empfohlen)', strategyAllSub:'Ein gemeinsamer Cutover. Keine zweite Public IP und keine temporären Split-Routing-Regeln nötig.', strategyGradual:'Domain für Domain', strategyGradualSub:'Benötigt eine zweite Public IP sowie temporäre Exchange-Connectoren und Routing-Regeln.',
+  strategyQ:'Wie möchten Sie mehrere Domains migrieren?', strategyAll:'Alle Domains zusammen (empfohlen)', strategyAllSub:'Eine gemeinsame Umschaltung. Keine zweite Public IP und keine temporären Split-Routing-Regeln nötig.', strategyGradual:'Domain für Domain', strategyGradualSub:'Benötigt eine zweite Public IP sowie temporäre Exchange-Connectoren und Routing-Regeln.',
   gradualForce:'Für eine schrittweise Domain-Migration wird automatisch „Neue IP“ verwendet, weil das HIN Gateway parallel zum MGW betrieben wird.',
   domainCard:'Domain {n}', domainFallback:'Domain {n}', addDomain:'Weitere Domain hinzufügen', removeDomain:'Entfernen',
   fldDomain:'HIN geschützte Domain', fldInbound:'Inbound Relay', fldOutbound:'Outbound Relay / MGW Forwarding Server', fldHeaders:'Whitelist Headers (optional, mit Komma trennen)', fldSec:'SEC Prefix', secUnknown:'Noch nicht geprüft', secYes:'Ja', secNo:'Nein / habe ich nicht',
@@ -519,6 +550,8 @@ en: {
   gateH1:'HIN Gateway migration – step by step.',
   gateSub:'This assistant shows you exactly what to do, one step at a time. Values you enter are automatically inserted into the commands later.',
   gateMeta:'For single- and multi-domain migrations. The assistant adapts the mail environment, VM platform and IP option automatically. As of 9 September 2026 · HIN Gateway v0.6.1.',
+  gateStartGuide:'To start the assistant, please answer three short questions. For each question, click one of the available options. The assistant will then start the migration path that matches your environment.',
+  gateStepMail:'Email system', gateStepPlatform:'VM platform', gateStepIP:'IP option', gateQuestion:'Question {n} of 3',
   gateMailH2:'Where does your email system run?',
   gateMailQ:'Choose where your email is processed. Important: having Microsoft 365 does not automatically mean you use Exchange Online. The assistant then shows only the relevant steps.',
   mailM365:'Exchange Online (Microsoft 365)',
@@ -604,6 +637,8 @@ fr: {
   gateH1:'La migration vers le HIN Gateway, étape par étape.',
   gateSub:'Cet assistant vous accompagne dans le remplacement de votre MGW actuel – de la préparation à la réception, en passant par l’onboarding. Vous ne voyez que l’étape en cours.',
   gateMeta:'Pour les migrations mono- et multi-domaines. L’assistant adapte automatiquement l’environnement mail, la plateforme VM et la variante IP. État au 9 septembre 2026 · HIN Gateway v0.6.1.',
+  gateStartGuide:'Pour démarrer l’assistant, répondez à trois questions courtes. Pour chaque question, cliquez sur l’une des options proposées. L’assistant lancera ensuite le parcours de migration adapté à votre environnement.',
+  gateStepMail:'Système e-mail', gateStepPlatform:'Plateforme VM', gateStepIP:'Option IP', gateQuestion:'Question {n} sur 3',
   gateMailH2:'Où fonctionne votre système de messagerie ?',
   gateMailQ:'Choisissez où vos e-mails sont traités. Important : Microsoft 365 ne signifie pas automatiquement que vous utilisez Exchange Online. Les autres serveurs mail et relais SMTP sont également pris en charge.',
   mailM365:'Exchange Online (Microsoft 365)',
@@ -713,16 +748,16 @@ CONTENT.de.STEPS = [
   {k:'h', t:'Smoke-Test vor der Migration'},
   {k:'todo', items:[
     'Test 1: HIN → HIN senden und Antwort prüfen',
-    'Test 2: geschützte Domain → externe Adresse senden und Antwort prüfen',
-    'Test 3: geschützte Domain → externe Adresse mit „(Vertraulich)“ im Betreff senden und Antwort prüfen',
-    'Test 4: externe Adresse → geschützte Domain senden und Empfang prüfen'
+    'Test 2: HIN → externe Adresse senden und Antwort prüfen',
+    'Test 3: HIN → externe Adresse mit „(Vertraulich)“ im Betreff senden und Antwort prüfen'
   ]},
+  {k:'todo', mail:'onprem', items:['Zusätzlicher Baseline-Test für Exchange On-Premises: externe Adresse → geschützte Domain senden und Empfang prüfen']},
   {k:'todo', items:[
     'Bestehendes MGW auf die aktuell unterstützte Version gebracht und neu gestartet',
     'Vollständiges VM-Backup des MGW erstellt und MGW als Rückfalloption aufbewahrt'
   ]},
   {k:'h', t:'MGW-Konfiguration kopieren'},
-  {k:'p', html:'Kopieren oder dokumentieren Sie die aktuelle MGW-Konfiguration. Bei mehreren Domains machen Sie das für jede Domain.'},
+  {k:'p', html:'Kopieren Sie die bestehende MGW-Konfiguration vollständig – diese Werte übernehmen Sie später im HIN Gateway. Bei mehreren Domains machen Sie das für jede Domain.'},
   {k:'domains'},
   {k:'domainTodo', items:[
     'Mail System → {domain} → Outgoing Server geprüft und dokumentiert',
@@ -780,6 +815,7 @@ CONTENT.de.STEPS = [
     ['Ausgehend','53','UDP + TCP','DNS'],
     ['Ausgehend','123','UDP','NTP']
   ]},
+  /* HIN decision: Port 8084 remains externally CLOSED; do not reintroduce it as an inbound SEAL callback. */
   {k:'note', tone:'danger', title:'Port 8084 geschlossen lassen', html:'<p>Port 8084 darf nicht aus dem Internet erreichbar sein. Falls eine alte Firewall-Regel dafür existiert, entfernen oder deaktivieren Sie sie.</p>'},
   {k:'cmd', where:'Rechner ausserhalb des Kundennetzes', lines:['nc -zv {pubip} 8084','# Erwartet: refused oder timeout']},
   {k:'todo', items:[
@@ -931,7 +967,7 @@ CONTENT.de.STEPS = [
   {k:'todo', mail:'m365', v:'A', items:['Incoming Connector kontrolliert','Outgoing Connector kontrolliert','Transportregeln kontrolliert']},
   {k:'h', mail:'m365', v:'B', t:'Neue IP'},
   {k:'todo', mail:'m365', v:'B', items:['Outgoing Connector / Smart Host auf das HIN Gateway umgestellt','Incoming Connector auf die neue öffentliche IP angepasst','Transportregeln und Routing-Domains auf die neue Route angepasst','Firewall und NAT – Network Address Translation – auf die neue Ziel-IP angepasst',{t:'DNS / MX / SPF / PTR angepasst, falls die öffentliche Adresse geändert wurde', na:true}]},
-  {k:'note', mail:'m365', dm:'multi', strategy:'all', tone:'info', title:'Multi-Domain: alle Domains zusammen – empfohlen', html:'<p>Ein gemeinsamer Cutover ist die einfachste Variante: keine zweite Public IP und keine temporären Split-Routing-Regeln. Rollback: neues HIN Gateway stoppen und altes MGW wieder starten.</p>'},
+  {k:'note', mail:'m365', dm:'multi', strategy:'all', tone:'info', title:'Multi-Domain: alle Domains zusammen – empfohlen', html:'<p>Eine gemeinsame Umschaltung ist die einfachste Variante: keine zweite Public IP und keine temporären Split-Routing-Regeln. Rollback: neues HIN Gateway stoppen und altes MGW wieder starten.</p>'},
   {k:'note', mail:'m365', dm:'multi', strategy:'gradual', tone:'warn', title:'Multi-Domain: Domain für Domain', html:'<p>Für diese Variante wird eine zweite Public IP benötigt. Erstellen Sie in Exchange Online einen Incoming- und einen Outgoing-Connector zum HIN Gateway und routen Sie zunächst nur eine Domain über eine Mail-Flow-Regel zum HIN Gateway. Alle anderen Domains bleiben auf dem MGW. Danach Domain für Domain wiederholen.</p><p>Rollback pro Domain: Routing-Regel der betroffenen Domain zurück auf das MGW setzen. Connectoren für den nächsten Versuch bestehen lassen. Änderungen in umgekehrter Reihenfolge zurücknehmen.</p>'},
   {k:'p', mail:'m365', dm:'multi', html:'<a href="https://health-info-net-ag.github.io/Stargate-deployment/Multi-domain-migration-scenarios/" target="_blank" rel="noopener">Multi-Domain-Migrationsszenarien öffnen</a>'},
   {k:'h', mail:'m365', t:'Trusted Networks für Exchange Online'},
@@ -1017,7 +1053,7 @@ CONTENT.en.FIELDS = [
 CONTENT.en.PHASES=[{id:'p1',name:'1 · Preparation'},{id:'p2',name:'2 · Installation and configuration'},{id:'p3',name:'3 · Test and finish'},{id:'p4',name:'Sign-off'}];
 CONTENT.en.STEPS=[
 {ph:'p1',n:'1',title:'Back up the old MGW and copy its settings',lead:'Before changing anything, test the current mail flow, back up the MGW and copy the settings you will need in the HIN Gateway.',blocks:[
- {k:'h',t:'Smoke test before migration'},{k:'todo',items:['Test 1: HIN → HIN and verify the reply','Test 2: protected domain → external address and verify the reply','Test 3: protected domain → external address with “(Vertraulich)” in the subject and verify the reply','Test 4: external address → protected domain and verify receipt']},
+ {k:'h',t:'Smoke test before migration'},{k:'todo',items:['Test 1: HIN → HIN and verify the reply','Test 2: HIN → external address and verify the reply','Test 3: HIN → external address with “(Vertraulich)” in the subject and verify the reply']},{k:'todo',mail:'onprem',items:['Additional Exchange On-Premises baseline test: external address → protected domain and verify receipt']},
  {k:'todo',items:['Existing MGW updated to the currently supported version and restarted','Full MGW VM backup created and the MGW kept as fallback']},{k:'h',t:'Copy the MGW configuration'},{k:'domains'},
  {k:'domainTodo',items:['Mail System → {domain} → Outgoing Server checked and documented','Mail System → {domain} → Forwarding server checked and copied into the migration details','Mail System → {domain} → “Send ALL outgoing mails …” checked and documented',{t:'TLS settings checked and documented for {domain}',na:true},{t:'Trusted Networks checked and documented for {domain}',na:true},{t:'SEC prefix checked and documented for {domain}',na:true},{t:'Content Filter checked and documented for {domain}',na:true},{t:'MGW Header Check reviewed and documented',na:true}]},
  {k:'h',mail:'m365',t:'Check Microsoft 365 / Exchange Online'},{k:'todo',mail:'m365',items:['Transport rules checked, especially Set-Header rules and HIN/MGW headers','Incoming connector checked','Outgoing connector checked',{t:'TLS and certificate settings checked',na:true}]},
@@ -1096,7 +1132,7 @@ CONTENT.fr.FIELDS = [
 ];
 CONTENT.fr.PHASES=[{id:'p1',name:'1 · Préparation'},{id:'p2',name:'2 · Installation et configuration'},{id:'p3',name:'3 · Tests et clôture'},{id:'p4',name:'Réception'}];
 CONTENT.fr.STEPS=[
-{ph:'p1',n:'1',title:'Sauvegarder l’ancien MGW et copier ses réglages',lead:'Avant toute modification, testez le flux actuel, sauvegardez le MGW et copiez les réglages nécessaires pour le HIN Gateway.',blocks:[{k:'h',t:'Smoke test avant migration'},{k:'todo',items:['Test 1 : HIN → HIN et vérifier la réponse','Test 2 : domaine protégé → adresse externe et vérifier la réponse','Test 3 : domaine protégé → adresse externe avec « (Vertraulich) » dans l’objet et vérifier la réponse','Test 4 : adresse externe → domaine protégé et vérifier la réception']},{k:'todo',items:['MGW existant mis à jour vers la version actuellement supportée et redémarré','Sauvegarde complète de la VM MGW créée et MGW conservé comme solution de repli']},{k:'h',t:'Copier la configuration MGW'},{k:'domains'},{k:'domainTodo',items:['Mail System → {domain} → Outgoing Server contrôlé et documenté','Mail System → {domain} → Forwarding server contrôlé et repris','Mail System → {domain} → « Send ALL outgoing mails … » contrôlé et documenté',{t:'Paramètres TLS contrôlés et documentés pour {domain}',na:true},{t:'Trusted Networks contrôlés et documentés pour {domain}',na:true},{t:'Préfixe SEC contrôlé et documenté pour {domain}',na:true},{t:'Content Filter contrôlé et documenté pour {domain}',na:true},{t:'MGW Header Check contrôlé et documenté',na:true}]},{k:'h',mail:'m365',t:'Contrôler Microsoft 365 / Exchange Online'},{k:'todo',mail:'m365',items:['Règles de transport contrôlées, notamment Set-Header et en-têtes HIN/MGW','Incoming Connector contrôlé','Outgoing Connector contrôlé',{t:'TLS et certificats contrôlés',na:true}]},{k:'h',mail:'onprem',t:'Contrôler Exchange Server On-Premises'},{k:'p',mail:'onprem',html:'Avant la bascule, contrôlez la configuration Exchange existante. L’étape 15 guide le Send Connector, le Receive Connector et la Transport Rule.'},{k:'todo',mail:'onprem',items:['Exchange Admin Center ou Exchange Management Shell disponible','Send Connectors existants contrôlés et documentés','Receive Connectors existants contrôlés et documentés','Transport Rules existantes contrôlées et documentées','Accepted Domains contrôlés et documentés',{t:'Points de terminaison DAG ou load balancer contrôlés et documentés',na:true},{t:'TLS et certificats contrôlés',na:true}]},{k:'p',mail:'onprem',html:'<a href="https://health-info-net-ag.github.io/Stargate-deployment/Exchange-integration/" target="_blank" rel="noopener">Ouvrir la documentation Exchange Integration</a>'},
+{ph:'p1',n:'1',title:'Sauvegarder l’ancien MGW et copier ses réglages',lead:'Avant toute modification, testez le flux actuel, sauvegardez le MGW et copiez les réglages nécessaires pour le HIN Gateway.',blocks:[{k:'h',t:'Smoke test avant migration'},{k:'todo',items:['Test 1 : HIN → HIN et vérifier la réponse','Test 2 : HIN → adresse externe et vérifier la réponse','Test 3 : HIN → adresse externe avec « (Vertraulich) » dans l’objet et vérifier la réponse']},{k:'todo',mail:'onprem',items:['Test de référence supplémentaire pour Exchange On-Premises : adresse externe → domaine protégé et vérifier la réception']},{k:'todo',items:['MGW existant mis à jour vers la version actuellement supportée et redémarré','Sauvegarde complète de la VM MGW créée et MGW conservé comme solution de repli']},{k:'h',t:'Copier la configuration MGW'},{k:'domains'},{k:'domainTodo',items:['Mail System → {domain} → Outgoing Server contrôlé et documenté','Mail System → {domain} → Forwarding server contrôlé et repris','Mail System → {domain} → « Send ALL outgoing mails … » contrôlé et documenté',{t:'Paramètres TLS contrôlés et documentés pour {domain}',na:true},{t:'Trusted Networks contrôlés et documentés pour {domain}',na:true},{t:'Préfixe SEC contrôlé et documenté pour {domain}',na:true},{t:'Content Filter contrôlé et documenté pour {domain}',na:true},{t:'MGW Header Check contrôlé et documenté',na:true}]},{k:'h',mail:'m365',t:'Contrôler Microsoft 365 / Exchange Online'},{k:'todo',mail:'m365',items:['Règles de transport contrôlées, notamment Set-Header et en-têtes HIN/MGW','Incoming Connector contrôlé','Outgoing Connector contrôlé',{t:'TLS et certificats contrôlés',na:true}]},{k:'h',mail:'onprem',t:'Contrôler Exchange Server On-Premises'},{k:'p',mail:'onprem',html:'Avant la bascule, contrôlez la configuration Exchange existante. L’étape 15 guide le Send Connector, le Receive Connector et la Transport Rule.'},{k:'todo',mail:'onprem',items:['Exchange Admin Center ou Exchange Management Shell disponible','Send Connectors existants contrôlés et documentés','Receive Connectors existants contrôlés et documentés','Transport Rules existantes contrôlées et documentées','Accepted Domains contrôlés et documentés',{t:'Points de terminaison DAG ou load balancer contrôlés et documentés',na:true},{t:'TLS et certificats contrôlés',na:true}]},{k:'p',mail:'onprem',html:'<a href="https://health-info-net-ag.github.io/Stargate-deployment/Exchange-integration/" target="_blank" rel="noopener">Ouvrir la documentation Exchange Integration</a>'},
   {k:'h',mail:'other',t:'Contrôler l’autre serveur mail / relais SMTP'},
   {k:'p',mail:'other',html:'Notez comment votre système de messagerie achemine actuellement les messages. Selon le produit, le réglage peut s’appeler <b>relais SMTP</b>, <b>smart host</b>, <b>route</b> ou <b>connecteur</b>.'},
   {k:'todo',mail:'other',items:['Relais SMTP / smart host actuel contrôlé et documenté','Domaines de routage et routes mail contrôlés et documentés',{t:'Règles de transport / routage contrôlées et documentées',na:true},{t:'Paramètres TLS et certificats contrôlés',na:true}]},
@@ -1442,24 +1478,40 @@ function renderChrome(){
 }
 
 function renderGate(){
+  const qtxt = n => esc(T.gateQuestion.replace('{n}',String(n)));
   const mailCard = (m) => {
     const map = {
       m365:['Cloud',T.mailM365,T.mailM365Sub],
       onprem:['On-Prem',T.mailOnPrem,T.mailOnPremSub],
       other:['SMTP',T.mailOther,T.mailOtherSub]
     }[m];
-    return '<button class="choice'+(S.mailMode===m?' on':'')+'" data-mail-mode="'+m+'"><span class="tag">'+esc(map[0])+'</span><h3>'+esc(map[1])+'</h3><p>'+esc(map[2])+'</p></button>';
+    const on = S.mailMode===m;
+    return '<button class="choice'+(on?' on':'')+'" data-mail-mode="'+m+'" aria-pressed="'+on+'"><span class="tag">'+esc(map[0])+'</span><h3>'+esc(map[1])+'</h3><p>'+esc(map[2])+'</p></button>';
   };
-  const platformCard = (p,tag,title,sub) => '<button class="choice'+(S.platform===p?' on':'')+'" data-platform="'+p+'"><span class="tag">'+esc(tag)+'</span><h3>'+esc(title)+'</h3><p>'+esc(sub)+'</p></button>';
+  const platformCard = (p,tag,title,sub) => {
+    const on = S.platform===p;
+    return '<button class="choice'+(on?' on':'')+'" data-platform="'+p+'" aria-pressed="'+on+'"><span class="tag">'+esc(tag)+'</span><h3>'+esc(title)+'</h3><p>'+esc(sub)+'</p></button>';
+  };
   const ipCard = (v) => '<button class="choice" data-variant="'+v+'"><span class="tag">'+esc(v==='A'?T.tagA:T.tagB)+'</span><h3>'+esc(v==='A'?T.titleA:T.titleB)+'</h3><p>'+esc(v==='A'?T.textA:T.textB)+'</p><ul>'+(v==='A'?T.bulletsA:T.bulletsB).map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></button>';
-  const mailPart = '<h2>'+esc(T.gateMailH2)+'</h2><p class="q">'+esc(T.gateMailQ)+'</p><div class="choices">'+mailCard('m365')+mailCard('onprem')+mailCard('other')+'</div>';
-  const platformPart = S.mailMode ? '<h2 style="margin-top:34px">'+esc(T.gatePlatformH2)+'</h2><p class="q">'+esc(T.gatePlatformQ)+'</p><div class="choices">'+
-    platformCard('azure','Cloud',T.platformAzure,T.platformAzureSub)+platformCard('vmware','ESXi',T.platformVMware,T.platformVMwareSub)+platformCard('proxmox','PVE',T.platformProxmox,T.platformProxmoxSub)+platformCard('windows','Hyper-V',T.platformWindows,T.platformWindowsSub)+platformCard('cloudscale','Cloud',T.platformCloudscale,T.platformCloudscaleSub)+'</div>' : '';
-  const ipPart = S.mailMode && S.platform ? '<h2 style="margin-top:34px">'+esc(T.gateH2)+'</h2><p class="q">'+esc(T.gateQ)+'</p><div class="choices">'+ipCard('A')+ipCard('B')+'</div>'+
+  const currentQ = !S.mailMode ? 1 : (!S.platform ? 2 : 3);
+  const gp = (n,label,done) => '<div class="gate-progress-step '+(done?'done':(currentQ===n?'active':''))+'"><span class="gp-n">'+(done?'✓':n)+'</span><span>'+esc(label)+'</span></div>';
+  const progress = '<div class="gate-progress">'+gp(1,T.gateStepMail,!!S.mailMode)+gp(2,T.gateStepPlatform,!!S.platform)+gp(3,T.gateStepIP,false)+'</div>';
+  const mailPart = '<section class="gate-question" data-gate-q="1"><span class="question-kicker">'+qtxt(1)+'</span><h2>'+esc(T.gateMailH2)+'</h2><p class="q">'+esc(T.gateMailQ)+'</p><div class="choices">'+mailCard('m365')+mailCard('onprem')+mailCard('other')+'</div></section>';
+  const platformPart = S.mailMode ? '<section class="gate-question" data-gate-q="2" style="margin-top:34px"><span class="question-kicker">'+qtxt(2)+'</span><h2>'+esc(T.gatePlatformH2)+'</h2><p class="q">'+esc(T.gatePlatformQ)+'</p><div class="choices">'+
+    platformCard('azure','Cloud',T.platformAzure,T.platformAzureSub)+platformCard('vmware','ESXi',T.platformVMware,T.platformVMwareSub)+platformCard('proxmox','PVE',T.platformProxmox,T.platformProxmoxSub)+platformCard('windows','Hyper-V',T.platformWindows,T.platformWindowsSub)+platformCard('cloudscale','Cloud',T.platformCloudscale,T.platformCloudscaleSub)+'</div></section>' : '';
+  const ipPart = S.mailMode && S.platform ? '<section class="gate-question" data-gate-q="3" style="margin-top:34px"><span class="question-kicker">'+qtxt(3)+'</span><h2>'+esc(T.gateH2)+'</h2><p class="q">'+esc(T.gateQ)+'</p><div class="choices">'+ipCard('A')+ipCard('B')+'</div>'+
     (S.mailMode==='onprem'?'<div class="note info" style="margin-top:18px"><b>'+esc(T.mailOnPrem)+'</b><p>'+esc(T.onPremSingleNotice)+'</p></div>':'')+
-    (T.compareRows ? '<div class="gate-compare"><h3>'+esc(T.compareTitle)+'</h3><div class="tbl-wrap"><table class="tbl"><thead><tr>'+T.compareHead.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+T.compareRows.map(r=>'<tr>'+r.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div></div>' : '') : '';
-  $('#gate').innerHTML = '<h1>'+esc(T.gateH1)+'</h1><p class="sub">'+esc(T.gateSub)+'</p><p class="meta">'+esc(T.gateMeta)+'</p>'+mailPart+platformPart+ipPart+'<p class="later">'+esc(T.later)+'</p>';
+    (T.compareRows ? '<div class="gate-compare"><h3>'+esc(T.compareTitle)+'</h3><div class="tbl-wrap"><table class="tbl"><thead><tr>'+T.compareHead.map(x=>'<th>'+esc(x)+'</th>').join('')+'</tr></thead><tbody>'+T.compareRows.map(r=>'<tr>'+r.map(c=>'<td>'+esc(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div></div>' : '')+'</section>' : '';
+  $('#gate').innerHTML = '<h1>'+esc(T.gateH1)+'</h1><p class="sub">'+esc(T.gateSub)+'</p><p class="meta">'+esc(T.gateMeta)+'</p><div class="gate-start"><b>'+esc(T.gateStartGuide)+'</b></div>'+progress+mailPart+platformPart+ipPart+'<p class="later">'+esc(T.later)+'</p>';
 }
+
+function scrollGateQuestion(n){
+  setTimeout(() => {
+    const el = document.querySelector('[data-gate-q="'+n+'"]');
+    if (el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  }, 80);
+}
+
 function render(){
   ensureCurVisible();
   const s = STEPS[S.cur];
@@ -1594,12 +1646,12 @@ document.addEventListener('click', e => {
   if (mm) {
     S.mailMode = mm.dataset.mailMode;
     if (S.mailMode==='onprem') { S.domainMode='single'; S.strategy='all'; S.domains=[S.domains[0]||blankDomain()]; }
-    save(); renderGate(); return;
+    save(); renderGate(); scrollGateQuestion(2); return;
   }
 
 
   const pf = e.target.closest('[data-platform]');
-  if (pf) { S.platform = pf.dataset.platform; save(); renderGate(); return; }
+  if (pf) { S.platform = pf.dataset.platform; save(); renderGate(); scrollGateQuestion(3); return; }
 
   const c = e.target.closest('.choice[data-variant]');
   if (c) { setVariant(c.dataset.variant); return; }
